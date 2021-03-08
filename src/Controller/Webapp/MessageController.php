@@ -55,7 +55,7 @@ class MessageController extends AbstractController
             $entityManager->persist($message);
             $entityManager->flush();
 
-            return $this->redirectToRoute('op_webapp_message_index');
+            return $this->redirectToRoute('op_webapp_message_messagesbyuser', ['iduser' => $user->getId()]);
         }
 
         return $this->render('webapp/message/new.html.twig', [
@@ -96,13 +96,14 @@ class MessageController extends AbstractController
      */
     public function edit(Request $request, Message $message): Response
     {
+        $user = $this->getUser();
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('op_webapp_message_index');
+            return $this->redirectToRoute('op_webapp_message_messagesbyuser', ['iduser' => $user->getId()]);
         }
 
         return $this->render('webapp/message/edit.html.twig', [
@@ -116,13 +117,14 @@ class MessageController extends AbstractController
      */
     public function delete(Request $request, Message $message): Response
     {
+        $user = $this->getUser();
         if ($this->isCsrfTokenValid('delete'.$message->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($message);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('webapp/message_index');
+        return $this->redirectToRoute('op_webapp_message_messagesbyuser', ['iduser' => $user->getId()]);
     }
 
     /**
@@ -145,6 +147,7 @@ class MessageController extends AbstractController
         return $this->render('webapp/message/index.html.twig',[
             'messages' => $messages,
             'college' => $college
+
         ]);
     }
 }
