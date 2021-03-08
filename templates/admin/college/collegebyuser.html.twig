@@ -5,18 +5,7 @@
 {% block body %}
     <section class="container" id="espace_college_header">
         <div class="row" id="content">
-            {% if college.headerName is null %}
-            {% else %}
-                <div class="col-12" id="content_header_img">
-                    <img id="college_header" class="img-fluid" src="{{ vich_uploader_asset(college, 'headerFile', 'App\\Entity\\Admin\\College' ) }}" alt="{{ college.headerName }}">
-                    <div id="college_logo">
-                        <img class="img-fluid" src="{{ vich_uploader_asset(college, 'logoFile', 'App\\Entity\\Admin\\College' ) }}" alt="{{ college.logoName }}">
-                    </div>
-                    <div id="college_titre">
-                        <h3>Espace privé Collège : {{ college.name }}</h3>
-                    </div>
-                </div>
-            {% endif %}
+            {{ include('admin/college/include/_header_college.html.twig') }}
         </div>
     </section>
     <section class="container" id="espace_college_content">

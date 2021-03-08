@@ -1,13 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Message{% endblock %}
+{% block title %}Modifier un message{% endblock %}
 
 {% block body %}
-    <h1>Edit Message</h1>
+    <section class="container" id="espace_college_header">
+        <div class="row" id="content">
+            {{ include('admin/college/include/_header_college.html.twig') }}
+        </div>
+    </section>
+    <section class="container"  id="espace_college_content">
+        <div class="row">
+            <div class="col-9" id="content">
+                <div class="row" id="content_title">
+                    <div class="col-12">
+                        <h5>Modifier un message</h5>
+                        <p>Vous pouvez envoyer un message à un collège ou plusieurs inscrit dans le dispositif.</p>
+                        <hr>
+                    </div>
+                </div>
+                {{ include('webapp/message/_form.html.twig') }}
+            </div>
+            {{ render(controller('App\\Controller\\Admin\\CollegeController:blocAdminCollege', {'id':college.id})) }}
+        </div>
+    </section>
+{% endblock %}
 
-    {{ include('webapp/message/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('op_webapp_message_index') }}">back to list</a>
-
-    {{ include('webapp/message/_delete_form.html.twig') }}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#message_content'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 {% endblock %}
