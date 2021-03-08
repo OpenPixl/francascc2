@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Collégiens - Citoyens{% endblock %}
+
+{% block body %}
+
+    <section class="container" id="espace_college_header">
+        <div class="row" id="content">
+            {% if college.headerName is null %}
+            {% else %}
+                <div class="col-12" id="content_header_img">
+                    <img id="college_header" class="img-fluid" src="{{ vich_uploader_asset(college, 'headerFile' ) }}" alt="{{ college.headerName }}">
+                    <div id="college_logo">
+                        <img class="img-fluid" src="{{ vich_uploader_asset(college, 'logoFile' ) }}" alt="{{ college.logoName }}">
+                    </div>
+                    <div id="college_titre">
+                        <h3>Espace privé Collège : {{ college.name }}</h3>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+    <section class="container" id="espace_college_content">
+        <div class="row">
+            <div class="col-9" id="content">
+                <div class="row" id="content_title">
+                    <div class="col-12">
+                        <h5>LISTE DES MESSAGES RECUS</h5>
+                        <p>Tous vos messages reçus sont listés ci-dessous</p>
+                    </div>
+                </div>
+                <div class="row" id="content_body">
+                    <div class="col-12">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>De</th>
+                                <th>Sujet</th>
+                                <th>Envoyé le</th>
+                                <th align="right">actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for message in messages %}
+                                {% if message.isRead == 1 %}
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ message.author }}</td>
+                                        <td><a href="{{ path('op_webapp_message_show', {'id': message.id}) }}">{{ message.subject }}</a></td>
+                                        <td>{{ message.createAt ? message.createAt|date('d-m-Y') : '' }}</td>
+                                        <td align="right">
+                                            <a href="{{ path('op_webapp_message_show', {'id': message.id}) }}"><i class="fas fa-eye"></i></a> |
+                                            <a href="#"><i class="fas fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr class="table-secondary">
+                                        <td></td>
+                                        <td>{{ message.author }}</td>
+                                        <td><a href="{{ path('op_webapp_message_show', {'id': message.id}) }}">{{ message.subject }}</a></td>
+                                        <td>{{ message.createAt ? message.createAt|date('d-m-Y') : '' }}</td>
+                                        <td align="right">
+                                            <a href="{{ path('op_webapp_message_show', {'id': message.id}) }}"><i class="fas fa-eye"></i></a> |
+                                            <a href="#"><i class="fas fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">Aucun message arrivé</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {{ render(controller('App\\Controller\\Admin\\CollegeController:blocAdminCollege', {'id': college.id})) }}
+
+        </div>
+    </section>
+{% endblock %}

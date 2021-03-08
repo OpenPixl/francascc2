@@ -1,0 +1,43 @@
+{% if not articles %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                 <th>id</th>
+                 <th>title</th>
+                 <th>thème</th>
+                 <th>publiée</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="4">
+                <p>Pour le moment, aucun article n'a été produit par le groupe de collégiens</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{% else %}
+    <table class="table table-hover">
+         <thead>
+             <tr>
+                 <th>id</th>
+                 <th>title</th>
+                 <th>thème</th>
+                 <th>publiée</th>
+                 <th></th>
+             </tr>
+         </thead>
+         <tbody>
+         {% for article in articles %}
+             <tr>
+                 <td>{{ article.id }}</td>
+                 <td>{{ article.title }}</td>
+                 <td>{{ article.theme }}</td>
+                 <td></td>
+                 <td><a href="{{ path('op_webapp_articles_edit', {'id' : article.id}) }}"><i class="far fa-edit"></i> Modifier</a></td>
+             </tr>
+         {% endfor %}
+     </tbody>
+    </table>
+{% endif %}
+

@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}College index{% endblock %}
+
+{% block body %}
+    <h1>College index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Complement</th>
+                <th>Zipcode</th>
+                <th>City</th>
+                <th>CollegeEmail</th>
+                <th>GroupEmail</th>
+                <th>CollegePhone</th>
+                <th>GroupPhone</th>
+                <th>Animateur</th>
+                <th>CreateAt</th>
+                <th>UpdateAt</th>
+                <th>GroupDescription</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for college in colleges %}
+            <tr>
+                <td>{{ college.id }}</td>
+                <td>{{ college.name }}</td>
+                <td>{{ college.address }}</td>
+                <td>{{ college.complement }}</td>
+                <td>{{ college.zipcode }}</td>
+                <td>{{ college.city }}</td>
+                <td>{{ college.collegeEmail }}</td>
+                <td>{{ college.groupEmail }}</td>
+                <td>{{ college.collegePhone }}</td>
+                <td>{{ college.groupPhone }}</td>
+                <td>{{ college.animateur }}</td>
+                <td>{{ college.createAt ? college.createAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ college.updateAt ? college.updateAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ college.GroupDescription }}</td>
+                <td>
+                    <a href="{{ path('admin_college_show', {'id': college.id}) }}">show</a>
+                    <a href="{{ path('admin_college_edit', {'id': college.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="15">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_college_new') }}">Create new</a>
+{% endblock %}

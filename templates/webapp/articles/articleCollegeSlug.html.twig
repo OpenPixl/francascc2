@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}collégiens-Citoyens{% endblock %}
+
+{% block body %}
+    {% if article.headerName is null %}
+    {% else %}
+    <section class="container" id="college_page_header">
+        <div class="row" id="content">
+            <div class="col-12" id="content_header_img">
+                {% if article.headerName is null %}
+                <img id="college_header" class="img-fluid" src="{{ asset('/uploads/images/fixes/logo-radio-francas.png') | imagine_filter('thumb_bandeau_college')  }}" alt="logo-radio-francas">
+                {% else %}
+                <img id="college_header" class="img-fluid" src="{{ vich_uploader_asset(article, 'headerFile', 'App\\Entity\\Admin\\College' ) | imagine_filter('thumb_bandeau_college') }}" alt="{{ article.headerName }}">
+                {% endif %}
+                <div id="college_logo">
+                    <img class="img-fluid" src="{{ vich_uploader_asset(article, 'logoFile', 'App\\Entity\\Admin\\College' ) | imagine_filter('thumb_logo_college') }}" alt="{{ article.logoName }}">
+                </div>
+                <div id="college_titre">
+                    {% if article.collegeId == 29 %}
+                        <h3>{{ article.name }}</h3>
+                    {% else %}
+                        <h3>Collège {{ article.name }}</h3>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-12" id="college_intro">
+                <div id="content_text">
+                    {{ article.GroupDescription|raw }}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    <section class="container" id="college_page_content">
+        <div class="row" id="content">
+            {{ include('webapp/articles/include/_blocarticle.html.twig') }}
+            {% if article.idsupport == 0 %}
+            {% elseif article.idsupport == 1 %}
+            <div class="col-12" id="content_support">
+                <h3>Notre émission de radio : {{ article.doc }}</h3>
+                <audio controls="controls">
+                    <source src="{{ vich_uploader_asset(article, 'docFile', 'App\\Entity\\Webapp\\Articles') }}" type="audio/mp3" />
+                    Votre navigateur ne supporte pas la balise AUDIO.
+                </audio>
+            </div>
+            {% elseif article.idsupport == 2 %}
+                <div class="col-12" id="content_support">
+                    <h3>Notre reportage vidéo : {{ article.doc }}</h3>
+                    <video controls width="500">
+
+                        <source src="{{ vich_uploader_asset(article, 'docFile', 'App\\Entity\\Webapp\\Articles') }}" type="video/mp4">
+
+                        <p>Votre navigateur ne prend pas en charge les vidéos HTML5.
+                            Voici <a href="{{ vich_uploader_asset(article, 'docFile', 'App\\Entity\\Webapp\\Articles') }}">un lien pour télécharger la vidéo sur votre ordinateur</a>.</p>
+                    </video>
+                </div>
+            {% elseif article.idsupport == 3 %}
+                <div class="col-12" id="content_support">
+
+                </div>
+            {% else %}
+                <div class="col-12" id="content_support">
+
+                </div>
+            {% endif %}
+        </div>
+        {% if is_granted('ROLE_USER') %}
+        {{ render(controller('App\\Controller\\Webapp\\CommentController::new')) }}
+        {% endif %}
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#comment_content'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+{% endblock %}

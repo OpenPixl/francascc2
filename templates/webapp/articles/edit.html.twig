@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Articles{% endblock %}
+
+{% block body %}
+    <section class="container" id="espace_college_header">
+        <div class="row" id="content">
+            {% if college.headerName is null %}
+            {% else %}
+                <div class="col-12" id="content_header_img">
+                    <img id="college_header" class="img-fluid" src="{{ vich_uploader_asset(college, 'headerFile' ) | imagine_filter('thumb_bandeau_college')  }}" alt="{{ college.headerName }}">
+                    <div id="college_logo">
+                        <img class="img-fluid" src="{{ vich_uploader_asset(college, 'logoFile' ) | imagine_filter('thumb_bandeau_college') | imagine_filter('thumb_bandeau_college') }}" alt="{{ college.logoName }}">
+                    </div>
+                    <div id="college_titre">
+                        <h3>Espace privé Collège : {{ college.name }}</h3>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+    <section class="container" id="espace_college_content">
+        <div class="row">
+            <div class="col-9" id="content">
+                <div class="row" id="content_title">
+                    <div class="col-12">
+                        <h5>MODIFIER UN ARTICLE</h5>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        {{ include('webapp/articles/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                    </div>
+                </div>
+            </div>
+            {{ render(controller('App\\Controller\\Admin\\CollegeController:blocAdminCollege', {'id': article.college})) }}
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#articles_content'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+
+{% endblock %}

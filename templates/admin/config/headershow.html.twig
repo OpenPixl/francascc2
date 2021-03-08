@@ -1,0 +1,9 @@
+{% if config.isHeaderShow == 1 %}
+    {% if config.headerName is null %}
+    {% else %}
+    <section class="container">
+        <img src="{{ vich_uploader_asset(config, 'headerFile' ) }}" alt="{{ config.headerName }}">
+    </section>
+    {% endif%}
+{% else %}
+{% endif %}

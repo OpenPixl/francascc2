@@ -1,0 +1,36 @@
+{% for article in articles %}
+    <div id="content" class="row">
+        {% if article.isTitleShow == 1 %}
+        <div class="col-12" id="content_title">
+            <h3><a href="{{ path('op_webapp_articles_articleSlug', {'slug': article.slug}) }}">{{ article.title }}</a></h3>
+        </div>
+        {% endif %}
+        {% if article.isShowIntro == 1 and article.isShowReadMore == 1 %}
+        <div class="col-12" id="content_text">
+            <p>{{ article.intro|u.truncate(400, ' ...')|raw }}</p>
+            <a href="{{ path('op_webapp_articles_articleSlug', {'slug': article.slug}) }}">Lire la suite</a>
+        </div>
+        <div class="col-12" id="content_code">
+            <div>
+                {{ article.content|raw }}
+            </div>
+        </div>
+        {% elseif article.isShowIntro == 1 and article.isShowReadMore == 0 %}
+            <div class="col-12" id="content_text">
+                <p>{{ article.intro|u.truncate(400, ' ...')|raw }}</p>
+                <a href="{{ path('op_webapp_articles_articleSlug', {'slug': article.slug}) }}">Lire la suite</a>
+            </div>
+            <div class="col-12" id="content_code">
+                <div>
+                    {{ article.content|raw }}
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12" id="content_code">
+                <div>
+                    {{ article.content|raw }}
+                </div>
+            </div>
+        {% endif%}
+    </div>
+{% endfor %}

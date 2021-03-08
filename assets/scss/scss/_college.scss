@@ -1,0 +1,142 @@
+/*****
+* REGLES PAGE COLLEGE (BLOG)
+ *****/
+
+#college_page_header{
+
+}
+
+#college_page_header h1,
+#college_page_header h2,
+#college_page_header h3,
+#college_page_header h4,
+#college_page_header h5,
+#college_page_header h6,{
+  color: $color-link;
+}
+
+#college_page_content h1,
+#college_page_content h2,
+#college_page_content h3,
+#college_page_content h4,
+#college_page_content h5,
+#college_page_content h6,{
+  color: $color-link;
+}
+
+#college_page_content{
+  padding-top: 1rem;
+}
+
+#college_page_content #content {
+  border: 4px double #ebebeb;
+  background-color: #fff;
+  margin-bottom: 15px;
+}
+
+#college_page_content #content_title {
+  margin-top: 0.5rem;
+}
+
+#college_page_content #content_body {
+  margin-bottom: 0.5rem;
+}
+
+#college_page_content .list-group{
+  margin-bottom: 0.5rem;
+  border-radius: 0;
+}
+#college_page_content .list-group-item:first-child {
+  position: relative;
+  display: block;
+  padding: 0.75rem 1.25rem;
+  background-color: #fff;
+  border-top: 4px double #ebebeb;
+  border-left: 4px double #ebebeb;
+  border-right: 4px double #ebebeb;
+}
+
+#college_page_content .list-group-item {
+  position: relative;
+  display: block;
+  padding: 0.75rem 1.25rem;
+  background-color: #fff;
+  border-top: 1px solid #ebebeb;
+  border-left: 4px double #ebebeb;
+  border-right: 4px double #ebebeb;
+}
+
+#college_page_content .list-group-item:last-child {
+  position: relative;
+  display: block;
+  padding: 0.75rem 1.25rem;
+  background-color: #fff;
+  border-top: 1px solid #ebebeb;
+  border-left: 4px double #ebebeb;
+  border-right: 4px double #ebebeb;
+  border-bottom: 4px double #ebebeb;
+}
+
+#bloc_admin_college {
+  padding-right: 0;
+}
+
+// bloc pour le module d'intro de la page
+#college_titre{
+  z-index: 2;
+  position: absolute;
+  right:1rem;
+  bottom:-4rem;
+}
+
+#college_logo{
+  z-index: 2;
+  position: absolute;
+  left:6rem;
+  top:10rem;
+  border: 2px solid #ebebeb;
+  border-radius: 15px;
+  background-color: #fff;
+}
+
+#college_logo img{
+  border-radius: 15px;
+}
+
+#college_intro{
+  margin-top: 5rem;
+}
+
+// Bloc pour les modules d'articles
+#logo_article{
+  z-index: 1;
+  position: absolute;
+  bottom: 0.5rem;
+  left:0.5rem;
+  display: flex;
+  flex-direction:row;
+}
+#logo_article_support{
+  margin-right:0.5rem;
+}
+#logo_article_theme{
+  margin-left:0.5rem;
+}
+
+/** Css pour les présentation de supports **/
+#college_page_content #content_support{
+  margin-bottom: 0.5rem;
+}
+
+#college_page_content #content_support video{
+  margin: 0 25%;
+}
+
+#college_page_content #content_support audio{
+  margin: 0 25%;
+}
+
+#img_article{
+  padding-left: 0;
+  padding-right:0;
+}

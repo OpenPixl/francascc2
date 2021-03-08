@@ -1,0 +1,298 @@
+/*****
+*   REGLES GENERALES
+*****/
+
+header{
+  background: #ffffff;
+}
+main{
+  margin-bottom: 2rem;
+}
+a{
+  color: $color-link;
+}
+a:hover {
+  color: $color-link-hover;
+}
+
+p{
+  font-size:1rem;
+}
+
+a:visited, a:hover, a:link, a:active {
+  text-decoration: none;
+}
+
+#page_header {
+  background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,1));
+  margin-bottom: 15px;
+  border-bottom: 4px double #ebebeb;
+}
+
+#page_header h1 {
+  margin-bottom: 0;
+}
+
+#page_header h1,
+#page_header h2,
+#page_header h3,
+#page_header h4,
+#page_header h5,
+#page_header h6,{
+  color: $color-link;
+}
+
+// page_content
+#page_content{
+  margin-bottom: 15px;
+  padding-top: 0.5rem;
+}
+
+#page_content h1,
+#page_content h2,
+#page_content h3,
+#page_content h4,
+#page_content h5,
+#page_content h6,{
+  color: $color-link;
+}
+
+// content
+#content{
+  border: 4px double #ebebeb;
+  background-color: #fff;
+}
+
+#content_header_img{
+  position: relative;
+  width: 100%;
+  padding-right: 0px;
+  padding-left: 0px;
+  box-shadow: 0px 0px 10px 2px rgba(211, 211, 211, 0.75);
+  -moz-box-shadow: 0px 0px 10px 2px rgba(211, 211, 211, 0.75);
+  -webkit-box-shadow: 0px 0px 10px 2px rgba(211, 211, 211, 0.75);
+}
+
+#content_title{
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+#content_text{
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+#content_other{
+   border: 4px double #ebebeb;
+   margin-bottom: 2em !important;
+   padding: 0px;
+   background-color: #fff;
+ }
+#content_code{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+/*****
+*   REGLES NAVBAR
+*****/
+
+#navbar {
+  background-color: #ffd100;
+  margin-bottom: 0.5rem;
+}
+
+#navbar a, #navbar a:visited, {
+  color: $color-link;
+  text-transform: uppercase;
+}
+
+#navbar a:hover {
+  color: $color-link-hover;
+  text-transform: uppercase;
+}
+
+/*****
+*   REGLES FOOTER
+*****/
+#op_footer{
+  box-shadow: 0px 0px 10px 2px rgba(211, 211, 211, 0.75);
+  -moz-box-shadow: 0px 0px 10px 2px rgba(211, 211, 211, 0.75);
+  -webkit-box-shadow: 0px 0px 10px 2px rgba(211, 211, 211, 0.75);
+  position: relative;
+  bottom: 0;
+}
+#op_footer1{
+  padding: 2em 6em;
+  font-size: 14px;
+  background-color: #fdfdfd;
+}
+#op_footer2{
+  padding: 2em 6em;
+  background: #666666;
+  font-size: 14px;
+}
+#op_footer2 a {
+  color: #ffffff ;
+}
+
+.tab-content{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+#bouton_form{
+  margin-bottom: 1rem;
+}
+
+/***
+*  REGLES PAGE DE LOGIN
+***/
+
+#bloc_login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 75vh;
+}
+
+#bloc_login h1 {
+  color: #d84519;
+}
+
+/*****
+*    AFFICHE LA BORDURE POUR LES PAGES EN BLOGS
+*****/
+
+div[itemprop="blogPost"] {
+  border: 4px double #ebebeb;
+  padding: 30px;
+  background-color: #fff;
+  margin-bottom: 1em;
+}
+
+.item-page {
+  border: 4px double #ebebeb;
+  padding: 30px;
+  background-color: #fff;
+  margin-bottom: 1em;
+}
+
+.readmore {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 4px double #ebebeb;
+  clear: both;
+}
+
+.table td, .table th {
+  padding: .75rem;
+  vertical-align: top;
+  border-top: none;
+}
+
+/***
+*  REGLES PAGE LISTE COLLEGIENS-CITOYENS
+***/
+
+// Bloc affichage par ligne
+#row_college{
+  margin: 1rem 0;
+}
+
+// Bloc Css pour la présentation des collèges
+#row_college > #bloc_college {
+  position: relative;
+  width: 100%;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
+#row_college > #bloc_college:first-child {
+  position: relative;
+  width: 100%;
+  padding-right: 0.5rem;
+  padding-left: 0;
+}
+#row_college > #bloc_college:last-child {
+  position: relative;
+  width: 100%;
+  padding-right: 0;
+  padding-left: 0.5rem;
+}
+#bloc_college h4, p {
+  margin-bottom: 0;
+}
+#bloc_college h4 {
+  font-size: 1.1rem;
+}
+#bloc_college p {
+  text-align: right;
+}
+#bloc_college .card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 0.9rem;
+}
+
+/***
+*  REGLES PAGE COLLEGE
+***/
+
+#college_logo{
+  z-index: 1;
+  position: absolute;
+  left:6rem;
+  top:12rem;
+}
+
+/*****
+*
+*   REGLES ESPACE COLLEGES ("op_espcoll")
+*
+*****/
+
+#op_espcoll_row{
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.op_espcoll_card{
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+#op_espcoll_navbar{
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+#op_espcoll .alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+#op_espcoll .alert-info {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+/*****
+*     REGLES POUR VICHUPLOADER
+*****/
+
+.vich-image img{
+  max-width: 540px;
+}
+
+iframe {
+  display: block;
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+  margin: 0 auto;
+  width: 100%;
+}

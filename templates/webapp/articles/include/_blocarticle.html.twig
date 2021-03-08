@@ -1,0 +1,63 @@
+{% if article.imageName is not null %}
+    <div class="col-3" id="img_article">
+        <img class="img-fluid" src="{{ vich_uploader_asset(article, 'imageFile', 'App\\Entity\\Webapp\\Articles' ) | imagine_filter('thumb_img_article') }}" alt="{{ article.imageName }}">
+        <div id="logo_article">
+            <div id="logo_article_support">
+                {% if article.support is not null %}
+                    {{ render(controller('App\\Controller\\Webapp\\SupportController::Show', {'id': article.idsupport})) }}
+                {% else %}
+                {% endif %}
+            </div>
+            <div id="logo_article_theme">
+                {% if article.theme is not null %}
+                    {{ render(controller('App\\Controller\\Webapp\\ThemeController::Show', {'id': article.idtheme})) }}
+                {% else %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-9" id="content_text">
+        <div class="row">
+            <div class="col-12" id="content_title">
+                <h3><a href="{{ path('op_webapp_articles_articleSlug', {'slug': article.slug}) }}">{{ article.title }}</a></h3>
+            </div>
+            <div class="col-12">
+                {{ article.content|u.truncate(280, ' ...')|raw }}
+                {% if app.request.attributes.get('_route') == 'op_webapp_articles_articleSlug' %}
+                {% else %}
+                <p><a href="{{ path('op_webapp_articles_articleSlug', {'slug': article.slug}) }}">Lire la suite</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="col-3" id="img_article">
+        <img class="img-fluid" src="/uploads/images/fixes/img_article_none.png" alt="img_article_none">
+        <div id="logo_article">
+            <div id="logo_article_support">
+                {% if article.support is not null %}
+                    {{ render(controller('App\\Controller\\Webapp\\SupportController::Show', {'id': article.idsupport})) }}
+                {% else %}
+                {% endif %}
+            </div>
+            <div id="logo_article_theme">
+                {% if article.theme is not null %}
+                    {{ render(controller('App\\Controller\\Webapp\\ThemeController::Show', {'id': article.idtheme})) }}
+                {% else %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-9" id="content_text">
+        <div class="row">
+            <div class="col-12" id="content_title">
+                <h3><a href="{{ path('op_webapp_articles_articleSlug', {'slug': article.slug}) }}">{{ article.title }}</a></h3>
+                {{ article.content|u.truncate(280, ' ...')|raw }}
+                {% if app.request.attributes.get('_route') == 'op_webapp_articles_articleSlug' %}
+                {% else %}
+                    <p><a href="{{ path('op_webapp_articles_articleSlug', {'slug': article.slug}) }}">Lire la suite</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endif %}

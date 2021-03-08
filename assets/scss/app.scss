@@ -1,0 +1,15 @@
+$primary: darken(#428bca, 20%);
+$color-link : #d84519;
+$color-link-hover : #E6A700;
+//*** ------------- Import Variables of bootstrap ---------------- ***//
+@import "~bootstrap/scss/bootstrap";
+//*** ------------- Import Variables of my theme ---------------- ***//
+@import "assets/scss/scss/body";
+@import "assets/scss/scss/custom";
+@import "assets/scss/scss/login";
+@import "assets/scss/scss/college";
+@import "assets/scss/scss/espace_college";
+//*** ------------- Import Variables of fontawesome icons ---------------- ***//
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import "scss/mixins/fontface";
+@include fontface('GloriaHallelujah', '../../fonts/GloriaHallelujah', 200, normal);

@@ -1,0 +1,102 @@
+{{ form_start(form) }}
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="groupe-tab" data-toggle="tab" href="#article" role="tab" aria-controls="home" aria-selected="true">L'article</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="profile" aria-selected="false">Illustration de l'article</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="college-tab" data-toggle="tab" href="#support" role="tab" aria-controls="profile" aria-selected="false">Support à charger</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="article" role="tabpanel" aria-labelledby="groupe-tab">
+        <div class="form-row">
+            <div class="col">
+                <div class="form-group row">
+                    {{ form_label(form.title, "Titre de l'article", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+                    <div class="col-sm-9">
+                        {{ form_widget(form.title) }}
+                        <small>{{ form_help(form.title) }}</small>
+                        <div class="form-error">
+                            {{ form_errors(form.title) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    {{ form_label(form.content, "Contenu", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+                    <div class="col-sm-9">
+                        {{ form_widget(form.content) }}
+                        <small>{{ form_help(form.content) }}</small>
+                        <div class="form-error">
+                            {{ form_errors(form.content) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    {{ form_label(form.theme, "Thème du projet", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+                    <div class="col-sm-9">
+                        {{ form_widget(form.theme) }}
+                        <small>{{ form_help(form.theme) }}</small>
+                        <div class="form-error">
+                            {{ form_errors(form.theme) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="tab-pane" id="media" role="tabpanel" aria-labelledby="groupe-tab">
+        <div class="form-row">
+            <div class="col">
+                <div class="form-group row">
+                    {{ form_label(form.imageFile, "Image de l'article", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+                    <div class="col-sm-9">
+                        {{ form_widget(form.imageFile, {'attr': {'class': 'col-sm-3 btn btn-small'}}) }}
+                        <small>{{ form_help(form.imageFile) }}</small>
+                        <div class="form-error">
+                            {{ form_errors(form.imageFile) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane" id="support" role="tabpanel" aria-labelledby="groupe-tab">
+        <div class="form-row">
+            <div class="col">
+                <div class="form-group row">
+                    {{ form_label(form.support, "Support du Projet", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+                    <div class="col-sm-9">
+                        {{ form_widget(form.support) }}
+                        <small>{{ form_help(form.support) }}</small>
+                        <div class="form-error">
+                            {{ form_errors(form.support) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    {{ form_label(form.docFile, "Insertion du fichier", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+                    <div class="col-sm-9">
+                        {{ form_widget(form.docFile) }}
+                        <small>{{ form_help(form.docFile) }}</small>
+                        <div class="form-error">
+                            {{ form_errors(form.docFile) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="bouton_form">
+    <button class="btn btn-sm btn-warning">{{ button_label|default('Enregistrer') }}</button>
+</div>
+{{ form_end(form) }}

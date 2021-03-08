@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Collégiens-Citoyens{% endblock %}
+
+{% block body %}
+<section class="container" id="page_header">
+    <div class="row" >
+        <div class="col-12">
+            {% if page.isTitleShow == 1 %}
+            <h1>{{ page.title }}</h1>
+            {% endif %}
+            {% if page.isIntroShow == 1 %}
+                <p>{{ page.intro|raw }}</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{{ render(controller('App\\Controller\\Webapp\\SectionController::ListAllSections', {page: page.id})) }}
+{% endblock %}

@@ -1,0 +1,67 @@
+#espace_college_header{
+
+}
+
+#espace_college_content {
+  margin-bottom: 15px;
+  margin-top: 4.3rem;
+  padding-top: 1rem;
+  border-top: 4px double #ebebeb;
+}
+
+#espace_college_header h1,
+#espace_college_header h2,
+#espace_college_header h3,
+#espace_college_header h4,
+#espace_college_header h5,
+#espace_college_header h6,{
+  color: $color-link;
+}
+
+#espace_college_content h1,
+#espace_college_content h2,
+#espace_college_content h3,
+#espace_college_content h4,
+#espace_college_content h5,
+#espace_college_content h6,{
+  color: $color-link;
+}
+
+#espace_college_content .list-group{
+  margin-bottom: 0.5rem;
+  border-radius: 0;
+}
+#espace_college_content .list-group-item:first-child {
+  position: relative;
+  display: block;
+  padding: 0.75rem 1.25rem;
+  background-color: #fff;
+  border-top: 4px double #ebebeb;
+  border-left: 4px double #ebebeb;
+  border-right: 4px double #ebebeb;
+}
+
+#espace_college_content .list-group-item {
+  position: relative;
+  display: block;
+  padding: 0.75rem 1.25rem;
+  background-color: #fff;
+  border-top: 1px solid #ebebeb;
+  border-left: 4px double #ebebeb;
+  border-right: 4px double #ebebeb;
+}
+
+#espace_college_content .list-group-item:last-child {
+  position: relative;
+  display: block;
+  padding: 0.75rem 1.25rem;
+  background-color: #fff;
+  border-top: 1px solid #ebebeb;
+  border-left: 4px double #ebebeb;
+  border-right: 4px double #ebebeb;
+  border-bottom: 4px double #ebebeb;
+}
+
+#bloc_admin_college {
+  padding-right: 0;
+}

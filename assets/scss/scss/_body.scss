@@ -1,0 +1,42 @@
+/*** Règles générales pour le body du site ***/
+//*** ------------- Règles générales pour le body du site ---------------- ***//
+html{
+  height: 100%;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #FCFCFC;
+  background-image: url("../images/fond_site.svg");
+  background-repeat: repeat;
+  line-height: 1.5;
+  word-break: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+  font-family: "GloriaHallelujah";
+}
+h1{
+  font-size: 1.75rem;
+}
+h2{
+  font-size: 1.5rem;
+}
+h3{
+  font-size: 1.4rem;
+}
+h4{
+  font-size: 1.15rem;
+}
+h5{
+  font-size: 1.10rem;
+}
+h6{
+   font-size: 1rem;
+ }
+
