@@ -65,7 +65,7 @@ class DashboardController extends AbstractDashboardController
         ]);
         yield MenuItem::linkToCrud('Messages', 'fa fa-user', Message::class);
         yield MenuItem::section('Administration');
-        yield MenuItem::linkToCrud( 'Utilisateur', 'fa fa-users', User::class)->setController(UserCrudController::class);
+        yield MenuItem::linkToCrud( 'Utilisateur', 'fa fa-users', User::class)->setController(User2CrudController::class);
         yield MenuItem::linkToCrud( 'Configuration', 'fa fa-cogs', Config::class);
         yield MenuItem::linkToCrud( 'Supports', 'fa fa-cogs', Support::class);
         yield MenuItem::linkToCrud( 'Thématique', 'fa fa-cogs', Theme::class);

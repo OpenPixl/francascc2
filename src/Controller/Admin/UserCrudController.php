@@ -33,14 +33,6 @@ class UserCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('firstName', 'Prénom'),
-            TextField::new('lastName', 'Nom'),
-            EmailField::new('Email', 'email'),
-            TextField::new('loginName', 'Surnom'),
-            TextField::new('password')
-            ->hideOnForm(),
-            CollectionField::new('Roles'),
-            AssociationField::new('college', 'College'),
             FormField::addPanel('Mot de passe')->setIcon('fa fa-key'),
             Field::new('Password', 'nouveau password')->onlyOnForms()
                 ->setFormType(RepeatedType::class)
