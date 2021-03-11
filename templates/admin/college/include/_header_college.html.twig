@@ -1,4 +1,5 @@
-{% if college.headerName is null %}
+{% if not college %}
+{% elseif college.headerName is null %}
 {% else %}
     <div class="col-12" id="content_header_img">
         <img id="college_header" class="img-fluid" src="{{ vich_uploader_asset(college, 'headerFile', 'App\\Entity\\Admin\\College' ) | imagine_filter('thumb_bandeau_college') }}" alt="{{ college.headerName }}">

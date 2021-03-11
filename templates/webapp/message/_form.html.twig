@@ -1,37 +1,79 @@
-{{ form_start(form) }}
-<div class="form-row">
-    <div class="col">
-        <div class="form-group row">
-            {{ form_label(form.subject, "Sujet", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
-            <div class="col-sm-9">
-                {{ form_widget(form.subject) }}
-                <small>{{ form_help(form.subject) }}</small>
-                <div class="form-error">
-                    {{ form_errors(form.subject) }}
+
+{% if app.request.attributes.get('_route') == 'op_webapp_message_reply_mail' %}
+    {{ form_start(replyform) }}
+    <div class="form-row">
+        <div class="col">
+            <div class="form-group row">
+
+            </div>
+            <div class="form-group row">
+                {{ form_label(replyform.subject, "Sujet", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+                <div class="col-sm-10">
+                    {{ form_widget(replyform.subject) }}
+                    <small>{{ form_help(replyform.subject) }}</small>
+                    <div class="form-error">
+                        {{ form_errors(replyform.subject) }}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group row">
-            {{ form_label(form.recipient, "Destinataire.s", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
-            <div class="col-sm-9">
-                {{ form_widget(form.recipient) }}
-                <small>{{ form_help(form.recipient) }}</small>
-                <div class="form-error">
-                    {{ form_errors(form.recipient) }}
+            <div class="form-group row">
+                {{ form_label(replyform.content, "contenu", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+                <div class="col-sm-10">
+                    {{ form_widget(replyform.content, {'attr': {'rows':'10'}}) }}
+                    <small>{{ form_help(replyform.content) }}</small>
+                    <div class="form-error">
+                        {{ form_errors(replyform.content) }}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group row">
-            {{ form_label(form.content, "contenu", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
-            <div class="col-sm-9">
-                {{ form_widget(form.content, {'attr': {'rows':'10'}}) }}
-                <small>{{ form_help(form.content) }}</small>
-                <div class="form-error">
-                    {{ form_errors(form.content) }}
-                </div>
+            <div class="form-group row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10"><button class="btn btn-sm btn-outline-info">{{ button_label|default('Envoyer le message') }}</button></div>
             </div>
+
         </div>
-        <button class="btn btn-sm btn-outline-info">{{ button_label|default('Envoyer le message') }}</button>
     </div>
-</div>
-{{ form_end(form) }}
+    {{ form_end(replyform) }}
+{% else %}
+    {{ form_start(form) }}
+    <div class="form-row">
+        <div class="col">
+            <div class="form-group row">
+                {{ form_label(form.subject, "Sujet", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+                <div class="col-sm-10">
+                    {{ form_widget(form.subject) }}
+                    <small>{{ form_help(form.subject) }}</small>
+                    <div class="form-error">
+                        {{ form_errors(form.subject) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                {{ form_label(form.recipient, "Destinataire.s", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+                <div class="col-sm-10">
+                    {{ form_widget(form.recipient) }}
+                    <small>{{ form_help(form.recipient) }}</small>
+                    <div class="form-error">
+                        {{ form_errors(form.recipient) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                {{ form_label(form.content, "contenu", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+                <div class="col-sm-10">
+                    {{ form_widget(form.content, {'attr': {'rows':'10'}}) }}
+                    <small>{{ form_help(form.content) }}</small>
+                    <div class="form-error">
+                        {{ form_errors(form.content) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10"><button class="btn btn-sm btn-outline-info">{{ button_label|default('Envoyer le message') }}</button></div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endif %}
+

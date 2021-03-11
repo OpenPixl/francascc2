@@ -1,17 +1,30 @@
-<div class="col-3" id="bloc_admin_college">
-    <ul class="list-group">
-        <li class="list-group-item disabled">LE GROUPE</li>
-        <li class="list-group-item"><a href="{{ path('op_webapp_college_edit', { 'id': college.id}) }}">Editer les infos</a></li>
-        <li class="list-group-item"><a href="{{ path('op_webapp_message_messagesbyuser', {'iduser': app.user.id}) }}">consulter les messages</a></li>
-        <li class="list-group-item"><a href="{{ path('op_webapp_message_new', { 'id': college.id}) }}">Ecrire un message</a></li>
-    </ul>
-    <ul class="list-group">
-        <li class="list-group-item disabled">ARTICLES</li>
-        <li class="list-group-item"><a href="{{ path('op_webapp_articles_new') }}">Créer un nouvel article</a></li>
-        <li class="list-group-item"><a href="{{ path('op_webapp_college_espcoll', {'iduser': app.user.id}) }}">Consulter les articles</a></li>
-    </ul>
+{% if is_granted('ROLE_ADMIN') %}
+    <div class="col-3" id="bloc_admin_college">
+        <ul class="list-group">
+            <li class="list-group-item disabled">LE GROUPE</li>
+            <li class="list-group-item"><a href="{{ path('op_webapp_message_messagesbyuser', {'iduser': app.user.id}) }}">consulter les messages</a></li>
+        </ul>
+        <ul class="list-group">
+            <li class="list-group-item disabled">ARTICLES</li>
+            <li class="list-group-item"><a href="{{ path('op_webapp_college_espcoll', {'iduser': app.user.id}) }}">Consulter les articles</a></li>
+        </ul>
+    </div>
+{% else %}
+    <div class="col-3" id="bloc_admin_college">
+        <ul class="list-group">
+            <li class="list-group-item disabled">LE GROUPE</li>
+            <li class="list-group-item"><a href="{{ path('op_webapp_college_edit', { 'id': college.id}) }}">Editer les infos</a></li>
+            <li class="list-group-item"><a href="{{ path('op_webapp_message_messagesbyuser', {'iduser': app.user.id}) }}">consulter les messages</a></li>
+            <li class="list-group-item"><a href="{{ path('op_webapp_message_new', { 'id': college.id}) }}">Ecrire un message</a></li>
+        </ul>
+        <ul class="list-group">
+            <li class="list-group-item disabled">ARTICLES</li>
+            <li class="list-group-item"><a href="{{ path('op_webapp_articles_new') }}">Créer un nouvel article</a></li>
+            <li class="list-group-item"><a href="{{ path('op_webapp_college_espcoll', {'iduser': app.user.id}) }}">Consulter les articles</a></li>
+        </ul>
 
-    <ul class="list-group">
-        <li class="list-group-item"><a href="{{ path('op_admin_security_logout') }}">Se déconnecter</a></li>
-    </ul>
-</div>
+        <ul class="list-group">
+            <li class="list-group-item"><a href="{{ path('op_admin_security_logout') }}">Se déconnecter</a></li>
+        </ul>
+    </div>
+{% endif %}

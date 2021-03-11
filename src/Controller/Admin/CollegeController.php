@@ -74,12 +74,22 @@ class CollegeController extends AbstractController
 
     /**
      * Affiche le bloc d'admin des collèges leur espace privé
-     * @Route("/bloc_admin/{id}", name="_admin", methods={"GET"})
+     * @Route("/bloc_admin/", name="_adminonly", methods={"GET"})
      */
     public function blocAdminCollege(College $college): Response
     {
         return $this->render('admin/college/blocAdminCollege.html.twig', [
             'college' => $college,
+        ]);
+    }
+
+    /**
+     * Affiche le bloc d'admin des collèges leur espace privé
+     * @Route("/bloc_admin/{id}", name="_admin", methods={"GET"})
+     */
+    public function blocAdmin(): Response
+    {
+        return $this->render('admin/college/blocAdminCollege.html.twig', [
         ]);
     }
 

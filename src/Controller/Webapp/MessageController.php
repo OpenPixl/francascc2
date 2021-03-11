@@ -4,6 +4,7 @@ namespace App\Controller\Webapp;
 
 use App\Entity\Admin\College;
 use App\Entity\Webapp\Message;
+use App\Form\Webapp\ReplyType;
 use App\Form\Webapp\MessageType;
 use App\Repository\Webapp\MessageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -148,6 +149,44 @@ class MessageController extends AbstractController
             'messages' => $messages,
             'college' => $college
 
+        ]);
+    }
+
+    /**
+     * Action de réponse à un mail
+     * @Route("/reply_mail/{id}", name="_reply_mail")
+     */
+    public function reply_mail(Message $message, Request $request){
+        $user = $this->getUser();
+        $college = $this
+            ->getDoctrine()
+            ->getRepository(College::class)
+            ->CollegeByUser($user);
+
+        $reply = clone $message;
+        $reply
+            ->setSubject("Rép : " . $message->getSubject())
+            ->addRecipient($message->getAuthor())
+            ->setAuthor($user)
+            ->setContent($message->getContent())
+        ;
+
+        $replyform = $this->createForm(ReplyType::class, $reply);
+        $replyform->handleRequest($request);
+
+        if ($replyform->isSubmitted() && $replyform->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($reply);
+            $em->flush();
+
+            return $this->redirectToRoute('op_webapp_message_messagesbyuser', ['iduser' => $user->getId()]);
+        }
+
+        return $this->render('webapp/message/reply_mail.html.twig',[
+            'college'=> $college,
+            'message'=> $message,
+            'reply' => $reply,
+            'replyform' => $replyform->createView()
         ]);
     }
 }

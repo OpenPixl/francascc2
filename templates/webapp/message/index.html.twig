@@ -3,7 +3,6 @@
 {% block title %}Collégiens - Citoyens{% endblock %}
 
 {% block body %}
-
     <section class="container" id="espace_college_header">
         <div class="row" id="content">
             {{ include('admin/college/include/_header_college.html.twig') }}
@@ -22,19 +21,17 @@
                     <div class="col-12">
                         <table class="table table-sm">
                             <thead>
-                            <tr>
-                                <th></th>
-                                <th>De</th>
-                                <th>Sujet</th>
-                                <th>Envoyé le</th>
-                                <th align="right">actions</th>
-                            </tr>
+                                <tr>
+                                    <th>De</th>
+                                    <th>Sujet</th>
+                                    <th>Envoyé le</th>
+                                    <th align="right">actions</th>
+                                </tr>
                             </thead>
                             <tbody>
                             {% for message in messages %}
                                 {% if message.isRead == 1 %}
                                     <tr>
-                                        <td></td>
                                         <td>{{ message.author }}</td>
                                         <td><a href="{{ path('op_webapp_message_show', {'id': message.id}) }}">{{ message.subject }}</a></td>
                                         <td>{{ message.createAt ? message.createAt|date('d-m-Y') : '' }}</td>
@@ -45,7 +42,6 @@
                                     </tr>
                                 {% else %}
                                     <tr class="table-secondary">
-                                        <td></td>
                                         <td>{{ message.author }}</td>
                                         <td><a href="{{ path('op_webapp_message_show', {'id': message.id}) }}">{{ message.subject }}</a></td>
                                         <td>{{ message.createAt ? message.createAt|date('d-m-Y') : '' }}</td>
@@ -65,8 +61,7 @@
                     </div>
                 </div>
             </div>
-            {{ render(controller('App\\Controller\\Admin\\CollegeController:blocAdminCollege', {'id': college.id})) }}
-
+            {{ include('admin/college/include/_blocadmin.html.twig') }}
         </div>
     </section>
 {% endblock %}

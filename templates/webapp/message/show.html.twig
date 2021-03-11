@@ -16,7 +16,7 @@
                         <h5>MESSAGE</h5>
                     </div>
                     <div class="col-12">
-                        <button class="btn btn-outline-dark btn-sm" ><i class="fas fa-angle-left"></i> Répondre</button>
+                        <a href="{{ path('op_webapp_message_reply_mail', {'id' : message.id}) }}" class="btn btn-outline-dark btn-sm" ><i class="fas fa-angle-left"></i> Répondre</a>
                         <button class="btn btn-outline-dark btn-sm" ><i class="fas fa-angle-double-left"></i>Transférer</button>
                         <a href="{{ path('op_webapp_message_delete', {'id': message.id}) }}" class="btn btn-outline-danger btn-sm" ><i class="fas fa-trash"></i> Supprimer</a>
                     </div>
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            {{ render(controller('App\\Controller\\Admin\\CollegeController:blocAdminCollege', {'id': college.id})) }}
+            {{ include('admin/college/include/_blocadmin.html.twig') }}
         </div>
     </section>
 {% endblock %}
