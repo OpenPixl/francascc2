@@ -18,6 +18,7 @@ class ReplyType extends AbstractType
             ->add('content', TextareaType::class,[
                 'label'=> "Contenu"
             ])
+            ->add('recipient')
         ;
     }
 

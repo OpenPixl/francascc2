@@ -3,6 +3,7 @@ $color-link : #d84519;
 $color-link-hover : #E6A700;
 //*** ------------- Import Variables of bootstrap ---------------- ***//
 @import "~bootstrap/scss/bootstrap";
+@import "assets/scss/scss/carousel";
 //*** ------------- Import Variables of my theme ---------------- ***//
 @import "assets/scss/scss/body";
 @import "assets/scss/scss/custom";

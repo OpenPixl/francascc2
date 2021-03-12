@@ -7,6 +7,7 @@ use App\Repository\Webapp\MessageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MessageRepository::class)
@@ -55,6 +56,11 @@ class Message
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updateAt;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $follow;
 
     public function __construct()
     {
@@ -167,6 +173,18 @@ class Message
     public function setUpdateAt(): self
     {
         $this->updateAt = new \DateTime();
+
+        return $this;
+    }
+
+    public function getFollow(): ?string
+    {
+        return $this->follow;
+    }
+
+    public function setFollow(string $follow): self
+    {
+        $this->follow = $follow;
 
         return $this;
     }

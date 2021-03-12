@@ -40,6 +40,7 @@ class MessageController extends AbstractController
     public function new(Request $request): Response
     {
         $user = $this->getUser();
+
         // code d'information du college en cours d'utilisation
         $college = $this
             ->getDoctrine()
@@ -47,7 +48,11 @@ class MessageController extends AbstractController
             ->CollegeByUser($user);
 
         $message = new Message();
-        $message -> setAuthor($user);
+        $message
+            ->setAuthor($user)
+            ->setFollow(uniqid())
+        ;
+
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 
@@ -162,13 +167,16 @@ class MessageController extends AbstractController
             ->getDoctrine()
             ->getRepository(College::class)
             ->CollegeByUser($user);
+        $recipient = $message->getAuthor();
 
-        $reply = clone $message;
+        $reply = new Message();
+
         $reply
             ->setSubject("Rép : " . $message->getSubject())
-            ->addRecipient($message->getAuthor())
+            ->addRecipient($recipient)
             ->setAuthor($user)
             ->setContent($message->getContent())
+            ->setFollow($message->getFollow())
         ;
 
         $replyform = $this->createForm(ReplyType::class, $reply);

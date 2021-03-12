@@ -2,9 +2,11 @@
 
 namespace App\Controller\App;
 
+use App\Entity\Admin\College;
 use App\Entity\Admin\Config;
 use App\Entity\Webapp\Page;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -74,8 +76,16 @@ class DashboardController extends AbstractController
      * Page React de connexion de l'espace college (espcoll)
      * @Route("/admin/espcoll/", name="_espcoll")
      */
-    public function college()
+    public function epscoll() : Response
     {
-        return $this->render('app/espcoll.html.twig');
+        $user = $this->getUser();
+        $college = $this
+            ->getDoctrine()
+            ->getRepository(College::class)
+            ->CollegeByUser($user);
+
+        return $this->render('app/espcoll.html.twig', [
+            'college' => $college,
+        ]);
     }
 }

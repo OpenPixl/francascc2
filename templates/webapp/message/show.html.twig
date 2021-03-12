@@ -24,18 +24,22 @@
                 <hr>
                 <div class="row" id="content_body">
                     <div class="col-12">
-                        <dl class="row">
-                            <dt class="col-2">De :<br>sujet :</dt>
-                            <dl class="col-10">{{ message.author }}<br>{{ message.subject }}</dl>
-                        </dl>
-                        <dl class="row">
-                            <dt class="col-2">Contenu :</dt>
-                            <dl class="col-10">{{ message.content | raw }}</dl>
-                        </dl>
+                        <div>
+                            <p class="align-content-end">Message envoyé le : {{ message.createAt | date('d M y', "Europe/Paris") }}</p>
+                        </div>
+                        <div class="alert alert-secondary">
+                            <dl class="row">
+                                <dt class="col-2">De :<br>sujet :</dt>
+                                <dl class="col-10">{{ message.author }}<br>{{ message.subject }}</dl>
+                                <dt class="col-2">Contenu :</dt>
+                                <dl class="col-10">{{ message.content | raw }}</dl>
+                            </dl>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            {{ include('admin/college/include/_blocadmin.html.twig') }}
+            {{ include('admin/college/include/_blocAdminCollege.html.twig') }}
         </div>
     </section>
 {% endblock %}

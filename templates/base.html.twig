@@ -23,7 +23,7 @@
 
             {% endblock %}
         </main>
-        <footer class="fixed-bottom">
+        <footer>
             {% block footer %}
                 <div class="container-fluid" id="op_footer">
                     <div class="row" id="op_footer1">
@@ -53,7 +53,7 @@
                                 <a href="{{ path('op_admin_security_login') }}">se connecter</a>
                                 {% endif %}
                                 {% if app.user %}
-                                    <a href="{{ path('op_webapp_college_espcoll', {'iduser': app.user.id}) }}">Espace collégiens</a> |
+                                    <a href="{{ path('op_webapp_espcoll') }}">Espace collégiens</a> |
                                     <a href="{{ path('op_admin_security_logout') }}">se déconnecter</a>
                                 {% endif %}
                             </p>

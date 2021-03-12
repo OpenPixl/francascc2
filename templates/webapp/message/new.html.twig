@@ -20,7 +20,7 @@
                 </div>
                 {{ include('webapp/message/_form.html.twig') }}
             </div>
-            {{ render(controller('App\\Controller\\Admin\\CollegeController:blocAdminCollege', {'id':college.id})) }}
+            {{ include('admin/college/include/_blocAdminCollege.html.twig') }}
         </div>
     </section>
 {% endblock %}
