@@ -51,4 +51,37 @@ class resettingController extends AbstractController
         ]);
 
     }
+
+    /**
+     * @Route("/{id}", name="_resetting_member")
+     */
+    public function resetting_member(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    {
+
+        $form = $this->createForm(ResettingType::class, $user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('success', "Votre mot de passe a été renouvelé.");
+
+            return $this->redirectToRoute('op_webapp_college_espcoll', [
+                'iduser' => $user->getId(),
+            ]);
+
+        }
+
+        return $this->render('admin/resetting/request2.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user
+        ]);
+
+    }
 }

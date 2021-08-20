@@ -1,71 +1,73 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        <header>
-            {% block header %}
-                {% if app.request.attributes.get('_route') == 'op_webapp_homepage'%}
-                {{ render(controller('App\\Controller\\Admin\\ConfigController::headerShow')) }}
-                {% endif %}
-            {% endblock %}
-            {% block mainnav %}
-                {{ render(controller('App\\Controller\\Webapp\\PageController::listmenu')) }}
-            {% endblock %}
-        </header>
-        <main>
-            {% block body %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+<header>
+    {% block header %}
+        {% if app.request.attributes.get('_route') == 'op_webapp_homepage'%}
+            {{ render(controller('App\\Controller\\Admin\\ConfigController::headerShow')) }}
+        {% endif %}
+    {% endblock %}
+    {% block mainnav %}
+        {{ render(controller('App\\Controller\\Webapp\\PageController::listmenu')) }}
+    {% endblock %}
+</header>
+<main>
+    {% block body %}
 
-            {% endblock %}
-        </main>
-        <footer>
-            {% block footer %}
-                <div class="container-fluid" id="op_footer">
-                    <div class="row" id="op_footer1">
-                        <div class="col-3">
-                            <h6>Partenaires</h6>
-                            <img src="/uploads/images/fixes/Francas-logo.gif" alt="Francas">
-                            <img src="/uploads/images/fixes/CD40.png" alt="Conseil départemental des Landes">
-                        </div>
-                        <div class="col-3"></div>
-                        <div class="col-3"></div>
-                        <div class="col-3">
-                            <h6>FRANCAS DES LANDES</h6>
-                            <p>3, Allée de la solidarité<br/>
-                                40000 MONT DE MARSAN</p>
-                            <p>Tel : 05 58 46 33 54</p>
-                        </div>
-                    </div>
-                    <div class="row" id="op_footer2">
-                        <div class="col-md-6 col-sm-12">
-                            <p>&copy; Collégiens-Citoyens 2020 - Site réalisé par <a href="https://www.openpixl.fr">OpenPixl</a></p>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <p class="float-right">
-                                <a href="{{ path('op_webapp_page', {'slug':'mentions'}) }}">Mentions légales</a> |
-                                <a href="">contacts</a> |
-                                {% if not app.user %}
-                                <a href="{{ path('op_admin_security_login') }}">se connecter</a>
-                                {% endif %}
-                                {% if app.user %}
-                                    <a href="{{ path('op_webapp_espcoll') }}">Espace collégiens</a> |
-                                    <a href="{{ path('op_admin_security_logout') }}">se déconnecter</a>
-                                {% endif %}
-                            </p>
-                        </div>
-                    </div>
-
+    {% endblock %}
+</main>
+<footer>
+    {% block footer %}
+        <div class="container-fluid" id="op_footer">
+            <div class="row" id="op_footer1">
+                <div class="col-3">
+                    <h6>Partenaires</h6>
+                    <img src="/uploads/images/fixes/Francas-logo.gif" alt="Francas">
+                    <img src="/uploads/images/fixes/CD40.png" alt="Conseil départemental des Landes">
                 </div>
-            {% endblock %}
-        </footer>
+                <div class="col-3"></div>
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <h6>FRANCAS DES LANDES</h6>
+                    <p>3, Allée de la solidarité<br/>
+                        40000 MONT DE MARSAN</p>
+                    <p>Tel : 05 58 46 33 54</p>
+                </div>
+            </div>
+            <div class="row" id="op_footer2">
+                <div class="col-md-6 col-sm-12">
+                    <p>&copy; Collégiens-Citoyens 2020 - Site réalisé par <a href="https://www.openpixl.fr">OpenPixl</a></p>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <p class="float-right">
+                        <a href="{{ path('op_webapp_page', {'slug':'mentions'}) }}">Mentions légales</a> |
+                        <a href="">contacts</a> |
+                        {% if not app.user %}
+                            <a href="{{ path('op_admin_security_login') }}">se connecter</a>
+                        {% endif %}
+                        {% if app.user %}
+                            <a href="{{ path('op_webapp_espcoll') }}">Espace collégiens</a> |
+                            <a href="{{ path('op_admin_security_logout') }}">se déconnecter</a>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </body>
+        </div>
+    {% endblock %}
+</footer>
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    <script src="{{ asset('bundles/ckeditor5/build/ckeditor.js') }}"></script>
+{% endblock %}
+</body>
 </html>

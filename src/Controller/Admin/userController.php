@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Admin\User;
 use App\Form\Admin\userType;
 use App\Repository\Admin\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +25,7 @@ class userController extends AbstractController
     }
 
     /**
-     * @Route("/", name="admin_user_index", methods={"GET"})
+     * @Route("/", name="op_admin_user_index", methods={"GET"})
      */
     public function index(userRepository $userRepository): Response
     {
@@ -34,7 +35,7 @@ class userController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="admin_user_new", methods={"GET","POST"})
+     * @Route("/new", name="op_admin_user_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -59,7 +60,7 @@ class userController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="admin_user_show", methods={"GET"})
+     * @Route("/{id}", name="op_admin_user_show", methods={"GET"})
      */
     public function show(user $user): Response
     {
@@ -69,7 +70,7 @@ class userController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_user_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="op_admin_user_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, user $user): Response
     {
@@ -79,7 +80,7 @@ class userController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_user_index');
+            return $this->redirectToRoute('op_admin_user_index');
         }
 
         return $this->render('admin/user/edit.html.twig', [
@@ -89,7 +90,7 @@ class userController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="admin_user_delete", methods={"DELETE"})
+     * @Route("/{id}", name="op_admin_user_delete", methods={"DELETE"})
      */
     public function delete(Request $request, user $user): Response
     {
@@ -99,6 +100,34 @@ class userController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('admin_user_index');
+        return $this->redirectToRoute('op_admin_user_index');
+    }
+
+    /**
+     * Permet de mettre en menu la poge ou non
+     * @Route("/op_admin/user/verified/{id}", name="op_admin_user_verified")
+     */
+    public function jsMenu(User $user, EntityManagerInterface $em) : Response
+    {
+        $admin = $this->getUser();
+        $isActiv = $user->getIsActiv();
+        // renvoie une erreur car l'utilisateur n'est pas connecté
+        if(!$admin) return $this->json([
+            'code' => 403,
+            'message'=> "Vous n'êtes pas connecté"
+        ], 403);
+        // Si la page est déja publiée, alors on dépublie
+        if($isActiv == true){
+            $user->setIsActiv(0);
+            $em->flush();
+            return $this->json(['code'=> 200, 'message' => "L'utilisateur n'accède plus à l'administration"], 200);
+        }
+        // Si la page est déja dépubliée, alors on publie
+        $user->setIsActiv(1);
+        $em->flush();
+        return $this->json([
+            'code'=> 200,
+            'message' => "L'utilisateur accède à l'administration"],
+            200);
     }
 }
