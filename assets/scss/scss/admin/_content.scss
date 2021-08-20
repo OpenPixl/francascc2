@@ -1,0 +1,65 @@
+//*** ------------- Personnalisation Card ---------------- ***//
+
+.card {
+  border-radius: 0 !important;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+.card > .card-body {
+  padding: 0.5rem 0.75rem;
+}
+.card > .card-body > .card-title {
+  margin-bottom: 0;
+  font-size: 1rem;
+}
+
+.card > .card-img, .card > .card-img-top {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.card > .card-footer p {
+  margin-bottom: 0;
+}
+
+.form-p{
+  margin-top: 0.25rem !important;
+  margin-bottom: 0;
+}
+
+//*** ------------- Personnalisation Formulaires ---------------- ***//
+.form-control-sm {
+  min-height: calc(1.5em + 0.5rem + 2px);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0;
+}
+
+.form-check-input[type="checkbox"] {
+  border-radius: 2em;
+}
+
+.mb-3 {
+  margin-bottom: 0.75rem !important;
+}
+
+//*** ------------- Personnalisation Slides ---------------- ***//
+
+#SlideAnnonce .border-sm{
+  height: 100%;
+  border: none;
+  display: flex;
+  align-items: center;
+  padding:0;
+}
+
+#SlideAnnonce .carousel-caption {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  color: #fff;
+  text-align: center;
+}

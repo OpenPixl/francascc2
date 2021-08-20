@@ -13,4 +13,4 @@ $color-link-hover : #E6A700;
 //*** ------------- Import Variables of fontawesome icons ---------------- ***//
 @import '~@fortawesome/fontawesome-free/css/all.css';
 @import "scss/mixins/fontface";
-@include fontface('GloriaHallelujah', '../../fonts/GloriaHallelujah', 200, normal);
+@include fontface('GloriaHallelujah', '../../fonts/GloriaHallelujah/GloriaHallelujah', 200, normal);

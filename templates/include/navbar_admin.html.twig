@@ -1,0 +1,40 @@
+<nav id="navbar_admin" class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>
+                </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userpanel" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-desktop"></i> Site
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-pager"></i> Pages</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="far fa-file-alt"></i> Articles</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-sms"></i> Avis</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userpanel" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-tools"></i> Paramètres
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cogs"></i> Paramètres</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_admin_user_index') }}"><i class="fas fa-users-cog"></i> Membres</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+

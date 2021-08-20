@@ -1,0 +1,23 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+    <script>
+        window.onload = function(){
+
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <section id="infos" class="container-fluid">
+        <div class="row">
+            <div class="col-12 mt-xl-4 mb-xl-4">
+                <h2>TABLEAU DE BORD</h2>
+            </div>
+        </div>
+    </section>
+{% endblock %}

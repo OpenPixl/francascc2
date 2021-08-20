@@ -1,0 +1,15 @@
+$primary: darken(#428bca, 20%);
+$color-link : #d84519;
+$color-link-hover : #E6A700;
+//*** ------------- Import Variables of bootstrap ---------------- ***//
+@import "~bootstrap/scss/bootstrap";
+@import "assets/scss/scss/carousel";
+//*** ------------- Import Variables of admin ---------------- ***//
+@import "assets/scss/scss/admin/body";
+@import "assets/scss/scss/admin/content";
+@import "assets/scss/scss/admin/header";
+//*** ------------- Import Variables of icons ---------------- ***//
+@import '~@fortawesome/fontawesome-free/css/all.css';
+//*** ------------- Import mixins and polices ---------------- ***//
+@import "scss/mixins/fontface";
+@include fontface('CerebriSans-light', '../../fonts/Cerebri-Sans/CerebriSans-Light', 300, normal);

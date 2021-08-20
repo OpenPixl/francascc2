@@ -1,0 +1,32 @@
+$menu-admin : #FFFFFF;
+$admin-color : linear-gradient(90deg, rgba(28,113,216,1) 0%, rgba(48,200,119,1) 100%);
+
+//*** ------------- property of header_admin ---------------- ***//
+#header_admin{
+  background: $admin-color;
+  padding:4px 5px;
+  font-size:110%;
+}
+
+#header_admin > div > div > ul > li > a {
+  color: $menu-admin;
+}
+
+#header_admin > div > a {
+  color: $menu-admin;
+}
+
+//*** ------------- property of navbar_admin ---------------- ***//
+
+#navbar_admin {
+  background: $menu-admin !important;
+  border-bottom : 1px solid;
+  border-image-source: $admin-color;
+  border-image-slice: 1;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+#navbar_admin a {
+  color : darken(#428bca, 20%);
+}

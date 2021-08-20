@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="300">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{% block title %}OpenGaia | Administration{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('admin') }}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    {% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('admin') }}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
+        <script src="{{ asset('bundles/ckeditor5/build/ckeditor.js') }}"></script>
+    {% endblock %}
+</head>
+<body>
+<header>
+    {% block header %}
+        {{ include('include/header_admin.html.twig') }}
+        {{ include('include/navbar_admin.html.twig') }}
+    {% endblock %}
+</header>
+<main id="content">
+    {% block content_title %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% block modal %}
+    {% endblock %}
+</main>
+<footer>
+    <section class="container-fluid">
+        <div class="modal fade" id="Suppr" tabindex="-1" aria-labelledby="Suppr" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-danger" id="exampleModalLabel">New message</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="modal-text">Vous êtes sur le point de supprimer l'évènement.</p>
+                        <input type="hidden" id="recipient-name">
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" type="button" class="btn btn-danger js-data-suppr" data-bs-dismiss="modal">Supprimer</a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="Add" tabindex="-1" aria-labelledby="Add" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>test</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" type="button" class="btn btn-primary js-add-annonce" data-bs-dismiss="modal">Publier</a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div aria-live="polite" aria-atomic="true" class="bg-dark position-relative">
+            <div class="toast-container position-absolute bottom-100 end-0 p-3">
+                <div id="toaster" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <img src="..." class="rounded me-2" alt="...">
+                        <strong class="me-auto">Bootstrap</strong>
+                        <small class="text-muted">A l'instant</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Hello, world! This is a toast message.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% block footer %}
+        {{ include('include/footer_admin.html.twig') }}
+    {% endblock %}
+</footer>
+</body>
+</html>
