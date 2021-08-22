@@ -1,4 +1,136 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="card-body">
+    <div class="d-flex justify-content-between">
+        <div>
+            <h4>Liste des membres du site</h4>
+            <p>Créer, Modifier ou supprimer des utilisateurs du site.</p>
+        </div>
+        <div id="op_actions">
+            <button class="btn btn-sm btn-outline-secondary">Supprimer</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <h5>Avatar</h5>
+            <hr>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-12">
+                    {{ form_widget(form.avatarFile, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Identifiant'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <h5>Général</h5>
+            <hr>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.loginName, 'Username', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.loginName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Identifiant'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.email, 'Email', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-6">
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'votre Email ...'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.firstName, 'First name', {'label_attr': {'class':'form-label'}}) }} {{ form_label(form.firstName, 'Last name', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.firstName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Prénom'}}) }}
+                </div>
+                <div class="col-3">
+                    {{ form_widget(form.lastName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Nom'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.type, 'Type', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-9">
+                    {{ form_widget(form.type, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <h5>Coordonnées</h5>
+            <hr>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.adress1, 'Adress1', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-9">
+                    {{ form_widget(form.adress1, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Identifiant'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.adress2, 'Adress2', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-9">
+                    {{ form_widget(form.adress2, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Identifiant'}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.zipcode, 'Zipcode', {'label_attr': {'class':'form-label'}}) }} / {{ form_label(form.city, 'City', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-2">
+                    {{ form_widget(form.zipcode, {'attr': {'class': 'form-control form-control-sm', 'placeholder':''}}) }}
+                </div>
+                <div class="col-7">
+                    {{ form_widget(form.city, {'attr': {'class': 'form-control form-control-sm', 'placeholder':''}}) }}
+                </div>
+            </div>
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.phoneDesk, 'Contact', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-3">
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" ><i class="bi bi-telephone"></i></span>
+                        {{ form_widget(form.phoneDesk, {'attr': {'class': 'form-control form-control-sm', 'placeholder':''}}) }}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" ><i class="bi bi-phone"></i></span>
+                        {{ form_widget(form.phoneGsm, {'attr': {'class': 'form-control form-control-sm', 'placeholder':''}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if app.request.get('_route') == 'op_admin_member_new'%}
+            <div class="col-6">
+                <h5>Mot de passe</h5>
+                <hr>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.password.first) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.password.first, {'attr': {'class': 'form-control form-control-sm'}} ) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.password.second) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.password.second, {'attr': {'class': 'form-control form-control-sm'}} ) }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<div class="card-footer">
+    <a class="btn btn-sm btn-secondary" href="{{ path('op_admin_user_index') }}"><i class="fas fa-angle-double-left"></i> Retour à la liste</a></a> <button class="btn btn-sm btn-primary">{{ button_label|default('Save') }}</button>
+</div>
 {{ form_end(form) }}

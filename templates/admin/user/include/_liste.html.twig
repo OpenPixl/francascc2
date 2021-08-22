@@ -1,41 +1,46 @@
-<table class="table">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Nom</th>
-        <th>Identifiant</th>
-        <th>Collège</th>
-        <th>Actif</th>
-        <th>actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for user in users %}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
         <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.loginName }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.college }}</td>
-            <td>
-                {% if user.isVerified == 0 %}
-                    <a class="js-verified" href="{{ path('op_admin_user_verified', {'id': user.id}) }}"><i class="far fa-times-circle text-danger"></i></a>
-                {% elseif user.isVerified == 1 %}
-                    <a class="js-verified" href="{{ path('op_admin_user_verified', {'id': user.id}) }}"><i class="far fa-check-circle text-success"></i></a>
-                {% endif %}
-            </td>
-            <td>
-                <a href="{{ path('op_admin_user_show', {'id': user.id}) }}"><i class="far fa-eye"></i></a>&nbsp;
-                <a href="{{ path('op_admin_user_edit', {'id': user.id}) }}"><i class="far fa-edit"></i></a>&nbsp;
-                <a href="{{ path('op_admin_security_resetting_member', {'id': user.id}) }}"><i class="fas fa-key"></i></a>&nbsp;|&nbsp;
-                <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ user.id }}">
-                    <i class="fas fa-eraser"></i>
-                </a>
-            </td>
+            <th></th>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Identifiant</th>
+            <th>Collège</th>
+            <th>Actif</th>
+            <th>actions</th>
         </tr>
-    {% else %}
-        <tr>
-            <td colspan="5">no records found</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td><input type="checkbox" id="check-liste"></td>
+                <td>{{ user.id }}</td>
+                <td>{{ user.loginName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.college }}</td>
+                <td>
+                    {% if user.isVerified == 0 %}
+                        <a class="js-verified" href="{{ path('op_admin_user_verified', {'id': user.id}) }}"><i class="far fa-times-circle text-danger"></i></a>
+                    {% elseif user.isVerified == 1 %}
+                        <a class="js-verified" href="{{ path('op_admin_user_verified', {'id': user.id}) }}"><i class="far fa-check-circle text-success"></i></a>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('op_admin_user_show', {'id': user.id}) }}"><i class="far fa-eye"></i></a>&nbsp;
+                    <a href="{{ path('op_admin_user_edit', {'id': user.id}) }}"><i class="far fa-edit"></i></a>&nbsp;
+                    <a href="{{ path('op_admin_security_resetting_member', {'id': user.id}) }}"><i class="fas fa-key"></i></a>&nbsp;|&nbsp;
+                    <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ user.id }}">
+                        <i class="fas fa-eraser"></i>
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+

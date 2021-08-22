@@ -10,6 +10,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -33,6 +36,11 @@ class User implements UserInterface
      * @ORM\Column(type="json")
      */
     private $roles = [];
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $type;
 
     /**
      * @var string The hashed password
@@ -69,6 +77,60 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $loginName;
+
+    /**
+     * Insertion de l'image mise en avant liée à un article
+     * NOTE : Il ne s'agit pas d'un champ mappé des métadonnées de l'entité, mais d'une simple propriété.
+     *
+     * @Vich\UploadableField(mapping="avatar_image", fileNameProperty="avatarName", size="avatarSize")
+     * @Ignore()
+     * @var File|null
+     */
+    private $avatarFile;
+
+    /**
+     * @ORM\Column(type="string",nullable=true)
+     *
+     * @var string|null
+     */
+    private $avatarName;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     *
+     * @var int|null
+     */
+    private $avatarSize;
+
+    /**
+     * @ORM\Column(type="string", length=150)
+     */
+    private $adress1;
+
+    /**
+     * @ORM\Column(type="string", length=150, nullable=true)
+     */
+    private $Adress2;
+
+    /**
+     * @ORM\Column(type="string", length=5, nullable=true)
+     */
+    private $zipcode;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $city;
+
+    /**
+     * @ORM\Column(type="string", length=14, nullable=true)
+     */
+    private $phoneDesk;
+
+    /**
+     * @ORM\Column(type="string", length=14, nullable=true)
+     */
+    private $phoneGsm;
 
     /**
      * @ORM\ManyToMany(targetEntity=Message::class, mappedBy="recipient")
@@ -127,6 +189,18 @@ class User implements UserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
@@ -235,9 +309,120 @@ class User implements UserInterface
         return $this;
     }
 
-    public function __toString()
+    /**
+     * Si vous téléchargez manuellement un fichier (c'est-à-dire sans utiliser Symfony Form),
+     * assurez-vous qu'une instance de "UploadedFile" est injectée dans ce paramètre pour déclencher la mise à jour.
+     * Si le paramètre de configuration 'inject_on_load' de ce bundle est défini sur 'true', ce setter doit être
+     * capable d'accepter une instance de 'File' car le bundle en injectera une ici pendant l'hydratation de Doctrine.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $avatarFile
+     */
+    public function setAvatarFile(?File $avatarFile = null): void
     {
-        return $this->loginName;
+        $this->avatarFile = $avatarFile;
+
+        if (null !== $avatarFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getAvatarFile(): ?File
+    {
+        return $this->avatarFile;
+    }
+
+    public function setAvatarName(?string $avatarName): void
+    {
+        $this->avatarName = $avatarName;
+    }
+
+    public function getAvatarName(): ?string
+    {
+        return $this->avatarName;
+    }
+
+    public function setAvatarSize(?int $avatarSize): void
+    {
+        $this->avatarSize = $avatarSize;
+    }
+
+    public function getAvatarSize(): ?int
+    {
+        return $this->avatarSize;
+    }
+
+    public function getAdress1(): ?string
+    {
+        return $this->adress1;
+    }
+
+    public function setAdress1(string $adress1): self
+    {
+        $this->adress1 = $adress1;
+
+        return $this;
+    }
+
+    public function getAdress2(): ?string
+    {
+        return $this->Adress2;
+    }
+
+    public function setAdress2(?string $Adress2): self
+    {
+        $this->Adress2 = $Adress2;
+
+        return $this;
+    }
+
+    public function getZipcode(): ?string
+    {
+        return $this->zipcode;
+    }
+
+    public function setZipcode(?string $zipcode): self
+    {
+        $this->zipcode = $zipcode;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getPhoneDesk(): ?string
+    {
+        return $this->phoneDesk;
+    }
+
+    public function setPhoneDesk(?string $phoneDesk): self
+    {
+        $this->phoneDesk = $phoneDesk;
+
+        return $this;
+    }
+
+    public function getPhoneGsm(): ?string
+    {
+        return $this->phoneGsm;
+    }
+
+    public function setPhoneGsm(?string $phoneGsm): self
+    {
+        $this->phoneGsm = $phoneGsm;
+
+        return $this;
     }
 
     /**
@@ -297,5 +482,10 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->loginName;
     }
 }

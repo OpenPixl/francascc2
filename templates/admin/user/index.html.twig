@@ -92,10 +92,8 @@
     {{ include('admin/user/include/_section_content_header.html.twig') }}
     <section id="op_admin_content_body">
         <div class="row g-2">
-            <div class="col-2">
-                {% include 'admin/user/include/_section_content_aside.html.twig' %}
-            </div>
-            <div class="col-10">
+            {{ include('admin/user/include/_section_content_aside.html.twig') }}
+            <div class="col-xs-12 col-sm-12 col-md-12 col-xl-10 col-xxl-10">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
@@ -108,8 +106,13 @@
                             </div>
                         </div>
                         <div id="liste">
-                            {{ include('admin/user/include/_liste.html.twig') }}
+                        {{ include('admin/user/include/_liste.html.twig') }}
+                        {# module de pagintaion hérité de KnpPaginator #}
+                        <div class="navigation">
+                            {# Ajout du template personnalisé pour la pagination en fin du block #}
+                            {{ knp_pagination_render(users, 'include/pagination.html.twig') }}
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

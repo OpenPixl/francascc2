@@ -3,6 +3,7 @@
 namespace App\Form\Admin;
 
 use App\Entity\Admin\user;
+use phpDocumentor\Reflection\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,9 +14,18 @@ class userType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('password')
+            ->add('type')
             ->add('firstName')
             ->add('lastName')
+            ->add('loginName')
+            ->add('avatarFile')
+            ->add('adress1')
+            ->add('adress2')
+            ->add('zipcode')
+            ->add('city')
+            ->add('phoneDesk')
+            ->add('phoneGsm')
+
         ;
     }
 
