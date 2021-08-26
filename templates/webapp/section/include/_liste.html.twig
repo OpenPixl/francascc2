@@ -1,0 +1,58 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Section</th>
+        <th class="text-center">Mise en avant</th>
+        <th class="text-center">Contenu</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for section in sections %}
+        <tr>
+            <td>
+                {% if loop.first %}<i class="fas fa-long-arrow-alt-up text-muted"></i>&nbsp;&nbsp;{% else %}<a href="#" class="jsPosition" id="{{ section.id }}"><i class="fas fa-long-arrow-alt-up"></i></a>&nbsp;&nbsp;{% endif %}
+                {% if loop.last %}<i class="fas fa-long-arrow-alt-down text-muted"></i>{% else %}<a href="#" class="jsPosition" id="{{ section.id }}"><i class="fas fa-long-arrow-alt-down"></i></a>{% endif %}
+            </td>
+            <td><a href="{{ path('op_webapp_section_edit', {'id': section.id}) }}">{{ section.name }}</a></td>
+            <td class="text-center">
+                {% if section.favorites == 0 %}
+                    <p class="card-text"><a class="js-star" href="{{ path('op_webapp_section_star', {'id': section.id}) }}"><i class="far fa-star text-warning"></i></a></p>
+                {% else %}
+                    <p class="card-text"><a class="js-star" href="{{ path('op_webapp_section_star', {'id': section.id}) }}"><i class="fas fa-star text-warning"></i></a></p>
+                {% endif %}
+            </td>
+            <td class="text-center">
+                {% if section.content == 'ONE_ARTICLE' %}
+                    Un article
+                {% elseif section.content == 'FIVE_ARTICLES' %}
+                    Les 5 deniers articles collègiens
+                {% elseif section.content == 'Category' %}
+                    Une catégorie
+                {% elseif section.content == 'One_event' %}
+                    Un Evènement
+                {% elseif section.content == 'Events' %}
+                    les évènement à venir
+                {% elseif section.content == 'HistoryOfEvent' %}
+                    Historique des évènements
+                {% elseif section.content == 'OTHER_CONTENT' %}
+                    Autres contenu
+                {% else %}
+                {{ section.content }}
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ path('op_webapp_section_edit', {'id': section.id}) }}"><i class="far fa-edit"></i></a>&nbsp;&nbsp;
+                <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ section.id }}">
+                    <i class="bi bi-eraser text-danger"></i>
+                </a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="9">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

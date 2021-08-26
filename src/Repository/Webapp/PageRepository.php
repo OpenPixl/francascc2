@@ -31,4 +31,15 @@ class PageRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    /**
+     * liste les pages par position ascendante
+     */
+    public function sortPosition(){
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.position', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

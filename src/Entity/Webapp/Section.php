@@ -100,6 +100,21 @@ class Section
      */
     private $isActiv;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $favorites = false;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $position;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -331,6 +346,42 @@ class Section
     public function setIsActiv(bool $isActiv): self
     {
         $this->isActiv = $isActiv;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getFavorites(): ?bool
+    {
+        return $this->favorites;
+    }
+
+    public function setFavorites(bool $favorites): self
+    {
+        $this->favorites = $favorites;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }

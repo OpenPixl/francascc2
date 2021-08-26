@@ -1,0 +1,136 @@
+{{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
+<div class="card-body">
+    <div class="row">
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <button class="nav-link active" aria-current="page" data-bs-toggle="tab" data-bs-target="#Informations" type="button" role="tab" aria-controls="Informations" aria-selected="true"><h5>Informations</h5></button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#Options" type="button" role="tab" aria-controls="Options" aria-selected="true"><h5>Options</h5></button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#SEO" type="button" role="tab" aria-controls="SEO" aria-selected="true"><h5>SEO</h5></button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="Informations" role="tabpanel" aria-labelledby="home-tab">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row mb-1 mt-1 g-1">
+                            <div class="col-3">
+                                <b>{{ form_label(form.name, 'Titre', {'label_attr': {'class':'form-label'}}) }}</b>
+                            </div>
+                            <div class="col-9">
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-1 mt-1 g-1">
+                            <div class="col-3">
+                                <b>{{ form_label(form.description, 'Description', {'label_attr': {'class':'form-label'}}) }}</b>
+                            </div>
+                            <div class="col-9">
+                                {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-sm', 'row': '10'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="row mb-1 mt-1 g-1">
+                            <div class="col-4">
+                                <b>{{ form_label(form.state, 'Etat', {'label_attr': {'class':'form-label'}}) }}</b>
+                            </div>
+                            <div class="col-8">
+                                {{ form_widget(form.state, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-1 mt-1 g-1">
+                            <div class="col-4">
+                                <b>{{ form_label(form.tags, 'Tags', {'label_attr': {'class':'form-label'}}) }}</b>
+                            </div>
+                            <div class="col-8">
+                                {{ form_widget(form.tags, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-1 mt-1 g-1">
+                            <fieldset>
+                                <div class="form-check form-switch">
+                                    {{ form_widget(form.isMenu, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(form.isMenu, 'Is menu', {'label_attr': {'class':'form-check-label'}}) }}
+                                </div>
+                                <div class="form-check form-switch">
+                                    {{ form_widget(form.isPublish, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(form.isPublish, 'Is publish', {'label_attr': {'class':'form-check-label'}}) }}
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane" id="Options" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="row mb-1 mt-1 g-1">
+                    <h6>Affichage</h6>
+                    <fieldset>
+                        <div class="form-check form-switch">
+                            {{ form_widget(form.isTitle, {'attr': {'class': 'form-check-input'}}) }}
+                            {{ form_label(form.isTitle, 'Is title', {'label_attr': {'class':'form-check-label'}}) }}
+                        </div>
+                        <div class="form-check form-switch">
+                            {{ form_widget(form.isDescription, {'attr': {'class': 'form-check-input'}}) }}
+                            {{ form_label(form.isDescription, 'Is description', {'label_attr': {'class':'form-check-label'}}) }}
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <h6>Date de publication de la page</h6>
+                    <div class="col-3">
+                        <b>{{ form_label(form.publishAt, 'Publish at', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.publishAt) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.dispublishAt, 'Dispublish at', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.dispublishAt, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="SEO" role="tabpanel" aria-labelledby="messages-tab">
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.title, 'Title', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.title, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.metaKeywords, 'Meta keywords', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.metaKeywords, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
+                    </div>
+                </div>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.metaDescription, 'Meta description', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.metaDescription, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card-footer">
+    <a class="btn btn-secondary btn-sm" href="{{ path('op_webapp_page_index') }}"><i class="fas fa-angle-double-left"></i> Retour à la liste</a> <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
+</div>
+{{ form_rest(form) }}
+{{ form_end(form) }}

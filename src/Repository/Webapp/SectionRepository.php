@@ -19,6 +19,27 @@ class SectionRepository extends ServiceEntityRepository
         parent::__construct($registry, Section::class);
     }
 
+    public function findbypage($page){
+        return $this->createQueryBuilder('s')
+            ->select('
+                s.id, 
+                s.name, 
+                s.slug, 
+                s.descriptif,
+                s.favorites, 
+                s.content, 
+                s.createAt, 
+                s.updateAt, 
+                s.position,
+                p.id AS ispage')
+            ->join('s.page', 'p')
+            ->Where('p.id = :page')
+            ->setParameter('page', $page)
+            ->orderBy('s.position', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Section[] Returns an array of Section objects
     //  */

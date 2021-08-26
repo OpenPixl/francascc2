@@ -1,0 +1,26 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}OpenGaia | Administration{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    {{ include('webapp/page/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('webapp/page/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Modifier page</h3>
+                    </div>
+                    {{ include('webapp/page/_form.html.twig', {'button_label': 'Update'}) }}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

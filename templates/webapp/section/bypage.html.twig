@@ -1,0 +1,14 @@
+{% set countrow = sections|length %}
+<div class="d-flex justify-content-between">
+    <div>
+        <h4>Liste des sections de la page : {{ element.title }}</h4>
+        <p>Dans cet espace, vous pouvez ajouter/supprimer les différentes sections composants cette dernière.</p>
+    </div>
+    <div id="op_actions" class="d-flex align-items-center">
+        <button id="btnAddSection" name="{{ element.id }}-{{ countrow }}" class="btn btn-sm btn-outline-secondary js-add-section"><i class="bi bi-plus-square"></i> Ajouter une section</button>
+    </div>
+</div>
+<div id="liste">
+    {{ include('webapp/section/include/_liste.html.twig') }}
+</div>
+

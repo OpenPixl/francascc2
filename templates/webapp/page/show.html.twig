@@ -1,0 +1,249 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}OpenGaia | {{ page.title }}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+            // Construction de la fonction OnClickBtnMenu
+            function onClickBtnStar(event){
+                event.preventDefault();
+                const url = this.href;                                          // variable qui récupère l'url inclus dans le "this"
+                const icone = this.querySelector('i');                          // variable qui sélectionne l'élément balise <i></i>
+                axios
+                    .post(url)
+                    .then(function(response) {
+                        if(icone.classList.contains('far')) {
+                            icone.classList.replace('far', 'fas');
+                            icone.classList.replace('text-danger', 'text-success');
+                        }
+                        else {
+                            icone.classList.replace('fas', 'far');
+                            icone.classList.replace('text-success', 'text-danger');
+                        }
+                    });
+            }
+
+            // Modal suppr une ligne
+            var Suppr = document.getElementById('Suppr')
+            Suppr.addEventListener('show.bs.modal', function (event) {
+                // Button that triggered the modal
+                var a = event.relatedTarget
+                // Extract info from data-bs-* attributes
+                var recipient = a.getAttribute('data-bs-whatever')
+                // If necessary, you could initiate an AJAX request here
+                // and then do the updating in a callback.
+                //
+                // Update the modal's content.
+                var modalTitle = Suppr.querySelector('.modal-title')
+                var modalText = Suppr.querySelector('.modal-text')
+                var modalBodyInput = Suppr.querySelector('.modal-body input')
+
+                modalTitle.textContent = "Suppression d'un évènement"
+                modalBodyInput.value = recipient
+                modalText.innerHTML = "Vous êtes sur le point de supprimer la section sélectionnée.<br><b>Etes-vous sur de continuer ?</b>"
+            })
+
+            // function Suppression de la ligne en cours
+            function onClickDelEvent(event){
+                event.preventDefault()
+                const id = document.getElementById('recipient-name').value
+                axios
+                    .post('/webapp/section/del/'+ id)
+                    .then(function(response)
+                    {
+                        // préparation de la liste à rafraichir
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                        // on réinitie l'appel de l'évènement sur jsPosition
+                        document.querySelectorAll('a.jsPosition').forEach(function (link){
+                            link.addEventListener('click', onClickBtnPosition);
+                        })
+                        //On appelle le toast
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+            }
+
+            // Appel de la fonction de mise en vedette d'une section lors d'un clic
+            document.querySelectorAll('a.js-star').forEach(function (link){
+                link.addEventListener('click', onClickBtnStar);
+            })
+
+            // Appel de la fonction de mise en vedette d'une section lors d'un clic
+            document.querySelectorAll('a.js-del-section').forEach(function (link){
+                link.addEventListener('click', onClickBtnDelSection);
+            })
+
+            // Bouton de suppression de la ligne en cours
+            document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                link.addEventListener('click', onClickDelEvent)
+            })
+
+            // Ajouter un évènement sur le bouton AddSection
+            document.getElementById('btnAddSection').addEventListener("click", function(event){
+                event.preventDefault();
+                const element = document.getElementById('btnAddSection').name;
+                const data = element.split('-');
+                const page = data[0];
+                const row = data[1];
+                console.log(page, row);
+                const url = '/webapp/section/addsection/' + page +'/'+ row
+                axios
+                .get(url)
+                .then(function(response)
+                {
+                    const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                    // on réinitie l'appel de l'évènement sur jsPosition
+                    document.querySelectorAll('a.jsPosition').forEach(function (link){
+                        link.addEventListener('click', onClickBtnPosition);
+                    })
+                    // préparation du toaster
+                    var option = {
+                        animation : true,
+                        autohide: true,
+                        delay : 3000,
+                    };
+                    // initialisation du toaster
+                    var toastHTMLElement = document.getElementById("toaster");
+                    var message = response.data.message;
+                    var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                    toastBody.textContent = message;
+                    var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                    toastElement.show();
+                })
+            })
+
+            function onClickBtnPosition(event)
+            {
+                event.preventDefault();
+                const id = this.id;
+                const icone = this.querySelector('i');
+                let level;
+                if(icone.classList.contains('fa-long-arrow-alt-up')) {
+                    level = 'up';
+                }else{
+                    level = 'down';
+                }
+                const url = '/webapp/section/position/' + id + '/' + level;
+                axios
+                    .get(url)
+                    .then(function(response){
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                        // on réinitie l'appel de l'évènement sur jsPosition
+                        document.querySelectorAll('a.jsPosition').forEach(function (link){
+                            link.addEventListener('click', onClickBtnPosition);
+                        })
+                        // préparation du toaster
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        // initialisation du toaster
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+            }
+
+            // Appel de la fonction lors du clic sur la flèche DOWN
+            document.querySelectorAll('a.jsPosition').forEach(function (link){
+                link.addEventListener('click', onClickBtnPosition);
+            })
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ include('webapp/page/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('webapp/page/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Id</th>
+                                        <td>{{ page.id }}<input id="page" type="hidden" value="{{ page.id }}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Title</th>
+                                        <td>{{ page.title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Slug</th>
+                                        <td>{{ page.slug }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>State</th>
+                                        <td>{{ page.state }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>IsMenu</th>
+                                        <td>{{ page.isMenu ? '<p class="text-success"><i class="far fa-check-circle"></i></p>' : '<p class="text-danger"><i class="far fa-times-circle"></i></p>' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>MetaKeywords</th>
+                                        <td>{{ page.metaKeywords ? page.metaKeywords|join(', ') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>MetaDescription</th>
+                                        <td>{{ page.metaDescription }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tags</th>
+                                        <td>{{ page.tags ? page.tags|join(', ') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>PublishAt</th>
+                                        <td>{{ page.publishAt ? page.publishAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>PublishEnd</th>
+                                        <td>{{ page.publishEnd ? page.publishEnd|date('Y-m-d') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>CreateAt</th>
+                                        <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>UpdateAt</th>
+                                        <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-8">
+                                {{ render(controller('App\\Controller\\Webapp\\SectionController::byPage', {'page': page.id})) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

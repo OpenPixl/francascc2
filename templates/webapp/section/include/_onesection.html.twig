@@ -1,0 +1,71 @@
+<section
+        {% if section.attrId is null %}{% else %}id="{{ section.attrId }}"{% endif %}
+        {% if section.isSectionFluid == 0 %}
+        class="container
+            {% if section.contentType == 'Member'%}
+            {% else %}op-section
+            {% endif %}
+        "
+        {% elseif section.isSectionFluid == 1 %}
+        class="container-fluid
+            {% if section.contentType == 'Member'%}
+            {% else %}op-section
+            {% endif %}
+            "
+        {% endif %}
+        style="">
+    <div id="section_title" class="mt-3">
+        <div class="row">
+            {% if section.isShowtitle == 1 %}
+            <div class="col">
+                <h2>{{ section.title|upper }}</h2>
+            </div>
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
+    <div id="section_content" class="mb-3">
+        {% if section.isShowdescription == 1 %}
+        <div class="row">
+            <div class="col-12">
+                <p>{{ section.description|raw }}</p>
+                <p class="text-center">
+                    <img src="{{asset('images/svg/Fleches.svg')}}" alt="">
+                </p>
+            </div>
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col">
+                {# Affiche l'intro du site #}
+                {% if section.contentType == 'intro'%}
+                    {{ include('webapp/section/include/_sectionIntro.html.twig') }}
+                {# Affiche un article #}
+                {% elseif section.contentType == 'One_article' %}
+                {{ render(controller('App\\Controller\\Webapp\\ArticleController::oneArticle', {'id': section.oneArticle})) }}
+                {# Affiche l'intro du site #}
+                {% elseif section.contentType == 'More_article'%}
+                {# Affiche une catégorie d'articles #}
+                {% elseif section.contentType == 'Category'%}
+                    {{ render(controller('App\\Controller\\Webapp\\ArticleController::carousel')) }}
+                {% elseif section.contentType == 'One_event'%}
+                {# Affiche un slide des évènements #}
+                {% elseif section.contentType == 'Events'%}
+                    {{ render(controller('App\\Controller\\GestApp\\EventController::ListAllEventPublish')) }}
+                {# Affiche l'historique des évènements #}
+                {% elseif section.contentType == 'HistoryOfEvent'%}
+                    {{ render(controller('App\\Controller\\GestApp\\EventController::historyOfEventPublish')) }}
+                {% elseif section.contentType == 'Member'%}
+                    {{ render(controller('App\\Controller\\Admin\\MemberController::Members')) }}
+                {% elseif section.contentType == 'Adhesion'%}
+                    {{ render(controller('App\\Controller\\GestApp\\AdhesionController::addAdhesion')) }}
+                {% elseif section.contentType == 'Avis'%}
+                    {{ render(controller('App\\Controller\\GestApp\\AvisController::view')) }}
+                {% elseif section.contentType == 'CountUp'%}
+                    {{ render(controller('App\\Controller\\Admin\\StatistiqueController::CountUp')) }}
+                {% else %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>

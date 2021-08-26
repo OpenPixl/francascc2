@@ -77,12 +77,12 @@ class Page
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $createAt;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updateAt;
+    private $updatedAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Section::class, mappedBy="page")
@@ -104,6 +104,16 @@ class Page
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isIntroShow;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $position;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isPublish = false;
 
     public function __construct()
     {
@@ -236,33 +246,33 @@ class Page
     }
 
 
-    public function getCreateAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->createAt;
+        return $this->createdAt;
     }
 
     /**
      * @ORM\PrePersist()
      */
-    public function setCreateAt(): self
+    public function setCreatedAt(): self
     {
-        $this->createAt = new \DateTime();
+        $this->createdAt = new \DateTime();
 
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updateAt;
+        return $this->updatedAt;
     }
 
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    public function setUpdateAt(): self
+    public function setUpdatedAt(): self
     {
-        $this->updateAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
 
         return $this;
     }
@@ -335,6 +345,30 @@ class Page
     public function setIsIntroShow(?bool $isIntroShow): self
     {
         $this->isIntroShow = $isIntroShow;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): self
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    public function getIsPublish(): ?bool
+    {
+        return $this->isPublish;
+    }
+
+    public function setIsPublish(bool $isPublish): self
+    {
+        $this->isPublish = $isPublish;
 
         return $this;
     }
