@@ -66,17 +66,23 @@ class SectionController extends AbstractController
      */
     public function edit(Request $request, Section $section): Response
     {
+        $page = $section->getPage();
+        $idpage = $page->getId();
+
         $form = $this->createForm(SectionType::class, $section);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('webapp_section_index');
+            return $this->redirectToRoute('op_webapp_section_edit', [
+                'id' => $section->getId()
+            ]);
         }
 
         return $this->render('webapp/section/edit.html.twig', [
             'section' => $section,
+            'idpage'=> $idpage,
             'form' => $form->createView(),
         ]);
     }
@@ -153,6 +159,117 @@ class SectionController extends AbstractController
         return $this->json([
             'code'          => 200,
             'message'       => "La section est publiée sur la page d'acccueil."
+        ], 200);
+    }
+
+    /**
+     * Permet de déplacer une section dans la liste
+     * @Route("/webapp/section/position/{id}/{level}", name="op_webapp_section_position_down")
+     */
+    public function Position(Section $section, $level, EntityManagerInterface $em) : Response
+    {
+        $user = $this->getUser();
+        $id = $section->getId();
+        $page = $section->getPage();
+
+        // On récupére la position de la page actuelle et on prépare des les futures positions +1 et -1.
+        $position = $section->getPosition();
+        $nextPos = $section->getPosition()+1;
+        $previousPos = $section->getPosition()-1;
+        //dd($previousPos, $position, $nextPos);
+
+        if($level == 'up')
+        {
+            $previousItem = $em->getRepository(Section::class)->findOneBy(array('position' => $previousPos));
+            //dd($previousItem);
+            $section->setPosition($previousPos);
+            $previousItem->setPosition($position);
+            $em->flush();
+
+            // on récupère la liste des pages ordonnée par position
+            $sections = $this->getDoctrine()->getRepository(Section::class)->findbypage($page);
+
+            // on retourne au format JSON
+            return $this->json([
+                'code'=> 200,
+                'message' => "La section est montée d'un niveau",
+                'liste' => $this->renderView('webapp/section/include/_liste.html.twig', [
+                    'sections' => $sections
+                ])
+            ], 200);
+        }elseif($level == 'down'){
+            $nextItem = $em->getRepository(Section::class)->findOneBy(array('position' => $nextPos));
+            $section->setPosition($nextPos);
+            $nextItem->setPosition($position);
+            $em->flush();
+            // on récupère la liste des pages ordonnée par position
+            $sections = $this->getDoctrine()->getRepository(Section::class)->findbypage($page);
+            return $this->json([
+                'code'=> 200,
+                'message' => "La section est descendu d'un niveau",
+                'liste' => $this->renderView('webapp/section/include/_liste.html.twig', [
+                    'sections' => $sections
+                ])
+            ], 200);
+        }else{
+            return $this->json([
+                'code'=> 200,
+                'message' => "Une erreur a été détecté",
+            ], 200);
+        }
+    }
+
+    /**
+     * @Route("/webapp/section/addsection/{page}/{row}", name="op_webapp_section_add", methods={"GET","POST"})
+     */
+    public function addSection( $page, $row, EntityManagerInterface $em) : Response
+    {
+        $element = $this->getDoctrine()->getRepository(Page::class)->find($page);
+        $position = $row +1;
+
+        $section = new Section;
+        $section->setName('Nouvelle section');
+        $section->setContent('none');
+        $section->setPage($element);
+        $section->setPosition($position);
+        $section->setIsActiv(0);
+        $em->persist($section);
+        $em->flush();
+
+        $sections = $this->getDoctrine()->getRepository(Section::class)->findbypage($page);
+
+        return $this->json([
+            'code'          => 200,
+            'message'       => 'LA section à bien été ajoutée.',
+            'liste'         =>  $this->renderView('webapp/section/include/_liste.html.twig', [
+                'sections' => $sections
+            ])
+        ], 200);
+    }
+
+    /**
+     * @Route("/webapp/section/del/{id}", name="op_webapp_section_del", methods={"POST"})
+     */
+    public function DelEvent(Request $request, Section $section, EntityManagerInterface $em) : Response
+    {
+        // creation des éléement ncessaire à la méthode
+        $user = $this->getUser();
+        $page = $section->getPage();
+
+        // Suppression de l'entité
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($section);
+        $entityManager->flush();
+
+        // Récupération de la liste des sectiosn
+        $element = $this->getDoctrine()->getRepository(Page::class)->find($page);
+        $sections = $em->getRepository(Section::class)->findbypage($page);
+        return $this->json([
+            'code'=> 200,
+            'message' => "L'évènenemt a été supprimé",
+            'liste' => $this->renderView('webapp/section/include/_liste.html.twig', [
+                'sections' => $sections,
+            ])
         ], 200);
     }
 }

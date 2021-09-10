@@ -7,28 +7,32 @@ use App\Entity\Webapp\Articles;
 use App\Entity\Webapp\Section;
 use App\Form\Webapp\ArticlesType;
 use App\Repository\Webapp\ArticlesRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/webapp/articles", name="op_webapp_articles")
- */
 class ArticlesController extends AbstractController
 {
     /**
-     * @Route("/", name="_index", methods={"GET"})
+     * @Route("/webapp/articles/", name="op_webapp_articles_index", methods={"GET"})
      */
-    public function index(ArticlesRepository $articlesRepository): Response
+    public function index(ArticlesRepository $articlesRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $data = $articlesRepository->findAll();
+        $articles = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            15
+        );
         return $this->render('webapp/articles/index.html.twig', [
-            'articles' => $articlesRepository->findAll(),
+            'articles' => $articles,
         ]);
     }
 
     /**
-     * @Route("/new", name="_new", methods={"GET","POST"})
+     * @Route("/webapp/articles/new", name="op_webapp_articles_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -64,7 +68,7 @@ class ArticlesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="_show", methods={"GET"})
+     * @Route("/webapp/articles/{id}", name="op_webapp_articles_show", methods={"GET"})
      */
     public function show(Articles $article): Response
     {
@@ -74,7 +78,7 @@ class ArticlesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="_edit", methods={"GET","POST"})
+     * @Route("/webapp/articles/{id}/edit", name="op_webapp_articles_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Articles $article): Response
     {
@@ -103,7 +107,31 @@ class ArticlesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="_delete", methods={"DELETE"})
+     * @Route("/webapp/articles/{id}/editAdmin", name="op_webapp_articles_edit_admin", methods={"GET","POST"})
+     */
+    public function editAdmin(Request $request, Articles $article): Response
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(ArticlesType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('op_webapp_articles_edit_admin', [
+                'iduser' => $user->getId(),
+            ]);
+        }
+
+        return $this->render('webapp/articles/edit_admin.html.twig', [
+            'article' => $article,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/webapp/articles/{id}", name="op_webapp_articles_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Articles $article): Response
     {
@@ -117,7 +145,7 @@ class ArticlesController extends AbstractController
     }
 
     /**
-     * @Route("/section/{idsection}", name="_articlesbysection", methods={"GET"})
+     * @Route("/webapp/articles/section/{idsection}", name="op_webapp_articles_articlesbysection", methods={"GET"})
      */
     public function listArticlesBySection($idsection): Response
     {
@@ -133,7 +161,7 @@ class ArticlesController extends AbstractController
     }
 
     /**
-     * @Route("/other/{idsection}", name="_articlesbysection", methods={"GET"})
+     * @Route("/webapp/articles/other/{idsection}", name="op_webapp_articles_articlesbysection", methods={"GET"})
      */
     public function listArticlesBySectionOther($idsection): Response
     {
@@ -150,7 +178,7 @@ class ArticlesController extends AbstractController
 
     /**
      * Affiche les articles d'un college dans sa page
-     * @Route("/college/{idcollege}", name="_articlesbycollege", methods={"GET"})
+     * @Route("/webapp/articles/college/{idcollege}", name="op_webapp_articles_articlesbycollege", methods={"GET"})
      */
     public function listArticlesByCollege($idcollege): Response
     {
@@ -166,7 +194,7 @@ class ArticlesController extends AbstractController
     }
 
     /**
-     * @Route("/college2/{idcollege}", name="_articlesbycollege", methods={"GET"})
+     * @Route("/webapp/articles/college2/{idcollege}", name="op_webapp_articles_articlesbycollege", methods={"GET"})
      */
     public function listArticlesByPageCollege($idcollege): Response
     {
@@ -182,7 +210,7 @@ class ArticlesController extends AbstractController
     }
 
     /**
-     * @Route("/carousel/{category}", name="_five_articles", methods={"GET"})
+     * @Route("/webapp/articles/carousel/{category}", name="op_webapp_articles_five_articles", methods={"GET"})
      */
     public function listFiveArticles($category): Response
     {
@@ -200,7 +228,7 @@ class ArticlesController extends AbstractController
 
     /**
      * Affiche un article depuis la page du collège
-     * @Route("/slug/{slug}", name="_articleSlug", methods={"GET"})
+     * @Route("/webapp/articles/slug/{slug}", name="op_webapp_articles_articleSlug", methods={"GET"})
      */
     public function articleCollegeSlug($slug): Response
     {

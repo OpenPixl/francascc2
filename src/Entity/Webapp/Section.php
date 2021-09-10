@@ -2,9 +2,9 @@
 
 namespace App\Entity\Webapp;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Admin\College;
 use App\Repository\Webapp\SectionRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -114,6 +114,16 @@ class Section
      * @ORM\Column(type="integer")
      */
     private $position;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isShowTitle = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isShowdescription = false;
 
     public function __construct()
     {
@@ -350,6 +360,19 @@ class Section
         return $this;
     }
 
+    /**
+     * Permet d'initialiser le slug !
+     * Utilisation de slugify pour transformer une chaine de caractères en slug
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function initializeSlug() {
+        if(empty($this->slug)) {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->name);
+        }
+    }
+
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -382,6 +405,30 @@ class Section
     public function setPosition(int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getIsShowTitle(): ?bool
+    {
+        return $this->isShowTitle;
+    }
+
+    public function setIsShowTitle(bool $isShowTitle): self
+    {
+        $this->isShowTitle = $isShowTitle;
+
+        return $this;
+    }
+
+    public function getIsShowdescription(): ?bool
+    {
+        return $this->isShowdescription;
+    }
+
+    public function setIsShowdescription(bool $isShowdescription): self
+    {
+        $this->isShowdescription = $isShowdescription;
 
         return $this;
     }

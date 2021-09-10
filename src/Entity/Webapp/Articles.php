@@ -54,7 +54,7 @@ class Articles
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $createAt;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -222,15 +222,32 @@ class Articles
         return $this;
     }
 
-    public function getCreateAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->createAt;
+        return $this->createdAt;
     }
 
-    public function setCreateAt(): self
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAt(): self
     {
-        $this->createAt = new \DateTime();
+        $this->createdAt = new \DateTime('now');
+        return $this;
+    }
 
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAt(): self
+    {
+        $this->updatedAt = new \DateTime('now');
         return $this;
     }
 

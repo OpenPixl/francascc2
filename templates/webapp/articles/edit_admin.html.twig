@@ -1,0 +1,39 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Edit Articles{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#articles_content'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        {{ include('webapp/articles/include/_section_content_header.html.twig') }}
+        <section id="op_admin_content_body">
+            <div class="row g-2">
+                <div class="col-2">
+                    {{ include('webapp/articles/include/_section_content_aside.html.twig') }}
+                </div>
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Modifier article</h3>
+                        </div>
+                        {{ include('webapp/articles/_form2.html.twig', {'button_label': 'Update'}) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+

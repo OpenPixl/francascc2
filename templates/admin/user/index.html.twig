@@ -107,12 +107,12 @@
                         </div>
                         <div id="liste">
                         {{ include('admin/user/include/_liste.html.twig') }}
+                        </div>
                         {# module de pagintaion hérité de KnpPaginator #}
                         <div class="navigation">
                             {# Ajout du template personnalisé pour la pagination en fin du block #}
                             {{ knp_pagination_render(users, 'include/pagination.html.twig') }}
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>

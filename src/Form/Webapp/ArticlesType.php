@@ -23,6 +23,10 @@ class ArticlesType extends AbstractType
             ->add('title',TextType::class,[
                 'label'=> 'titre',
             ])
+            ->add('intro',TextType::class,[
+                'label'=> 'titre',
+            ])
+            ->add('isShowReadMore')
             ->add('content',TextareaType::class,[
                 'label'=> "Contenu de l'article",
             ])

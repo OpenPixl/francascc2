@@ -77,17 +77,17 @@
                     })
             }
 
-            // Appel de la fonction de mise en vedette d'une section lors d'un clic
+            // Ajouter un évènement sur le bouton de mise en vedette d'une section lors d'un clic
             document.querySelectorAll('a.js-star').forEach(function (link){
                 link.addEventListener('click', onClickBtnStar);
             })
 
-            // Appel de la fonction de mise en vedette d'une section lors d'un clic
+            // Ajouter un évènement sur le bouton de mise en vedette d'une section lors d'un clic
             document.querySelectorAll('a.js-del-section').forEach(function (link){
                 link.addEventListener('click', onClickBtnDelSection);
             })
 
-            // Bouton de suppression de la ligne en cours
+            // Ajouter un évènement sur le bouton de suppression de la ligne en cours
             document.querySelectorAll('a.js-data-suppr').forEach(function(link){
                 link.addEventListener('click', onClickDelEvent)
             })

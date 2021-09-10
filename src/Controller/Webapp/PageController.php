@@ -4,8 +4,12 @@ namespace App\Controller\Webapp;
 
 use App\Entity\Admin\Config;
 use App\Entity\Webapp\Page;
+use App\Entity\Webapp\Section;
+use App\Form\Webapp\PageType;
 use App\Repository\Webapp\PageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -66,10 +70,11 @@ class PageController extends AbstractController
 
             // on alimente une nouvelle section au nouvel objet fraichement créer et on le persiste
             $section = new Section();
-            $section->setTitle('nouvelle section');
-            $section->setDescription('');
-            $section->setContentType('none');
+            $section->setName('nouvelle section');
+            $section->setIntro('');
+            $section->setContent('none');
             $section->setPosition(1);
+            $section->setIsActiv(0);
             $section->setPage($page);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($section);
@@ -109,10 +114,11 @@ class PageController extends AbstractController
 
             // on alimente une nouvelle section au nouvel objet fraichement créer et on le persiste
             $section = new Section();
-            $section->setTitle('nouvelle section');
-            $section->setDescription('');
-            $section->setContentType('none');
+            $section->setName('nouvelle section');
+            $section->setIntro('');
+            $section->setContent('none');
             $section->setPosition(1);
+            $section->setIsActiv(0);
             $section->setPage($page);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($section);

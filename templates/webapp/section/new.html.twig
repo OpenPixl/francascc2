@@ -1,11 +1,24 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}New Section{% endblock %}
 
-{% block body %}
-    <h1>Create new Section</h1>
-
-    {{ include('webapp_section/_form.html.twig') }}
-
-    <a href="{{ path('webapp_section_index') }}">back to list</a>
+{% block content %}
+    <div class="container-fluid">
+        {{ include('webapp/section/include/_section_content_header.html.twig') }}
+        <section id="op_admin_content_body">
+            <div class="row g-2">
+                <div class="col-2">
+                    {{ include('webapp/section/include/_section_content_aside.html.twig') }}
+                </div>
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Créer une section</h3>
+                        </div>
+                        {{ include('webapp/section/_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 {% endblock %}

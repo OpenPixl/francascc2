@@ -15,9 +15,8 @@ class PageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
             ->add('title')
-            ->add('description', TextareaType::class)
+            ->add('intro', TextareaType::class)
             ->add('state', ChoiceType::class, [
                 'choices'  => [
                     'Brouillon' => 'draft',
@@ -34,7 +33,7 @@ class PageType extends AbstractType
                 'format' => 'dd-MM-yyyy',
                 'attr' => ['class' => 'js-datepicker form-control form-control-sm'],
             ])
-            ->add('dispublishAt', DateType::class, [
+            ->add('publishEnd', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => false,
                 // this is actually the default format for single_text
@@ -43,8 +42,8 @@ class PageType extends AbstractType
             ])
             ->add('isPublish')
             ->add('isMenu')
-            ->add('isTitle')
-            ->add('isDescription')
+            ->add('isTitleShow')
+            ->add('isIntroShow')
         ;
     }
 

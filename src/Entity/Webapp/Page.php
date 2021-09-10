@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Entity\Admin\User;
 use App\Repository\Webapp\PageRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -85,8 +86,7 @@ class Page
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Section::class, mappedBy="page")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\OneToMany(targetEntity=Section::class, mappedBy="page", orphanRemoval=true)
      */
     private $sections;
 
@@ -135,6 +135,19 @@ class Page
         $this->title = $title;
 
         return $this;
+    }
+
+    /**
+     * Permet d'initialiser le slug !
+     * Utilisation de slugify pour transformer une chaine de caractères en slug
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function initializeSlug() {
+        if(empty($this->slug)) {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->title);
+        }
     }
 
     public function getSlug(): ?string

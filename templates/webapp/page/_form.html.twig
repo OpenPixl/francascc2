@@ -20,18 +20,18 @@
                     <div class="col-8">
                         <div class="row mb-1 mt-1 g-1">
                             <div class="col-3">
-                                <b>{{ form_label(form.name, 'Titre', {'label_attr': {'class':'form-label'}}) }}</b>
+                                <b>{{ form_label(form.title, 'Titre', {'label_attr': {'class':'form-label'}}) }}</b>
                             </div>
                             <div class="col-9">
-                                {{ form_widget(form.name, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
+                                {{ form_widget(form.title, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
                             </div>
                         </div>
                         <div class="row mb-1 mt-1 g-1">
                             <div class="col-3">
-                                <b>{{ form_label(form.description, 'Description', {'label_attr': {'class':'form-label'}}) }}</b>
+                                <b>{{ form_label(form.intro, 'Description', {'label_attr': {'class':'form-label'}}) }}</b>
                             </div>
                             <div class="col-9">
-                                {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-sm', 'row': '10'}}) }}
+                                {{ form_widget(form.intro, {'attr': {'class': 'form-control form-control-sm', 'row': '10'}}) }}
                             </div>
                         </div>
                     </div>
@@ -73,12 +73,12 @@
                     <h6>Affichage</h6>
                     <fieldset>
                         <div class="form-check form-switch">
-                            {{ form_widget(form.isTitle, {'attr': {'class': 'form-check-input'}}) }}
-                            {{ form_label(form.isTitle, 'Is title', {'label_attr': {'class':'form-check-label'}}) }}
+                            {{ form_widget(form.isTitleShow, {'attr': {'class': 'form-check-input'}}) }}
+                            {{ form_label(form.isTitleShow, 'Is title', {'label_attr': {'class':'form-check-label'}}) }}
                         </div>
                         <div class="form-check form-switch">
-                            {{ form_widget(form.isDescription, {'attr': {'class': 'form-check-input'}}) }}
-                            {{ form_label(form.isDescription, 'Is description', {'label_attr': {'class':'form-check-label'}}) }}
+                            {{ form_widget(form.isIntroShow, {'attr': {'class': 'form-check-input'}}) }}
+                            {{ form_label(form.isIntroShow, 'Is description', {'label_attr': {'class':'form-check-label'}}) }}
                         </div>
                     </fieldset>
                 </div>
@@ -93,22 +93,14 @@
                 </div>
                 <div class="row mb-1 mt-1 g-1">
                     <div class="col-3">
-                        <b>{{ form_label(form.dispublishAt, 'Dispublish at', {'label_attr': {'class':'form-label'}}) }}</b>
+                        <b>{{ form_label(form.publishEnd, 'Dispublish at', {'label_attr': {'class':'form-label'}}) }}</b>
                     </div>
                     <div class="col-9">
-                        {{ form_widget(form.dispublishAt, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                        {{ form_widget(form.publishEnd, {'attr': {'class': 'form-control form-control-sm'}}) }}
                     </div>
                 </div>
             </div>
             <div class="tab-pane" id="SEO" role="tabpanel" aria-labelledby="messages-tab">
-                <div class="row mb-1 mt-1 g-1">
-                    <div class="col-3">
-                        <b>{{ form_label(form.title, 'Title', {'label_attr': {'class':'form-label'}}) }}</b>
-                    </div>
-                    <div class="col-9">
-                        {{ form_widget(form.title, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
-                    </div>
-                </div>
                 <div class="row mb-1 mt-1 g-1">
                     <div class="col-3">
                         <b>{{ form_label(form.metaKeywords, 'Meta keywords', {'label_attr': {'class':'form-label'}}) }}</b>
