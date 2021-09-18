@@ -60,14 +60,26 @@ class ArticlesRepository extends ServiceEntityRepository
     public function listFiveArticles($category)
     {
         return $this->createQueryBuilder('a')
-            ->addSelect('a.id as id, a.title as title, a.slug as slug, a.content as content, t.id as idtheme, t.name as theme, a.imageName, a.isTitleShow, a.isShowReadMore, s.id as idsupport, s.name as support')
+            ->addSelect('
+                a.id as id, 
+                a.title as title, 
+                a.slug as slug, 
+                a.content as content,
+                a.createdAt As createdAt, 
+                t.id as idtheme, 
+                t.name as theme, 
+                a.imageName, 
+                a.isTitleShow, 
+                a.isShowReadMore, 
+                s.id as idsupport, 
+                s.name as support')
             ->leftJoin('a.college', 'c')
             ->leftJoin('a.theme', 't')
             ->leftJoin('a.support' , 's')
             ->leftJoin('a.category', 'ca')
             ->andWhere('ca.id = :category')
             ->setParameter('category', $category)
-            ->orderBy('a.id', 'ASC')
+            ->orderBy('a.createdAt', 'ASC')
             ->setMaxResults(5)
             ->getQuery()
             ->getResult()

@@ -17,39 +17,30 @@ class SectionType extends AbstractType
             ->add('page')
             ->add('content', ChoiceType::class, [
                 'choices'  => [
-                    'aucun' => 'none',
+                    'AUCUN' => 'none',
                     'ARTICLES' => [
-                        'Un article' => 'One_article',
-                        'Plusieurs articles' => 'More_article',
+                        'Un article' => 'ONE_ARTICLE',
+                        'Les 5 derniers articles' => 'FIVE_ARTICLES',
                         'Une categorie' => 'Category',
                     ],
-                    'EVENEMENTS' =>[
-                        'Un évènement' => 'One_event',
-                        'les évènements' => 'Events',
-                        'historiques des évènements' => 'HistoryOfEvent',
+                    'Ressources' =>[
+                        'Une ressources' => 'ONE_RESSOURCES',
                     ],
-                    'GALERIES' =>[
-                        "image seule" => "Media_one",
-                    ],
-                    'MEMBRES' => [
-                        'membre' => 'Member',
-                        "bulletin d'adhésion" => "Adhesion",
-                    ],
-                    'ANIMATION' => [
-                        'Compteur' => "CountUp"
+                    'Collèges' =>[
+                        "unn collège" => "ONE_COLLEGE",
+                        "tous les collèges" => 'ALL_COLLEGES'
                     ],
                     'DIVERS' => [
-                        'introduction' => 'intro',
-                        "liste des avis" => "Avis",
-                        'Autres' => 'Others'
+                        'Autres' => 'OTHER_CONTENT',
                     ],
                 ],
             ])
             ->add('favorites')
             ->add('fluid')
             ->add('position')
-            ->add('isShowtitle')
+            ->add('isShowTitle')
             ->add('isShowdescription')
+            ->add('category')
         ;
     }
 

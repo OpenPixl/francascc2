@@ -10,12 +10,21 @@ liip_imagine:
                 thumbnail:
                     size: [ 1132, 250 ]
                     mode: outbond
+
         thumb_logo_college:
             quality: 75
             filters:
                 thumbnail:
                     size: [200, 152]
                     mode: outbond
+
+        thumb_card_college:
+            quality: 75
+            filters:
+                thumbnail:
+                    size: [ 314, 240 ]
+                    mode: outbond
+
         thumb_img_article:
             quality: 75
             filters:

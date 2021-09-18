@@ -6,6 +6,8 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+        <script src="{{ asset('bundles/ckeditor5/build/ckeditor.js') }}"></script>
     {% endblock %}
 </head>
 <body>

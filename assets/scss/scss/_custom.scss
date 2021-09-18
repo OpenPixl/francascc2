@@ -93,6 +93,22 @@ a:visited, a:hover, a:link, a:active {
   padding-right: 0;
 }
 
+/******  CAROUSEL *******/
+#SlideEvent p{
+  color: #222222;
+}
+
+#SlideEvent .carousel-caption {
+  position: absolute;
+  right: 5%;
+  bottom: 2rem;
+  left: 30%;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  color: #fff;
+  text-align: center;
+}
+
 
 /*****
 *   REGLES NAVBAR
@@ -203,19 +219,16 @@ div[itemprop="blogPost"] {
 // Bloc Css pour la présentation des collèges
 #row_college > #bloc_college {
   position: relative;
-  width: 100%;
   padding-right: 0.5rem;
   padding-left: 0.5rem;
 }
 #row_college > #bloc_college:first-child {
   position: relative;
-  width: 100%;
   padding-right: 0.5rem;
   padding-left: 0;
 }
 #row_college > #bloc_college:last-child {
   position: relative;
-  width: 100%;
   padding-right: 0;
   padding-left: 0.5rem;
 }

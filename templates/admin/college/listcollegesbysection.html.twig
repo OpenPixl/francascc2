@@ -2,6 +2,11 @@
     {% for college in colleges %}
         <div class="col-3" id="bloc_college">
             <div class="card">
+                {% if college.logoName%}
+                <img src="{{ vich_uploader_asset(college, 'logoFile', 'App\\Entity\\Admin\\College') | imagine_filter('thumb_card_college')}}" alt="{{ college.logoName }}" style="max-height: 240px">
+                {% else %}
+
+                {% endif %}
                 <div class="card-body">
                     <h5><a href="{{ path('op_webapp_college_show2', {'id': college.id}) }}">{{ college.name }}</a></h5>
                     <p class="card-text">{{ college.city }}</p>
@@ -9,10 +14,10 @@
             </div>
         </div>
         {% if loop.index % 4 == 0 %}
-</div>
-<div class="row" id="row_college">
-    {% endif %}
-    {% else %}
+        </div>
+        <div class="row" id="row_college">
+        {% endif %}
+        {% else %}
     {%  endfor %}
 </div>
 

@@ -5,16 +5,19 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script>
     <script>
-        ClassicEditor
-            .create(document.querySelector('#articles_content'))
-            .catch(error => {
-                console.error(error);
-            });
+        window.onload = function(){
+            ClassicEditor
+                .create(document.querySelector('#articles_content'), {
+                    toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'indent', 'alignment' ],
+                    height: 50
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
     </script>
-
-{% endblock %}
+{%  endblock %}
 
 {% block content %}
     <div class="container-fluid">

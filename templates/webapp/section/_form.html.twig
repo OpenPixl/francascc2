@@ -55,8 +55,8 @@
                         <div class="row mb-1 mt-1 g-1">
                             <fieldset>
                                 <div class="form-check form-switch">
-                                    {{ form_widget(form.isShowtitle, {'attr': {'class': 'form-check-input'}}) }}
-                                    {{ form_label(form.isShowtitle, 'Afficher le titre', {'label_attr': {'class':'form-check-label'}}) }}
+                                    {{ form_widget(form.isShowTitle, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(form.isShowTitle, 'Afficher le titre', {'label_attr': {'class':'form-check-label'}}) }}
                                 </div>
                             </fieldset>
                         </div>
@@ -80,6 +80,14 @@
                             </div>
                             <div class="col-9">
                                 {{ form_widget(form.content, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-1 mt-1 g-1">
+                            <div class="col-3">
+                                <b>{{ form_label(form.category, 'Catégorie', {'label_attr': {'class':'form-label'}}) }}</b>
+                            </div>
+                            <div class="col-9">
+                                {{ form_widget(form.category, {'attr': {'class': 'form-select form-select-sm'}}) }}
                             </div>
                         </div>
                     </div>

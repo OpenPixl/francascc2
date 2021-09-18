@@ -23,14 +23,7 @@
                             {{ form_widget(form.title, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'titre de la page'}}) }}
                         </div>
                     </div>
-                    <div class="row mb-1 mt-1 g-1">
-                        <div class="col-3">
-                            <b>{{ form_label(form.intro, 'introduction', {'label_attr': {'class':'form-label'}}) }}</b>
-                        </div>
-                        <div class="col-9">
-                            {{ form_widget(form.intro, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'description'}}) }}
-                        </div>
-                    </div>
+
                     <hr>
                     <div class="row mb-1 mt-1 g-1">
                         <div class="col-3">
@@ -42,7 +35,7 @@
                     </div>
                 </div>
                 <div class="col-4 mt-2">
-                    <h5>Options de la page</h5>
+                    <h5>Options de l'article</h5>
                     <hr>
                     <div class="row mb-1 mt-1 g-1">
                         <div class="col-4">
@@ -68,7 +61,12 @@
                             </div>
                         </fieldset>
                     </div>
-
+                    <h5>Categorie</h5>
+                    <div class="row mb-1 mt-1 g-1">
+                        <div class="col-12">
+                            {{ form_widget(form.category, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

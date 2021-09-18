@@ -22,7 +22,7 @@ class CollegeRepository extends ServiceEntityRepository
     public function listCollegesBySection($idsection)
     {
         return $this->createQueryBuilder('c')
-            ->addSelect('c.id, c.name, c.city, c.isActive, s.id as idsection')
+            ->addSelect('c.id, c.name, c.city, c.isActive,c.logoName, s.id as idsection')
             ->leftJoin('c.section', 's')
             ->andWhere('c.isActive = :isActive ')
             ->setParameter('isActive', 1)
