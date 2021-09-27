@@ -24,6 +24,8 @@ class SectionType extends AbstractType
                         'Une categorie' => 'Category',
                     ],
                     'Ressources' =>[
+                        'Toutes les ressources' => 'ALL_RESSOURCES',
+                        'Une catégorie'=> 'ONE_RESSOURCE_CAT',
                         'Une ressources' => 'ONE_RESSOURCES',
                     ],
                     'Collèges' =>[
@@ -41,6 +43,7 @@ class SectionType extends AbstractType
             ->add('isShowTitle')
             ->add('isShowdescription')
             ->add('category')
+            ->add('ressourcesCat')
         ;
     }
 

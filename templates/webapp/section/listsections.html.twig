@@ -12,6 +12,10 @@
             {{ render(controller('App\\Controller\\Admin\\CollegeController::listCollegesBySection', {'idsection': section.id})) }}
         {% elseif section.content == 'OTHER_CONTENT' %}
             {{ render(controller('App\\Controller\\Webapp\\ArticlesController::listArticlesBySectionOther', {'idsection': section.id})) }}
+        {% elseif section.content == 'ALL_RESSOURCES' %}
+            {{ render(controller('App\\Controller\\Webapp\\RessourcesController::sectionListAll')) }}
+        {% elseif section.content == 'ALL_RESSOURCES' %}
+            {{ render(controller('App\\Controller\\Webapp\\RessourcesController::sectionlistOneCategory', {'category': section.ressourcescat})) }}
         {% endif %}
     </section>
 {%  endfor %}

@@ -1,0 +1,36 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Ressources index{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ include('webapp/ressources/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+
+                {% include 'webapp/ressources/include/_section_content_aside.html.twig' %}
+
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h4>Liste des ressources du site</h4>
+                                <p>Créer, Modifier ou supprimer des pages du site.</p>
+                            </div>
+                            <div id="op_actions">
+                                <button class="btn btn-sm btn-outline-secondary">Supprimer</button>
+                            </div>
+                        </div>
+                        <div id="liste">
+                            {% include 'webapp/ressources/include/_liste.html.twig' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-2">
+        <h4>Les catégories</h4>
+        <form action="">
+
+                {% for categorie in categories %}
+                    <p>
+                        <input type="checkbox" name="categories[]" id="cat{{ categorie.id }}" value="{{ categorie.id }}">
+                        <label for="cat{{ categorie.id }}">{{ categorie.name }}</label>
+                    </p>
+                {% else %}
+                    <p>Pas de catégorie</p>
+                {% endfor %}
+            <input type="hidden" id="page" value="{{ page }}">
+
+        </form>
+    </div>
+
+    <div class="col-10">
+        {{ include('webapp/ressources/include/_contentSectionList.html.twig') }}
+    </div>
+</div>

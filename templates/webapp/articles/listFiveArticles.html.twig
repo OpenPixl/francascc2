@@ -12,7 +12,7 @@
             {% for article in articles %}
                 <div class="carousel-item {% if loop.index == 1 %} active {%endif%}">
                     {% if article.imageName is not null %}
-                        <img src="{{ vich_uploader_asset(articles, 'imageFile', 'App\\Entity\\Webapp\\Articles') }}" class="d-block" alt="{{ article.title }}">
+                        <img src="{{ vich_uploader_asset(article, 'imageFile', 'App\\Entity\\Webapp\\Articles') | imagine_filter('thumb_img_article') }}" class="d-block" alt="{{ article.title }}">
                     {% else %}
                         <img src="{{ asset('uploads/images/fixes/img_article_none.png')}}" alt="...">
                     {% endif %}

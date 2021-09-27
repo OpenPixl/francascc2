@@ -125,6 +125,11 @@ class Section
      */
     private $isShowdescription = false;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=RessourceCat::class, inversedBy="sections")
+     */
+    private $ressourcesCat;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -429,6 +434,18 @@ class Section
     public function setIsShowdescription(bool $isShowdescription): self
     {
         $this->isShowdescription = $isShowdescription;
+
+        return $this;
+    }
+
+    public function getRessourcesCat(): ?RessourceCat
+    {
+        return $this->ressourcesCat;
+    }
+
+    public function setRessourcesCat(?RessourceCat $ressourcesCat): self
+    {
+        $this->ressourcesCat = $ressourcesCat;
 
         return $this;
     }
