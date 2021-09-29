@@ -1,10 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}RessourceCat index{% endblock %}
 
-{% block body %}
-    <h1>RessourceCat index</h1>
-
+{% block content %}
     <table class="table">
         <thead>
             <tr>
@@ -21,8 +19,8 @@
                 <td>{{ ressource_cat.name }}</td>
                 <td>{{ ressource_cat.slug }}</td>
                 <td>
-                    <a href="{{ path('webapp_ressource_cat_show', {'id': ressource_cat.id}) }}">show</a>
-                    <a href="{{ path('webapp_ressource_cat_edit', {'id': ressource_cat.id}) }}">edit</a>
+                    <a href="{{ path('op_webapp_ressource_cat_show', {'id': ressource_cat.id}) }}">show</a>
+                    <a href="{{ path('op_webapp_ressource_cat_edit', {'id': ressource_cat.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +31,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('webapp_ressource_cat_new') }}">Create new</a>
+    <a href="{{ path('op_webapp_ressource_cat_new') }}">Create new</a>
 {% endblock %}

@@ -90,7 +90,7 @@ class RessourceCatController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('webapp_ressource_cat_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('op_webapp_ressource_cat_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('webapp/ressource_cat/edit.html.twig', [
