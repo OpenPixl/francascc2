@@ -28,6 +28,8 @@ class ArticlesController extends AbstractController
         );
         return $this->render('webapp/articles/index.html.twig', [
             'articles' => $articles,
+            'page' => $request->query->getInt('page', 1),
+
         ]);
     }
 

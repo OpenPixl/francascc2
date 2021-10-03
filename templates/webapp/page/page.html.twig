@@ -4,11 +4,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        window.onload = function(){
-
-        }
-    </script>
+    <script src="{{ asset('js/filters.js') }}"></script>
 {% endblock %}
 
 {% block body %}
