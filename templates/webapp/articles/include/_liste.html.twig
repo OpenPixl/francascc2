@@ -7,8 +7,8 @@
             <th>Auteur</th>
             <th>thème</th>
             <th>Support</th>
-            <th>CreateAt</th>
-            <th>UpdateAt</th>
+            <th>{{ knp_pagination_sortable(articles, 'Créer le', 'a.createdAt') }}</th>
+            <th>{{ knp_pagination_sortable(articles, 'Modifier le', 'a.updatedAt') }}</th>
             <th>Actions</th>
         </tr>
         </thead>

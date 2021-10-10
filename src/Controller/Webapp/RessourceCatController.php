@@ -80,7 +80,7 @@ class RessourceCatController extends AbstractController
     }
 
     /**
-     * @Route("/admin/ressourcescat", name="op_webapp_ressource_cat_edit", methods={"GET","POST"})
+     * @Route("/admin/ressourcescat/{id}/edit", name="op_webapp_ressource_cat_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, RessourceCat $ressourceCat): Response
     {

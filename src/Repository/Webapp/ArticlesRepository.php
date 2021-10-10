@@ -79,7 +79,7 @@ class ArticlesRepository extends ServiceEntityRepository
             ->leftJoin('a.category', 'ca')
             ->andWhere('ca.id = :category')
             ->setParameter('category', $category)
-            ->orderBy('a.createdAt', 'ASC')
+            ->orderBy('a.updatedAt', 'DESC')
             ->setMaxResults(5)
             ->getQuery()
             ->getResult()

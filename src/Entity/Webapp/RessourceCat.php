@@ -41,6 +41,11 @@ class RessourceCat
      */
     private $sections;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $parent;
+
     public function __construct()
     {
         $this->ressources = new ArrayCollection();
@@ -149,6 +154,18 @@ class RessourceCat
                 $section->setRessourcesCat(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getParent(): ?string
+    {
+        return $this->parent;
+    }
+
+    public function setParent(string $parent): self
+    {
+        $this->parent = $parent;
 
         return $this;
     }

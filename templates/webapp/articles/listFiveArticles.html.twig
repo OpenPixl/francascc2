@@ -10,7 +10,7 @@
                 </div>
             </div>
             {% for article in articles %}
-                <div class="carousel-item {% if loop.index == 1 %} active {%endif%}">
+                <div class="carousel-item {% if loop.index == 1 %} active{% endif %}">
                     {% if article.imageName is not null %}
                         <img src="{{ vich_uploader_asset(article, 'imageFile', 'App\\Entity\\Webapp\\Articles') | imagine_filter('thumb_img_article') }}" class="d-block" alt="{{ article.title }}">
                     {% else %}
@@ -19,8 +19,8 @@
                     <div class="carousel-caption d-md-block">
                         <div class="row">
                             <div class="col-12">
-                                <h2 class="text-start">{{ article.title }}</h2>
-                                <p class="text-start">{{ article.content |u.truncate(600, ' ...')| raw }}</p>
+                                <h2 class="text-start"><a href="{{ path('op_webapp_articles_show', {'id':article.id}) }}">{{ article.title }}</a></h2>
+                                <p class="text-start">{{ article.content |u.truncate(200, ' ...')| raw }}</p>
                             </div>
                         </div>
                     </div>
