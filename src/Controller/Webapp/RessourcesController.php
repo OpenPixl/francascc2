@@ -49,6 +49,29 @@ class RessourcesController extends AbstractController
     }
 
     /**
+     * @Route("/admin/ressources/filter", name="op_webapp_ressources_filter", methods={"GET","POST"})
+     */
+    public function filter(Request $request, RessourcesRepository $ressourcesRepository,PaginatorInterface $paginator): Response
+    {
+        $filters = $request->get("categories");
+        $data = $ressourcesRepository->listFilters($filters);
+
+        $ressources = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+
+        return $this->json([
+            'code'      => 200,
+            'message'   => "Ok",
+            'liste' => $this->renderView('webapp/ressources/include/_contentSectionList.html.twig', [
+                'ressources' => $ressources
+            ])
+        ], 200);
+    }
+
+    /**
      * @Route("/webapp/ressources/{category}", name="op_webapp_ressources_sectionlistall", methods={"GET"})
      */
     public function sectionlistOneCategory(Request $request, PaginatorInterface $paginator, $category): Response
@@ -69,6 +92,7 @@ class RessourcesController extends AbstractController
             'page' => $request->query->getInt('page', 1),
         ]);
     }
+
 
 
     /**

@@ -30,6 +30,16 @@ class RessourcesRepository extends ServiceEntityRepository
             ;
     }
 
+    public function ListFilters($filters)
+    {
+        $query = $this->createQueryBuilder('r');
+        if($filters != null){
+            $query->andWhere('r.category IN(:cats)')
+                ->setParameter(':cats', array_values($filters));
+        }
+        return $query->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Ressources[] Returns an array of Ressources objects
     //  */

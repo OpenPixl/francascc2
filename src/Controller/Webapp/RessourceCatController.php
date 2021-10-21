@@ -70,6 +70,30 @@ class RessourceCatController extends AbstractController
     }
 
     /**
+     * @Route("/admin/ressourcescat/new2", name="op_webapp_ressource_cat_new2", methods={"GET","POST"})
+     */
+    public function new2(Request $request): Response
+    {
+            $ressourceCat = new RessourceCat();
+            $form = $this->createForm(RessourceCatType::class, $ressourceCat);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($ressourceCat);
+                $entityManager->flush();
+
+                $this->redirectToRoute('op_webapp_ressource_cat_index', [], Response::HTTP_SEE_OTHER);
+
+            }
+
+            return $this->render('webapp/ressource_cat/new2.html.twig', [
+                'ressource_cat' => $ressourceCat,
+                'form' => $form->createView(),
+            ]);
+    }
+
+    /**
      * @Route("/admin/ressourcescat/{id}", name="op_webapp_ressource_cat_show", methods={"GET"})
      */
     public function show(RessourceCat $ressourceCat): Response

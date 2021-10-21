@@ -5,18 +5,22 @@ window.onload = () => {
 
             // j'intercepte les clics et ses données.
             const Form = new FormData(FiltersForms);
-            const result = [];
             // construction de la "QueryString"
-            const query = new URLSearchParams();
-
+            const Params = new URLSearchParams();
+            //alimentation de la "QueryString"
             Form.forEach((value,key) => {
-                result.push(value);
-                console.log(key ,result.toString())
+                Params.append(key, value);
             })
 
-            // on récupère l'url active
-            const url = new URL(window.location.href);
-            console.log(url);
+            const url = '/admin/ressources/filter';
+            axios
+                .get(url + "?" + Params.toString())
+                .then(response => {
+                    // rafraichissement du tableau
+                    const liste = document.getElementById('liste').innerHTML = response.data.liste;
+                })
+
+
         });
     });
 }
