@@ -49,7 +49,7 @@ class RessourcesController extends AbstractController
     }
 
     /**
-     * @Route("/admin/ressources/filter", name="op_webapp_ressources_filter", methods={"GET","POST"})
+     * @Route("/webapp/ressources/filter", name="op_webapp_ressources_filter", methods={"GET","POST"})
      */
     public function filter(Request $request, RessourcesRepository $ressourcesRepository,PaginatorInterface $paginator): Response
     {
@@ -139,7 +139,7 @@ class RessourcesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('webapp_ressources_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('op_webapp_ressources_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('webapp/ressources/edit.html.twig', [
@@ -160,5 +160,23 @@ class RessourcesController extends AbstractController
         }
 
         return $this->redirectToRoute('webapp_ressources_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * Affiche une ressource dans le frontend
+     * @Route("/webapp/ressources/show/{slug}/{page}", name="op_webapp_ressources_ressourceshow", methods={"GET"})
+     */
+    public function RessourceShow($slug, $page, Request $request)
+    {
+        $categories = $this->getDoctrine()->getRepository(RessourceCat::class)->findAll();
+
+        $ressource = $this->getDoctrine()->getRepository(Ressources::class)->ressourceSlug($slug);
+
+
+        return $this->render('webapp/ressources/ressourceshow.html.twig', [
+            'ressource' => $ressource,
+            'categories' => $categories,
+            'page' => $page
+        ]);
     }
 }

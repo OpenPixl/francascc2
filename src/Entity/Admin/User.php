@@ -4,6 +4,7 @@ namespace App\Entity\Admin;
 
 use App\Entity\Webapp\Articles;
 use App\Entity\Webapp\Message;
+use App\Entity\Webapp\Ressources;
 use App\Repository\Admin\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -142,9 +143,15 @@ class User implements UserInterface
      */
     private $articles;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Ressources::class, mappedBy="author")
+     */
+    private $ressources;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->ressources = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -487,5 +494,35 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->loginName;
+    }
+
+    /**
+     * @return Collection|Ressources[]
+     */
+    public function getRessources(): Collection
+    {
+        return $this->ressources;
+    }
+
+    public function addRessource(Ressources $ressource): self
+    {
+        if (!$this->ressources->contains($ressource)) {
+            $this->ressources[] = $ressource;
+            $ressource->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRessource(Ressources $ressource): self
+    {
+        if ($this->ressources->removeElement($ressource)) {
+            // set the owning side to null (unless already changed)
+            if ($ressource->getAuthor() === $this) {
+                $ressource->setAuthor(null);
+            }
+        }
+
+        return $this;
     }
 }

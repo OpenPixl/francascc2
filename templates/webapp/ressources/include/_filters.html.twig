@@ -1,0 +1,28 @@
+<form id="filters" action="">
+    {# Construction en twig de la variable parent pour segmenter le filtrage des ressources #}
+    {% set parents = [] %}
+    {% for categorie in categories %}
+        {% if categorie.parent is null %}
+            {# Assemblage du tableau en twig #}
+            {% set parents = parents|merge([{name : categorie.name, id: categorie.id}]) %}
+        {% endif%}
+    {% endfor%}
+    <div class="card">
+        {# Mise en place de la boucle à partir de Parents #}
+        {% for parent in parents %}
+            <div class="card-header">
+                {{parent.name}}
+            </div>
+            {% for categorie in categories|filter(categorie => categorie.parent == parent.id) %}
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <input type="checkbox" name="categories[]" id="cat{{ categorie.id }}" value="{{ categorie.id }}">
+                        <label for="cat{{ categorie.id }}">{{ categorie.name }}</label>
+                    </li>
+                </ul>
+            {% else %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+    <input type="hidden" id="page" value="{{ page }}">
+</form>

@@ -1,19 +1,23 @@
 <div class="row">
     {% for ressource in ressources %}
-        <div class="col-3">
-            <div class="card">
-                <img class="card-img-top" src="..." alt="">
-                <div class="card-body">
-                    <div class="row">
-                        <h3>{{ ressource.name }}</h3>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    {{ ressource.category }}
+    <div class="col-3">
+        <div class="card">
+            <img class="card-img-top" src="{{ vich_uploader_asset(ressource)}}" alt="{{ressource.imageName}}">
+            <div class="card-body">
+                <div class="row">
+                    <a href="{{ path('op_webapp_ressources_ressourceshow', {'slug': ressource.slug, 'page': page}) }}"><h3>{{ ressource.name }}</h3></a>
                 </div>
             </div>
         </div>
+    </div>
     {% else %}
-        pas de ressource.
+    <div class="col-12">
+        <div class="card text-dark bg-light mb-3">
+            <div class="card-body">
+                <p class="card-text">Il n'y a pas de ressources dans cette catégorie.</p>
+            </div>
+        </div>
+    </div>
+
     {% endfor %}
 </div>

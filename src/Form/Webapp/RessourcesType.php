@@ -6,6 +6,8 @@ use App\Entity\Webapp\Ressources;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RessourcesType extends AbstractType
 {
@@ -15,6 +17,8 @@ class RessourcesType extends AbstractType
             ->add('name')
             ->add('content')
             ->add('category')
+            ->add('imageFile', VichImageType::class, ['required' => false,])
+            ->add('docFile', VichFileType::class, ['required' => false,])
         ;
     }
 

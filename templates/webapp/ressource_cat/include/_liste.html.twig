@@ -4,6 +4,7 @@
         <th>Id</th>
         <th>Name</th>
         <th>Slug</th>
+        <th>Parent</th>
         <th>actions</th>
     </tr>
     </thead>
@@ -13,6 +14,7 @@
             <td>{{ ressource_cat.id }}</td>
             <td>{{ ressource_cat.name }}</td>
             <td>{{ ressource_cat.slug }}</td>
+            <td>{{ ressource_cat.parent }}</td>
             <td>
                 <a href="{{ path('op_webapp_ressource_cat_show', {'id': ressource_cat.id}) }}"><i class="far fa-eye"></i></a>
                 <a href="{{ path('op_webapp_ressource_cat_edit', {'id': ressource_cat.id}) }}"><i class="far fa-edit"></i></a>

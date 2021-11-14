@@ -12,7 +12,7 @@ window.onload = () => {
                 Params.append(key, value);
             })
 
-            const url = '/admin/ressources/filter';
+            const url = '/webapp/ressources/filter';
             axios
                 .get(url + "?" + Params.toString())
                 .then(response => {

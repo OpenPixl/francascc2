@@ -10,9 +10,10 @@
             function onClickaddCategory(event){
                 event.preventDefault();
                 const name = document.getElementById('ressource_cat_name').value;
+                const parent = document.getElementById('ressource_cat_parent').value;
                 const url = "/admin/ressourcescat/new";
                 axios
-                    .post(url,{name:name})
+                    .post(url,{name:name, parent:parent})
                     .then(function(response)
                     {
                         const select = document.getElementById('ressources_category');

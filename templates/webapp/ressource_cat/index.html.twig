@@ -1,36 +1,35 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Ressources index{% endblock %}
+{% block title %}RessourceCat index{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    {{ include('webapp/ressource_cat/include/_section_content_header.html.twig') }}
-    <section id="op_admin_content_body">
-        <div class="row g-2">
-            <div class="col-2">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ressource_cat in ressource_cats %}
+            <tr>
+                <td>{{ ressource_cat.id }}</td>
+                <td>{{ ressource_cat.name }}</td>
+                <td>{{ ressource_cat.slug }}</td>
+                <td>
+                    <a href="{{ path('op_webapp_ressource_cat_show', {'id': ressource_cat.id}) }}">show</a>
+                    <a href="{{ path('op_webapp_ressource_cat_edit', {'id': ressource_cat.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-                {% include 'webapp/ressource_cat/include/_section_content_aside.html.twig' %}
-
-            </div>
-            <div class="col-10">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h4>Liste des catégories de ressources</h4>
-                                <p>Créer, Modifier ou supprimer des pages du site.</p>
-                            </div>
-                            <div id="op_actions">
-                                <button class="btn btn-sm btn-outline-secondary">Supprimer</button>
-                            </div>
-                        </div>
-                        <div id="liste">
-                            {{ include('webapp/ressource_cat/include/_liste.html.twig') }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
+    <a href="{{ path('op_webapp_ressource_cat_new') }}">Create new</a>
 {% endblock %}

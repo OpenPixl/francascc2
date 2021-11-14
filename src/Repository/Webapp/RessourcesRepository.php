@@ -40,6 +40,26 @@ class RessourcesRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    /**
+     * @param $slug
+     * @return int|mixed|string|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * Affiche une ressource selon son slug
+     */
+    public function ressourceSlug($slug)
+    {
+        return $this->createQueryBuilder('r')
+            ->addSelect('r.id as id, r.slug, r.name as name, r.content as content, r.doc, r.imageName, r.isTitleShow, r.isShowIntro, c.name, c.id AS collegeId,c.headerName, c.logoName, c.GroupDescription, r.isShowReadMore, s.id as idsupport, s.name as support')
+            ->leftJoin('r.college', 'c')
+            ->leftJoin('r.support' , 's')
+            ->leftJoin('r.category', 'ca')
+            ->andWhere('r.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return Ressources[] Returns an array of Ressources objects
     //  */

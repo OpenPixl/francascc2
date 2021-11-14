@@ -3,6 +3,7 @@
 namespace App\Entity\Admin;
 
 use App\Entity\Webapp\Articles;
+use App\Entity\Webapp\Ressources;
 use App\Entity\Webapp\Section;
 use App\Repository\Admin\CollegeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -172,12 +173,18 @@ class College
      */
     private $sections;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Ressources::class, mappedBy="college")
+     */
+    private $ressources;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->section = new ArrayCollection();
         $this->sections = new ArrayCollection();
+        $this->ressources = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -523,6 +530,36 @@ class College
     public function getSections(): Collection
     {
         return $this->sections;
+    }
+
+    /**
+     * @return Collection|Ressources[]
+     */
+    public function getRessources(): Collection
+    {
+        return $this->ressources;
+    }
+
+    public function addRessource(Ressources $ressource): self
+    {
+        if (!$this->ressources->contains($ressource)) {
+            $this->ressources[] = $ressource;
+            $ressource->setCollege($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRessource(Ressources $ressource): self
+    {
+        if ($this->ressources->removeElement($ressource)) {
+            // set the owning side to null (unless already changed)
+            if ($ressource->getCollege() === $this) {
+                $ressource->setCollege(null);
+            }
+        }
+
+        return $this;
     }
 
 }

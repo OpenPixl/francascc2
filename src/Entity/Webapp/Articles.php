@@ -438,6 +438,7 @@ class Articles
 
         return $this;
     }
+    
     // Bloc insertion de Fichiers
     public function setDocFile(File $doc = null)
     {
