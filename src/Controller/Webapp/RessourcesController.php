@@ -2,6 +2,7 @@
 
 namespace App\Controller\Webapp;
 
+use App\Entity\Admin\College;
 use App\Entity\Webapp\RessourceCat;
 use App\Entity\Webapp\Ressources;
 use App\Form\Webapp\RessourcesType;
@@ -66,7 +67,8 @@ class RessourcesController extends AbstractController
             'code'      => 200,
             'message'   => "Ok",
             'liste' => $this->renderView('webapp/ressources/include/_contentSectionList.html.twig', [
-                'ressources' => $ressources
+                'ressources' => $ressources,
+                'page' => $request->query->getInt('page', 1),
             ])
         ], 200);
     }
@@ -113,6 +115,34 @@ class RessourcesController extends AbstractController
         }
 
         return $this->render('webapp/ressources/new.html.twig', [
+            'ressource' => $ressource,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * AJouter uen ressource pédagogique depuis l'admin collège
+     * @Route("/admin/ressources/college/new/{idcollege}", name="op_webapp_ressources_college_new", methods={"GET","POST"})
+     */
+    public function newressourcebycollege(Request $request, $idcollege): Response
+    {
+        $college = $this->getDoctrine()->getRepository(College::class)->find($idcollege);
+
+        $ressource = new Ressources();
+        $ressource->setCollege($college);
+
+        $form = $this->createForm(RessourcesType::class, $ressource);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($ressource);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('op_webapp_ressources_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('webapp/ressources/newressourcebycollege.html.twig', [
             'ressource' => $ressource,
             'form' => $form->createView(),
         ]);

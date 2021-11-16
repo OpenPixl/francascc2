@@ -49,10 +49,16 @@ class RessourcesRepository extends ServiceEntityRepository
     public function ressourceSlug($slug)
     {
         return $this->createQueryBuilder('r')
-            ->addSelect('r.id as id, r.slug, r.name as name, r.content as content, r.doc, r.imageName, r.isTitleShow, r.isShowIntro, c.name, c.id AS collegeId,c.headerName, c.logoName, c.GroupDescription, r.isShowReadMore, s.id as idsupport, s.name as support')
-            ->leftJoin('r.college', 'c')
-            ->leftJoin('r.support' , 's')
-            ->leftJoin('r.category', 'ca')
+            ->addSelect('
+                r.id as id, 
+                r.slug, 
+                r.name as name, 
+                r.content as content, 
+                r.doc, 
+                r.imageName, 
+                r.isTitleShow, 
+                r.isShowIntro
+                ')
             ->andWhere('r.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()

@@ -23,6 +23,11 @@
             </ul>
 
             <ul class="list-group">
+                <li class="list-group-item disabled">Ressources</li>
+                <li class="list-group-item"><a href="{{ path('op_webapp_ressources_college_new_new', { 'id': college.id})) }}">Ajouter une ressource</a></li>
+            </ul>
+
+            <ul class="list-group">
                 <li class="list-group-item"><a href="{{ path('op_admin_security_logout') }}">Se déconnecter</a></li>
             </ul>
         </div>
