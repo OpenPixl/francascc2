@@ -24,7 +24,7 @@
             <hr>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-3">
-                    <b>{{ form_label(form.loginName, 'Username', {'label_attr': {'class':'form-label'}}) }}</b>
+                    <b>{{ form_label(form.loginName, 'Login', {'label_attr': {'class':'form-label'}}) }}</b>
                 </div>
                 <div class="col-3">
                     {{ form_widget(form.loginName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Identifiant'}}) }}
@@ -40,7 +40,7 @@
             </div>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-3">
-                    <b>{{ form_label(form.firstName, 'First name', {'label_attr': {'class':'form-label'}}) }} {{ form_label(form.firstName, 'Last name', {'label_attr': {'class':'form-label'}}) }}</b>
+                    <b>{{ form_label(form.firstName, 'Prénom & Nom', {'label_attr': {'class':'form-label'}}) }} {{ form_label(form.firstName, 'Last name', {'label_attr': {'class':'form-label'}}) }}</b>
                 </div>
                 <div class="col-3">
                     {{ form_widget(form.firstName, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Prénom'}}) }}
@@ -63,7 +63,7 @@
             <hr>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-3">
-                    <b>{{ form_label(form.adress1, 'Adress1', {'label_attr': {'class':'form-label'}}) }}</b>
+                    <b>{{ form_label(form.adress1, 'Adresse', {'label_attr': {'class':'form-label'}}) }}</b>
                 </div>
                 <div class="col-9">
                     {{ form_widget(form.adress1, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Identifiant'}}) }}
@@ -71,7 +71,6 @@
             </div>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-3">
-                    <b>{{ form_label(form.adress2, 'Adress2', {'label_attr': {'class':'form-label'}}) }}</b>
                 </div>
                 <div class="col-9">
                     {{ form_widget(form.adress2, {'attr': {'class': 'form-control form-control-sm', 'placeholder':'Identifiant'}}) }}
@@ -79,7 +78,7 @@
             </div>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-3">
-                    <b>{{ form_label(form.zipcode, 'Zipcode', {'label_attr': {'class':'form-label'}}) }} / {{ form_label(form.city, 'City', {'label_attr': {'class':'form-label'}}) }}</b>
+                    <b>{{ form_label(form.zipcode, 'CP / Commune', {'label_attr': {'class':'form-label'}}) }} / {{ form_label(form.city, 'City', {'label_attr': {'class':'form-label'}}) }}</b>
                 </div>
                 <div class="col-2">
                     {{ form_widget(form.zipcode, {'attr': {'class': 'form-control form-control-sm', 'placeholder':''}}) }}
@@ -90,7 +89,7 @@
             </div>
             <div class="row mb-1 mt-1 g-1">
                 <div class="col-3">
-                    <b>{{ form_label(form.phoneDesk, 'Contact', {'label_attr': {'class':'form-label'}}) }}</b>
+                    <b>{{ form_label(form.phoneDesk, 'Contacts', {'label_attr': {'class':'form-label'}}) }}</b>
                 </div>
                 <div class="col-3">
                     <div class="input-group input-group-sm mb-3">
@@ -106,7 +105,7 @@
                 </div>
             </div>
         </div>
-        {% if app.request.get('_route') == 'op_admin_member_new'%}
+        {% if app.request.get('_route') == 'op_admin_user_new'%}
             <div class="col-6">
                 <h5>Mot de passe</h5>
                 <hr>
@@ -127,22 +126,23 @@
                     </div>
                 </div>
             </div>
-        {% endif %}
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="row mb-1 mt-1 g-1">
-                <div class="col-3">
-                    <b>{{ form_label(form.college, 'Type', {'label_attr': {'class':'form-label'}}) }}</b>
-                </div>
-                <div class="col-9">
-                    {{ form_widget(form.college, {'attr': {'class': 'form-select form-select-sm'}}) }}
+            <div class="col-6">
+                <h5>College</h5>
+                <hr>
+                <div class="row mb-1 mt-1 g-1">
+                    <div class="col-3">
+                        <b>{{ form_label(form.college, 'Choix :', {'label_attr': {'class':'form-label'}}) }}</b>
+                    </div>
+                    <div class="col-9">
+                        {{ form_widget(form.college, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 </div>
 <div class="card-footer">
-    <a class="btn btn-sm btn-secondary" href="{{ path('op_admin_user_index') }}"><i class="fas fa-angle-double-left"></i> Retour à la liste</a></a> <button class="btn btn-sm btn-primary">{{ button_label|default('Save') }}</button>
+    <a class="btn btn-sm btn-secondary" href="{{ path('op_admin_user_index') }}"><i class="fas fa-angle-double-left"></i> Retour à la liste</a>
+    <button class="btn btn-sm btn-primary">{{ button_label|default('Save') }}</button>
 </div>
 {{ form_end(form) }}
