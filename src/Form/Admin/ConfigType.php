@@ -6,6 +6,7 @@ use App\Entity\Admin\Config;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ConfigType extends AbstractType
 {
@@ -15,9 +16,7 @@ class ConfigType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('isOffline')
-            ->add('headerName')
-            ->add('headerSize')
-            ->add('updatedAt')
+            ->add('headerFile', VichImageType::class, ['required' => false,])
         ;
     }
 

@@ -1,0 +1,35 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Etablissement</th>
+        <th>City</th>
+        <th>CollegeEmail</th>
+        <th>GroupEmail</th>
+        <th>CollegePhone</th>
+        <th>Animateur</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for college in colleges %}
+        <tr>
+            <td></td>
+            <td>{{ college.name }}</td>
+            <td>{{ college.city }}</td>
+            <td>{{ college.collegeEmail }}</td>
+            <td>{{ college.groupEmail }}</td>
+            <td>{{ college.collegePhone }}</td>
+            <td>{{ college.animateur }}</td>
+            <td>
+                <a href="{{ path('op_admin_college_show', {'id': college.id}) }}">show</a>
+                <a href="{{ path('op_admin_college_edit', {'id': college.id}) }}">edit</a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="15">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

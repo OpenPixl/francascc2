@@ -57,7 +57,7 @@ class userController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_user_index');
+            return $this->redirectToRoute('op_admin_user_index');
         }
 
         return $this->render('admin/user/new.html.twig', [

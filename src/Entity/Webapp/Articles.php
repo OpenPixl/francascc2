@@ -163,10 +163,16 @@ class Articles
      */
     private $isShowIntro;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Section::class, mappedBy="oneArticle")
+     */
+    private $sections;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
         $this->section = new ArrayCollection();
+        $this->sections = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -528,5 +534,13 @@ class Articles
         $this->isShowIntro = $isShowIntro;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Section[]
+     */
+    public function getSections(): Collection
+    {
+        return $this->sections;
     }
 }

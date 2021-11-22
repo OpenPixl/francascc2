@@ -130,6 +130,11 @@ class Section
      */
     private $ressourcesCat;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Articles::class, inversedBy="sections")
+     */
+    private $oneArticle;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -446,6 +451,18 @@ class Section
     public function setRessourcesCat(?RessourceCat $ressourcesCat): self
     {
         $this->ressourcesCat = $ressourcesCat;
+
+        return $this;
+    }
+
+    public function getOneArticle(): ?Articles
+    {
+        return $this->oneArticle;
+    }
+
+    public function setOneArticle(?Articles $oneArticle): self
+    {
+        $this->oneArticle = $oneArticle;
 
         return $this;
     }

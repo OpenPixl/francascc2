@@ -44,6 +44,7 @@ class SectionType extends AbstractType
             ->add('isShowdescription')
             ->add('category')
             ->add('ressourcesCat')
+            ->add('oneArticle')
         ;
     }
 

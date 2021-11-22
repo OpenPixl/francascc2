@@ -121,16 +121,15 @@ class RessourcesController extends AbstractController
     }
 
     /**
-     * AJouter uen ressource pédagogique depuis l'admin collège
-     * @Route("/admin/ressources/college/new/{idcollege}", name="op_webapp_ressources_college_new", methods={"GET","POST"})
+     * @Route("/admin/ressources/collegenew/{idcollege}", name="op_webapp_ressources_collegenew", methods={"GET","POST"})
      */
-    public function newressourcebycollege(Request $request, $idcollege): Response
+    public function collegeNew($idcollege, Request $request): Response
     {
+        // On récupère l'entité collège
         $college = $this->getDoctrine()->getRepository(College::class)->find($idcollege);
 
         $ressource = new Ressources();
         $ressource->setCollege($college);
-
         $form = $this->createForm(RessourcesType::class, $ressource);
         $form->handleRequest($request);
 
@@ -142,7 +141,8 @@ class RessourcesController extends AbstractController
             return $this->redirectToRoute('op_webapp_ressources_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('webapp/ressources/newressourcebycollege.html.twig', [
+        return $this->render('webapp/ressources/collegenew.html.twig', [
+            'college' => $college,
             'ressource' => $ressource,
             'form' => $form->createView(),
         ]);

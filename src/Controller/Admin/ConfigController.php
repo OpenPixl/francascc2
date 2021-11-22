@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin/config")
+ * @Route("/opadmin/config")
  */
 class ConfigController extends AbstractController
 {
     /**
-     * @Route("/", name="admin_config_index", methods={"GET"})
+     * @Route("/", name="op_admin_config_index", methods={"GET"})
      */
     public function index(ConfigRepository $configRepository): Response
     {
@@ -26,7 +26,7 @@ class ConfigController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="admin_config_new", methods={"GET","POST"})
+     * @Route("/new", name="op_admin_config_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -49,7 +49,7 @@ class ConfigController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="admin_config_show", methods={"GET"})
+     * @Route("/{id}", name="op_admin_config_show", methods={"GET"})
      */
     public function show(Config $config): Response
     {
@@ -59,7 +59,7 @@ class ConfigController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_config_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="op_admin_config_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Config $config): Response
     {
@@ -69,7 +69,9 @@ class ConfigController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_config_index');
+            return $this->redirectToRoute('op_admin_config_edit', [
+                "id" => $config->getId()
+            ]);
         }
 
         return $this->render('admin/config/edit.html.twig', [
@@ -79,7 +81,7 @@ class ConfigController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="admin_config_delete", methods={"DELETE"})
+     * @Route("/{id}", name="op_admin_config_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Config $config): Response
     {

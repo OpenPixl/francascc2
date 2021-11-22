@@ -84,6 +84,14 @@
                         </div>
                         <div class="row mb-1 mt-1 g-1">
                             <div class="col-3">
+                                <b>{{ form_label(form.oneArticle, 'Article', {'label_attr': {'class':'form-label'}}) }}</b>
+                            </div>
+                            <div class="col-3">
+                                {{ form_widget(form.oneArticle, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-1 mt-1 g-1">
+                            <div class="col-3">
                                 <b>{{ form_label(form.category, 'Catégorie', {'label_attr': {'class':'form-label'}}) }}</b>
                             </div>
                             <div class="col-3">
@@ -102,7 +110,6 @@
                 </div>
                 <div class="row" id="One_article">
                     <div class="col-4">
-
                     </div>
                 </div>
             </div>

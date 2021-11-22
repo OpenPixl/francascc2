@@ -129,6 +129,18 @@
             </div>
         {% endif %}
     </div>
+    <div class="row">
+        <div class="col">
+            <div class="row mb-1 mt-1 g-1">
+                <div class="col-3">
+                    <b>{{ form_label(form.college, 'Type', {'label_attr': {'class':'form-label'}}) }}</b>
+                </div>
+                <div class="col-9">
+                    {{ form_widget(form.college, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="card-footer">
     <a class="btn btn-sm btn-secondary" href="{{ path('op_admin_user_index') }}"><i class="fas fa-angle-double-left"></i> Retour à la liste</a></a> <button class="btn btn-sm btn-primary">{{ button_label|default('Save') }}</button>

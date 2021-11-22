@@ -1,16 +1,15 @@
 {{ form_start(form) }}
 <div class="card-body">
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <button class="nav-link active" aria-current="page" data-bs-toggle="tab" data-bs-target="#Contenu" type="button" role="tab" aria-controls="Contenu" aria-selected="true"><h5>Contenu</h5></button>
-        </li>
-        <li class="nav-item">
-            <button class="nav-link" aria-current="page" data-bs-toggle="tab" data-bs-target="#Medias" type="button" role="tab" aria-controls="Options" aria-selected="true"><h5>Médias</h5></button>
-        </li>
-    </ul>
+
+    <nav>
+        <div class="nav nav-tabs" id="tab-college" role="tablist">
+            <button class="nav-link active" id="nav-contenu-tab" data-bs-toggle="tab" data-bs-target="#Contenu" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Contenu</button>
+            <button class="nav-link" id="nav-medias-tab" data-bs-toggle="tab" data-bs-target="#Medias" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Médias</button>
+        </div>
+    </nav>
 
     <div class="tab-content">
-        <div class="tab-pane active" id="Contenu" role="tabpanel" aria-labelledby="home-tab">
+        <div class="tab-pane fade show active" id="Contenu" role="tabpanel" aria-labelledby="home-tab">
             <div class="row">
                 <div class="col-8 mt-2">
                     <h5>L'article</h5>
@@ -70,7 +69,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane" id="Medias" role="tabpanel" aria-labelledby="home-tab">
+        <div class="tab-pane fade" id="Medias" role="tabpanel" aria-labelledby="home-tab">
             <div class="row">
                 <div class="col-8 mt-2">
                     <h5>L'image de l'article</h5>

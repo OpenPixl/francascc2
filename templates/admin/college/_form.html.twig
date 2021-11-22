@@ -1,102 +1,18 @@
-{{ form_start(form) }}
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="groupe-tab" data-toggle="tab" href="#groupe" role="tab" aria-controls="home" aria-selected="true">Le groupe</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="profile" aria-selected="false">Illustrations du collège</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="college-tab" data-toggle="tab" href="#college" role="tab" aria-controls="profile" aria-selected="false">Le collège</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="resetpassword-tab" data-toggle="tab" href="#college" role="tab" aria-controls="profile" aria-selected="false"></a>
-        </li>
-    </ul>
+<div class="card-body">
+    {{ form_start(form) }}
+    <nav>
+        <div class="nav nav-tabs" id="tab-college" role="tablist">
+            <button class="nav-link active" id="nav-groupe-tab" data-bs-toggle="tab" data-bs-target="#college" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Le collège</button>
+            <button class="nav-link" id="nav-groupe-tab" data-bs-toggle="tab" data-bs-target="#groupe" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Le Groupe</button>
+            <button class="nav-link" id="nav-groupe-tab" data-bs-toggle="tab" data-bs-target="#media" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Illustrations du collège</button>
+        </div>
+    </nav>
 
     <div class="tab-content">
-        <div class="tab-pane active" id="groupe" role="tabpanel" aria-labelledby="groupe-tab">
+        <div class="tab-pane fade show active" id="college" role="tabpanel" aria-labelledby="college-tab">
             <div class="form-row">
                 <div class="col">
-                    <div class="form-group row">
-                        {{ form_label(form.animateur, "Animateur du groupe", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
-                        <div class="col-sm-9">
-                            {{ form_widget(form.animateur) }}
-                            <small>{{ form_help(form.animateur) }}</small>
-                            <div class="form-error">
-                                {{ form_errors(form.animateur) }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        {{ form_label(form.groupPhone, "Téléphone du groupe", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
-                        <div class="col-sm-9">
-                            {{ form_widget(form.groupPhone) }}
-                            <small>{{ form_help(form.groupPhone) }}</small>
-                            <div class="form-error">
-                                {{ form_errors(form.groupPhone) }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        {{ form_label(form.groupEmail, "Email du groupe", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
-                        <div class="col-sm-9">
-                            {{ form_widget(form.groupEmail) }}
-                            <small>{{ form_help(form.groupEmail) }}</small>
-                            <div class="form-error">
-                                {{ form_errors(form.groupEmail) }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        {{ form_label(form.GroupDescription, "Présentation du groupe", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
-                        <div class="col-sm-9">
-                            {{ form_widget(form.GroupDescription) }}
-                            <small>{{ form_help(form.GroupDescription) }}</small>
-                            <div class="form-error">
-                                {{ form_errors(form.GroupDescription) }}
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane" id="media" role="tabpanel" aria-labelledby="media-tab">
-            <div class="form-row">
-                <div class="col">
-                    <div class="form-group row">
-                        {{ form_label(form.headerFile, "Bandeau de présentation", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
-                        <div class="col-sm-9">
-                            {{ form_widget(form.headerFile) }}
-                            <small>{{ form_help(form.headerFile) }}</small>
-                            <div class="form-error">
-                                {{ form_errors(form.headerFile) }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        {{ form_label(form.logoFile, "Photo de Profil", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
-                        <div class="col-sm-9">
-                            {{ form_widget(form.logoFile) }}
-                            <small>{{ form_help(form.logoFile) }}</small>
-                            <div class="form-error">
-                                {{ form_errors(form.logoFile) }}
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane" id="college" role="tabpanel" aria-labelledby="college-tab">
-            <div class="form-row">
-                <div class="col">
-                    <div class="form-group row">
+                    <div class="form-group row mt-1 mb-1">
                         {{ form_label(form.name, "Collège", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-9">
                             {{ form_widget(form.name) }}
@@ -107,7 +23,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row mb-1">
                         {{ form_label(form.address, "Adresse", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-9">
                             {{ form_widget(form.address) }}
@@ -118,7 +34,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row mb-1">
                         <div class="col-sm-9 offset-sm-3">
                             {{ form_widget(form.complement) }}
                             <small>{{ form_help(form.complement) }}</small>
@@ -128,7 +44,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row mb-1">
                         {{ form_label(form.zipcode, "CP / Ville", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-3">
                             {{ form_widget(form.zipcode) }}
@@ -146,7 +62,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row mb-1">
                         {{ form_label(form.collegeEmail, "Email du collège", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-9">
                             {{ form_widget(form.collegeEmail) }}
@@ -157,7 +73,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group row mb-1">
                         {{ form_label(form.collegePhone, "Téléphone du collège", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-9">
                             {{ form_widget(form.collegePhone) }}
@@ -170,9 +86,89 @@
                 </div>
             </div>
         </div>
+        <div class="tab-pane fade" id="groupe" role="tabpanel" aria-labelledby="groupe-tab">
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group row mt-1 mb-1">
+                        {{ form_label(form.animateur, "Animateur du groupe", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.animateur) }}
+                            <small>{{ form_help(form.animateur) }}</small>
+                            <div class="form-error">
+                                {{ form_errors(form.animateur) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-1">
+                        {{ form_label(form.groupPhone, "Téléphone du groupe", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.groupPhone) }}
+                            <small>{{ form_help(form.groupPhone) }}</small>
+                            <div class="form-error">
+                                {{ form_errors(form.groupPhone) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-1">
+                        {{ form_label(form.groupEmail, "Email du groupe", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.groupEmail) }}
+                            <small>{{ form_help(form.groupEmail) }}</small>
+                            <div class="form-error">
+                                {{ form_errors(form.groupEmail) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-1">
+                        {{ form_label(form.GroupDescription, "Présentation du groupe", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.GroupDescription) }}
+                            <small>{{ form_help(form.GroupDescription) }}</small>
+                            <div class="form-error">
+                                {{ form_errors(form.GroupDescription) }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="media" role="tabpanel" aria-labelledby="media-tab">
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group row mt-1 mb-1">
+                        {{ form_label(form.headerFile, "Bandeau de présentation", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.headerFile) }}
+                            <small>{{ form_help(form.headerFile) }}</small>
+                            <div class="form-error">
+                                {{ form_errors(form.headerFile) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-1">
+                        {{ form_label(form.logoFile, "Photo de Profil", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.logoFile) }}
+                            <small>{{ form_help(form.logoFile) }}</small>
+                            <div class="form-error">
+                                {{ form_errors(form.logoFile) }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
     <div id="bouton_form">
         <button class="btn btn-sm btn-outline-warning">{{ button_label|default('Enregistrer') }}</button>
     </div>
 
-{{ form_end(form) }}
+    {{ form_end(form) }}
+</div>
+

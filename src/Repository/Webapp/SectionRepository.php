@@ -77,7 +77,7 @@ class SectionRepository extends ServiceEntityRepository
             ->andWhere('s.isActiv = :isActiv')
             ->setParameter('page', $page)
             ->setParameter('isActiv', 1)
-            ->orderBy('s.priority', 'ASC')
+            ->orderBy('s.position', 'ASC')
             ->getQuery()
             ->getResult()
             ;

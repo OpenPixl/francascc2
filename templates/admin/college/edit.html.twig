@@ -1,29 +1,6 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Collégiens-Citoyens{% endblock %}
-
-{% block body %}
-    <section class="container" id="espace_college_header">
-        <div class="row" id="content">
-            {{ include('admin/college/include/_header_college.html.twig') }}
-        </div>
-    </section>
-    <section class="container" id="espace_college_content">
-        <div class="row">
-            <div class="col-9" id="content">
-                <div class="row" id="content_title">
-                    <div class="col-12">
-                        <h5>METTRE A JOUR LES INFORMATIONS DU COLLEGE</h5>
-                        <p>Sur cette page, vous pourrez modifier les informations dédiées à votre collège.</p>
-                        <hr>
-                    </div>
-                </div>
-                {{ include('admin/college/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
-            </div>
-            {{ render(controller('App\\Controller\\Admin\\CollegeController::blocAdminCollege', {'id' : college.id})) }}
-        </div>
-    </section>
-{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -37,3 +14,25 @@
     </script>
 
 {% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ include('admin/college/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            {{ include('admin/college/include/_section_content_aside.html.twig') }}
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Modifier college</h3>
+                    </div>
+                    {{ include('admin/college/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+
+

@@ -5,28 +5,72 @@ namespace App\Controller\Admin;
 use App\Entity\Admin\College;
 use App\Form\Admin\CollegeType;
 use App\Repository\Admin\CollegeRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/webapp/college", name="op_webapp_college")
- */
 class CollegeController extends AbstractController
 {
     /**
-     * @Route("/", name="_index", methods={"GET"})
+     * @Route("/op_admin/college", name="op_admin_college_index", methods={"GET"})
      */
-    public function index(CollegeRepository $collegeRepository): Response
+    public function index(CollegeRepository $collegeRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $data = $collegeRepository->findAll();
+
+        $college = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            15
+        );
+
         return $this->render('admin/college/index.html.twig', [
-            'colleges' => $collegeRepository->findAll(),
+            'colleges' => $college,
         ]);
     }
 
     /**
-     * @Route("/new", name="_new", methods={"GET","POST"})
+     * @Route("/webapp/college/articles/{iduser}", name="op_webapp_college_espace_article", methods={"GET"})
+     */
+    public function collegebyuser(CollegeRepository $collegeRepository, Request $request): Response
+    {
+        $iduser = $this->getUser()->getId();
+
+        $college = $collegeRepository->CollegeByUser($iduser);
+
+        return $this->render('admin/college/collegebyuser.html.twig', [
+            'college' => $college,
+        ]);
+    }
+
+    /**
+     * @Route("/webapp/college/newcollege", name="op_webapp_college_newcollege", methods={"GET","POST"})
+     */
+    public function newcollege(Request $request): Response
+    {
+        $user = $this->getUser();
+        $college = new College();
+        $form = $this->createForm(CollegeType::class, $college);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($college);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('op_webapp_college_espcoll');
+        }
+
+        return $this->render('admin/college/new.html.twig', [
+            'college' => $college,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/op_admin/college/new", name="op_admin_college_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -40,9 +84,7 @@ class CollegeController extends AbstractController
             $entityManager->persist($college);
             $entityManager->flush();
 
-            return $this->redirectToRoute('op_webapp_college_espcoll',[
-                'iduser' => $user->getId(),
-            ]);
+            return $this->redirectToRoute('op_admin_college_index');
         }
 
         return $this->render('admin/college/new.html.twig', [
@@ -52,7 +94,7 @@ class CollegeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="_show", methods={"GET"})
+     * @Route("/op_admin/college/{id}", name="op_admin_college_show", methods={"GET"})
      */
     public function show(College $college): Response
     {
@@ -63,7 +105,7 @@ class CollegeController extends AbstractController
 
     /**
      * Affiche un collège depuis la page des collèges
-     * @Route("/blog/{id}", name="_show2", methods={"GET"})
+     * @Route("/webapp/college/blog/{id}", name="op_webapp_college_show2", methods={"GET"})
      */
     public function show2(College $college): Response
     {
@@ -74,7 +116,7 @@ class CollegeController extends AbstractController
 
     /**
      * Affiche le bloc d'admin des collèges leur espace privé
-     * @Route("/bloc_admin/", name="_adminonly", methods={"GET"})
+     * @Route("/webapp/college/bloc_admin/", name="op_webapp_college_adminonly", methods={"GET"})
      */
     public function blocAdminCollege(College $college): Response
     {
@@ -84,7 +126,7 @@ class CollegeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="_edit", methods={"GET","POST"})
+     * @Route("/op_admin/college/{id}/edit", name="op_admin_college_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, College $college): Response
     {
@@ -108,7 +150,31 @@ class CollegeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="_delete", methods={"DELETE"})
+     * @Route("/webapp/college/{id}/editcollege", name="op_webapp_college_edit", methods={"GET","POST"})
+     */
+    public function editCollege(Request $request, College $college): Response
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(CollegeType::class, $college);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('op_webapp_college_espcoll',[
+                'iduser' => $user->getId(),
+            ]);
+        }
+
+        return $this->render('admin/college/editcollege.html.twig', [
+            'college' => $college,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/op_admin/college/{id}", name="op_admin_college_delete", methods={"DELETE"})
      */
     public function delete(Request $request, College $college): Response
     {
@@ -118,7 +184,7 @@ class CollegeController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('admin_college_index');
+        return $this->redirectToRoute('op_admin_college_index');
     }
 
     /**
@@ -140,7 +206,7 @@ class CollegeController extends AbstractController
     /**
      * @param $iduser
      * @return Response
-     * @Route("/espace/{iduser}", name="_espcoll")
+     * @Route("webapp/college/espace/{iduser}", name="op_webapp_college_espcoll")
      */
     public function findCollegeById($iduser): Response
     {

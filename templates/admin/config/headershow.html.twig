@@ -2,7 +2,7 @@
     {% if config.headerName is null %}
     {% else %}
     <section class="container">
-        <img src="{{ vich_uploader_asset(config, 'headerFile' ) }}" alt="{{ config.headerName }}">
+        <img src="{{ vich_uploader_asset(config, 'headerFile' ) }}" alt="{{ config.headerName }}" class="img-fluid">
     </section>
     {% endif%}
 {% else %}
