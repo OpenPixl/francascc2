@@ -74,7 +74,7 @@ class DashboardController extends AbstractController
     }
     /**
      * Page React de connexion de l'espace college (espcoll)
-     * @Route("/admin/espcoll/", name="_espcoll")
+     * @Route("/webapp/espcoll/", name="_espcoll")
      */
     public function epscoll() : Response
     {

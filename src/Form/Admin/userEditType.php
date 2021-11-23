@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class userType extends AbstractType
+class userEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -42,30 +42,6 @@ class userType extends AbstractType
                 'placeholder' => '-- Choisir le college --',
                 'required' => false,
                 'label'=> "Thème du projet",
-            ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'first_options' => [
-                    'constraints' => [
-                        new NotBlank([
-                            'message' => 'entrez un mot de passe',
-                        ]),
-                        new Length([
-                            'min' => 8,
-                            'minMessage' => 'Your password should be at least {{ limit }} characters',
-                            // max length allowed by Symfony for security reasons
-                            'max' => 4096,
-                        ]),
-                    ],
-                    'label' => 'Nouveau password',
-                ],
-                'second_options' => [
-                    'label' => 'Répétez le Password',
-                ],
-                'invalid_message' => 'The password fields must match.',
-                // Instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => true,
             ])
         ;
     }

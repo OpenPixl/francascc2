@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+
+
 {% block javascripts %}
     {{ parent() }}
     <script>
@@ -38,6 +40,15 @@
             document.querySelectorAll('a.js-add-category').forEach(function(link){
                 link.addEventListener('click', onClickaddCategory)
             })
+
+            ClassicEditor
+                .create(document.querySelector('#ressources_content'), {
+                    toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'indent', 'alignment' ],
+                    height: 50
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         }
     </script>
 {% endblock %}
@@ -53,7 +64,7 @@
             <div class="col-9" id="content">
                 <div class="row" id="content_title">
                     <div class="col-12">
-                        <h5>MODIFIER UN ARTICLE</h5>
+                        <h5>Créer une nouvelle ressource</h5>
                         <hr>
                     </div>
                 </div>

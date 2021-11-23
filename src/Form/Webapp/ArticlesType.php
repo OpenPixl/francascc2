@@ -31,11 +31,13 @@ class ArticlesType extends AbstractType
             ->add('theme',EntityType::class,[
                 'class' => Theme::class,
                 'placeholder' => '-- Choisir le thème --',
+                'required' => false,
                 'label'=> "Thème du projet",
             ])
             ->add('support',EntityType::class,[
                 'class' => Support::class,
                 'placeholder' => '-- Choisir le support --',
+                'required' => false,
                 'label'=> "Support du Projet",
             ])
             ->add('imageFile', VichImageType::class, ['required' => false,])

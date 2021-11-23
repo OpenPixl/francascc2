@@ -28,11 +28,6 @@ class Theme
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Articles::class, mappedBy="theme")
-     */
-    private $articles;
-
-    /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Vich\UploadableField(mapping="theme_image", fileNameProperty="imageName", size="imageSize")

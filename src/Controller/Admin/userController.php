@@ -2,7 +2,10 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\Webapp\ArticlesController;
 use App\Entity\Admin\User;
+use App\Entity\Webapp\Articles;
+use App\Form\Admin\userEditType;
 use App\Form\Admin\userType;
 use App\Repository\Admin\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -81,7 +84,7 @@ class userController extends AbstractController
      */
     public function edit(Request $request, user $user): Response
     {
-        $form = $this->createForm(userType::class, $user);
+        $form = $this->createForm(userEditType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -136,5 +139,28 @@ class userController extends AbstractController
             'code'=> 200,
             'message' => "L'utilisateur accède à l'administration"],
             200);
+    }
+
+    /**
+     * Suppression d'une ligne index.php
+     * @Route("/del/{id}", name="op_admin_user_del", methods={"POST"})
+     */
+    public function Del(Request $request, User $user) : Response
+    {
+        $articles = $this->getDoctrine()->getRepository(Articles::class)->find($user->getArticles());
+        dd($articles);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "L'évènenemt a été supprimé",
+            'liste' => $this->renderView('admin/user/include/_liste.html.twig', [
+                'users' => $users
+            ])
+        ], 200);
     }
 }

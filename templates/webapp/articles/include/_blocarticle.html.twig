@@ -2,18 +2,18 @@
     <div class="col-3 g-0" id="img_article">
         <img class="img-fluid" src="{{ vich_uploader_asset(article, 'imageFile', 'App\\Entity\\Webapp\\Articles' ) | imagine_filter('thumb_img_article') }}" alt="{{ article.imageName }}">
         <div id="logo_article">
+            {% if article.support is not null %}
             <div id="logo_article_support">
-                {% if article.support is not null %}
-                    {{ render(controller('App\\Controller\\Webapp\\SupportController::Show', {'id': article.idsupport})) }}
-                {% else %}
-                {% endif %}
+                {{ render(controller('App\\Controller\\Webapp\\SupportController::Show', {'id': article.idsupport})) }}
             </div>
+            {% else %}
+            {% endif %}
+            {% if article.theme is not null %}
             <div id="logo_article_theme">
-                {% if article.theme is not null %}
-                    {{ render(controller('App\\Controller\\Webapp\\ThemeController::Show', {'id': article.idtheme})) }}
-                {% else %}
-                {% endif %}
+                {{ render(controller('App\\Controller\\Webapp\\ThemeController::Show', {'id': article.idtheme})) }}
             </div>
+            {% else %}
+            {% endif %}
         </div>
     </div>
     <div class="col-9 g-0" id="content_text">

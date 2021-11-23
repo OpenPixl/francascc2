@@ -104,7 +104,7 @@ class User implements UserInterface
     private $avatarSize;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=150, nullable=true)
      */
     private $adress1;
 

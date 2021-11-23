@@ -80,6 +80,7 @@ class Articles
 
     /**
      * @ORM\ManyToOne(targetEntity=Theme::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $theme;
 

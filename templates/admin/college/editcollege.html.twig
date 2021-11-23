@@ -2,6 +2,23 @@
 
 {% block title %}Collégiens-Citoyens{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+            ClassicEditor
+                .create(document.querySelector('#college_GroupDescription'), {
+                    toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'indent', 'alignment' ],
+                    height: 50
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    </script>
+{% endblock %}
+
+
 {% block body %}
     <section class="container" id="espace_college_header">
         <div class="row" id="content">
@@ -25,15 +42,3 @@
     </section>
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#college_GroupDescription'))
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
-
-{% endblock %}

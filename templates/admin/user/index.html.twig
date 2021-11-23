@@ -55,11 +55,16 @@
                 //event.preventDefault()
                 const id = document.getElementById('recipient-name').value
                 axios
-                    .post('/admin/member/del/'+ id)
+                    .post('/admin/user/del/'+ id)
                     .then(function(response)
                     {
                         const liste = document.getElementById('liste').innerHTML;
                         console.log(liste);
+
+                        // Bouton de suppression de la ligne en cours
+                        document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                            link.addEventListener('click', onClickDelEvent)
+                        })
 
                         var option = {
                             animation : true,
