@@ -5,7 +5,7 @@
                 {% if college.logoName%}
                 <img src="{{ vich_uploader_asset(college, 'logoFile', 'App\\Entity\\Admin\\College') | imagine_filter('thumb_card_college')}}" alt="{{ college.logoName }}" style="max-height: 240px">
                 {% else %}
-
+                <img src="{{ asset('uploads/images/fixes/logo_v1.jpg') }}">
                 {% endif %}
                 <div class="card-body">
                     <h5><a href="{{ path('op_webapp_college_show2', {'id': college.id}) }}">{{ college.name }}</a></h5>

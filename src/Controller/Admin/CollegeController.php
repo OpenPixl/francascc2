@@ -138,9 +138,7 @@ class CollegeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('op_webapp_college_espcoll',[
-                'iduser' => $user->getId(),
-            ]);
+            return $this->redirectToRoute('op_admin_college_index');
         }
 
         return $this->render('admin/college/edit.html.twig', [

@@ -29,7 +29,7 @@ class SectionType extends AbstractType
                         'Une ressources' => 'ONE_RESSOURCES',
                     ],
                     'Collèges' =>[
-                        "unn collège" => "ONE_COLLEGE",
+                        "un collège" => "ONE_COLLEGE",
                         "tous les collèges" => 'ALL_COLLEGES'
                     ],
                     'DIVERS' => [

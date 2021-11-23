@@ -2,6 +2,10 @@
 
 {% block title %}New Message{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
 {% block body %}
     <section class="container" id="espace_college_header">
         <div class="row" id="content">
@@ -23,16 +27,4 @@
             {{ include('admin/college/include/_blocAdminCollege.html.twig') }}
         </div>
     </section>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#message_content'))
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
 {% endblock %}
