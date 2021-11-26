@@ -149,14 +149,10 @@ class ArticlesController extends AbstractController
      */
     public function listArticlesBySection($idsection): Response
     {
-        $articles = $this
-            ->getDoctrine()
-            ->getRepository(Articles::class)
-            ->listArticlesBySection($idsection)
-        ;
+        $article = $this->getDoctrine()->getRepository(Articles::class)->listArticlesBySection($idsection);
 
-        return $this->render('webapp/articles/listarticlesbysection.html.twig',[
-            'articles' => $articles,
+        return $this->render('webapp/articles/listarticlebysection.html.twig',[
+            'article' => $article,
         ]);
     }
 
@@ -165,14 +161,10 @@ class ArticlesController extends AbstractController
      */
     public function listArticlesBySectionOther($idsection): Response
     {
-        $articles = $this
-            ->getDoctrine()
-            ->getRepository(Articles::class)
-            ->listArticlesBySection($idsection)
-        ;
+        $article = $this->getDoctrine()->getRepository(Articles::class)->listArticlesBySection($idsection);
 
         return $this->render('webapp/articles/listarticlesbysectionother.html.twig',[
-            'articles' => $articles,
+            'article' => $article,
         ]);
     }
 

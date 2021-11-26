@@ -1,36 +1,54 @@
-{% for article in articles %}
-    <div id="content" class="row">
-        {% if article.isTitleShow == 1 %}
-        <div class="col-12" id="content_title">
-            <h3><a href="{{ path('op_webapp_articles_articleSlug', {'slug': article.slug}) }}">{{ article.title }}</a></h3>
-        </div>
-        {% endif %}
-        {% if article.isShowIntro == 1 and article.isShowReadMore == 1 %}
-        <div class="col-12" id="content_text">
-            <p>{{ article.intro|u.truncate(400, ' ...')|raw }}</p>
-            <a href="{{ path('op_webapp_articles_articleSlug', {'slug': article.slug}) }}">Lire la suite</a>
-        </div>
-        <div class="col-12" id="content_code">
-            <div>
-                {{ article.content|raw }}
-            </div>
-        </div>
-        {% elseif article.isShowIntro == 1 and article.isShowReadMore == 0 %}
-            <div class="col-12" id="content_text">
-                <p>{{ article.intro|u.truncate(400, ' ...')|raw }}</p>
-                <a href="{{ path('op_webapp_articles_articleSlug', {'slug': article.slug}) }}">Lire la suite</a>
-            </div>
-            <div class="col-12" id="content_code">
-                <div>
-                    {{ article.content|raw }}
+<div id="content" class="row">
+    {% if article.imageName is null %}
+        <div class="col-12 g-0 mb-0" id="content_text">
+            {% if article.isTitleShow == 1 %}
+                <div class="row">
+                    <div class="col-12 m-3">
+                        <h3><a href="{{ path('op_webapp_articles_show', {'id': article.id}) }}">{{ article.title }}</a></h3>
+                    </div>
                 </div>
-            </div>
-        {% else %}
-            <div class="col-12" id="content_code">
-                <div>
-                    {{ article.content|raw }}
+            {% endif %}
+            {% if article.isShowReadMore == 1 %}
+                <div class="row">
+                    <div class="col-12">
+                        <p>{{ article.content|u.truncate(600, ' ...')|raw }}</p>
+                        <a class="content-readmore" href="{{ path('op_webapp_articles_show', {'id': article.id}) }}">Lire la suite</a>
+                    </div>
                 </div>
-            </div>
-        {% endif%}
-    </div>
-{% endfor %}
+            {% else %}
+                <div class="row">
+                    <div class="col-12">
+                        <p>{{ article.content|raw }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="col-3 g-0">
+            <img id="img_article" class="img-fluid" src="{{ vich_uploader_asset(article, 'imageFile', 'App\\Entity\\Webapp\\Articles' ) | imagine_filter('thumb_img_article') }}" alt="{{ article.imageName }}">
+        </div>
+        <div class="col-9 g-0" id="content_text">
+            {% if article.isTitleShow == 1 %}
+                <div class="row">
+                    <div class="col-12">
+                        <h3><a href="{{ path('op_webapp_articles_show', {'id': article.id}) }}">{{ article.title }}</a></h3>
+                    </div>
+                </div>
+            {% endif %}
+            {% if article.isShowReadMore == 1 %}
+                <div class="row">
+                    <div class="col-12">
+                        <p>{{ article.content|u.truncate(600, ' ...')|raw }}</p>
+                        <a class="content-readmore" href="{{ path('op_webapp_articles_show', {'id': article.id}) }}">Lire la suite</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-12">
+                        <p>{{ article.content|raw }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>

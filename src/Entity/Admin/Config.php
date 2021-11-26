@@ -98,6 +98,11 @@ class Config
      */
     private $isHeaderShow;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isShowTitleSiteHome = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -240,6 +245,18 @@ class Config
     public function setIsHeaderShow(?bool $isHeaderShow): self
     {
         $this->isHeaderShow = $isHeaderShow;
+
+        return $this;
+    }
+
+    public function getIsShowTitleSiteHome(): ?bool
+    {
+        return $this->isShowTitleSiteHome;
+    }
+
+    public function setIsShowTitleSiteHome(bool $isShowTitleSiteHome): self
+    {
+        $this->isShowTitleSiteHome = $isShowTitleSiteHome;
 
         return $this;
     }

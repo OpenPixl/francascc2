@@ -97,7 +97,7 @@ class OpCustomAuthenticator extends AbstractFormLoginAuthenticator implements Pa
         }
 
         // redirect to some "app_homepage" route - of wherever you want
-        return new RedirectResponse($this->urlGenerator->generate('op_webapp_homepage'));
+        return new RedirectResponse($this->urlGenerator->generate('op_webapp_public_homepage'));
     }
 
     protected function getLoginUrl()

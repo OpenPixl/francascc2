@@ -1,5 +1,8 @@
 {% if config.isHeaderShow == 1 %}
     {% if config.headerName is null %}
+        <section class="container">
+            <img src="{{ asset('uploads/images/fixes/logo_v1.jpg') }}" alt="{{ config.headerName }}" class="img-fluid">
+        </section>
     {% else %}
     <section class="container">
         <img src="{{ vich_uploader_asset(config, 'headerFile' ) }}" alt="{{ config.headerName }}" class="img-fluid">

@@ -29,7 +29,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('op_webapp_page_slug', {'slug': 'home'})}}" onclick="window.open(this.href); return false;"><i class="bi bi-eye">  Voir le site</i>
+                    <a class="nav-link" href="{{ path('op_webapp_public_homepage')}}" onclick="window.open(this.href); return false;"><i class="bi bi-eye">  Voir le site</i>
                     </a>
                 </li>
                 <li class="nav-item dropdown">
@@ -43,7 +43,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userpanel">
                         <li><a class="dropdown-item" href="#"><i class="far fa-id-badge"></i> Mon profil</a></li>
                         <li><a class="dropdown-item" href="#"><i class="fas fa-key"></i> Changer le mot de passe</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-lock-open"></i> Déconnexion</a></li>
+                        <li><a class="dropdown-item" href="{{ path('op_admin_security_logout') }}"><i class="fas fa-lock-open"></i> Déconnexion</a></li>
                     </ul>
                 </li>
             </ul>

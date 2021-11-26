@@ -13,7 +13,7 @@
 <body>
 <header>
     {% block header %}
-        {% if app.request.attributes.get('_route') == 'op_webapp_homepage'%}
+        {% if app.request.attributes.get('_route') == 'op_webapp_public_homepage'%}
             {{ render(controller('App\\Controller\\Admin\\ConfigController::headerShow')) }}
         {% endif %}
     {% endblock %}
@@ -23,7 +23,6 @@
 </header>
 <main>
     {% block body %}
-
     {% endblock %}
 </main>
 <footer>

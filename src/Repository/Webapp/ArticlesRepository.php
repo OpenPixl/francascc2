@@ -22,12 +22,16 @@ class ArticlesRepository extends ServiceEntityRepository
     public function listArticlesBySection($idsection)
     {
         return $this->createQueryBuilder('a')
-            ->leftJoin('a.section', 's')
+            ->select('a.id as id, a.slug, a.title as title, a.isTitleShow, a.isShowReadMore, a.content as content, t.id as idtheme, t.name as theme, a.imageName, su.id as idsupport, su.name as support')
+            ->leftJoin('a.sections', 's')
+            ->leftJoin('a.college', 'c')
+            ->leftJoin('a.theme', 't')
+            ->leftJoin('a.support' , 'su')
             ->andWhere('s.id = :idsection')
             ->setParameter('idsection', $idsection)
             ->orderBy('a.id', 'ASC')
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
             ;
     }
 

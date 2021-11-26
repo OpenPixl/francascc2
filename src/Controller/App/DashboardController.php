@@ -5,6 +5,7 @@ namespace App\Controller\App;
 use App\Entity\Admin\College;
 use App\Entity\Admin\Config;
 use App\Entity\Webapp\Page;
+use App\Entity\Webapp\Section;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,7 +27,7 @@ class DashboardController extends AbstractController
         {
             return $this->redirectToRoute('op_webapp');
         }
-        return $this->redirectToRoute('op_webapp_homepage');
+        return $this->redirectToRoute('op_webapp_public_homepage');
     }
 
     /**
@@ -53,23 +54,16 @@ class DashboardController extends AbstractController
 
     /**
      * Affiche automatiquement la page d'acceuil
-     * @Route("/home", name="_homepage")
+     * @Route("/home", name="_public_homepage")
      */
     public function HomePage()
     {
-        $page = $this->getDoctrine()
-            ->getRepository(Page::class)
-            ->findOneBy(['id' => 4]);
-
-        if (!$page) {
-            throw $this->createNotFoundException(
-                "La page n'existe pas"
-            );
-        }
-
-
-        return $this->render('webapp/page/page.html.twig', [
-            'page' => $page
+        $config = $this->getDoctrine()->getRepository(Config::class)->find(1);
+        $sections = $this->getDoctrine()->getRepository(Section::class)->findBy(array('favorites' => 1), array('position' => 'ASC'));
+        //dd($sections);
+        return $this->render('webapp/public/index.html.twig',[
+            'config' => $config,
+            'sections' => $sections,
         ]);
     }
     /**
