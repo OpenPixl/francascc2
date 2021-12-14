@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticlesController extends AbstractController
 {
     /**
+     * Liste dans l'admin tous les articles
      * @Route("/webapp/articles/", name="op_webapp_articles_index", methods={"GET"})
      */
     public function index(ArticlesRepository $articlesRepository, PaginatorInterface $paginator, Request $request): Response
@@ -65,6 +66,32 @@ class ArticlesController extends AbstractController
         return $this->render('webapp/articles/new.html.twig', [
             'article' => $article,
             'college' =>$college,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/webapp/articles/newadmin", name="op_webapp_articles_newadmin", methods={"GET","POST"})
+     */
+    public function newAdmin(Request $request): Response
+    {
+        $user = $this->getUser();
+
+        $article = new Articles();
+        $article->setAuthor($user);
+        $form = $this->createForm(ArticlesType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('op_webapp_articles_index');
+        }
+
+        return $this->render('webapp/articles/newadmin.html.twig', [
+            'article' => $article,
             'form' => $form->createView(),
         ]);
     }

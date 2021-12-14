@@ -57,7 +57,8 @@ class RessourcesRepository extends ServiceEntityRepository
                 r.doc, 
                 r.imageName, 
                 r.isTitleShow, 
-                r.isShowIntro
+                r.isShowIntro,
+                r.Linkmedia
                 ')
             ->andWhere('r.slug = :slug')
             ->setParameter('slug', $slug)

@@ -49,13 +49,24 @@ class ArticlesRepository extends ServiceEntityRepository
     public function listArticlesByCollege($idcollege)
     {
         return $this->createQueryBuilder('a')
-            ->addSelect('a.id as id, a.slug, a.title as title, a.content as content, t.id as idtheme, t.name as theme, a.imageName, s.id as idsupport, s.name as support')
+            ->addSelect('
+                a.id as id, 
+                a.slug, 
+                a.title as title,
+                 a.content as content, 
+                 t.id as idtheme, 
+                 t.name as theme, 
+                 a.imageName,
+                 a.updatedAt, 
+                 s.id as idsupport, 
+                 s.name as support
+                 ')
             ->leftJoin('a.college', 'c')
             ->leftJoin('a.theme', 't')
             ->leftJoin('a.support' , 's')
             ->andWhere('c.id = :idcollege')
             ->setParameter('idcollege', $idcollege)
-            ->orderBy('a.id', 'ASC')
+            ->orderBy('a.updatedAt', 'DESC')
             ->getQuery()
             ->getResult()
             ;

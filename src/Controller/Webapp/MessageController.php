@@ -7,6 +7,8 @@ use App\Entity\Webapp\Message;
 use App\Form\Webapp\ReplyType;
 use App\Form\Webapp\MessageType;
 use App\Repository\Webapp\MessageRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -195,6 +197,21 @@ class MessageController extends AbstractController
             'message'=> $message,
             'reply' => $reply,
             'replyform' => $replyform->createView()
+        ]);
+    }
+
+    /**
+     * Liste les réponses selon le "follow"
+     * @Route("/reply_mail/{follow}", name="_reply_mail_follow")
+     */
+    public function followmessage($follow, EntityManagerInterface $em)
+    {
+        $user = $this->getUser();
+        $follows = $em->getRepository(Message::class)->findBy(array('follow'=> $follow),array('createAt' => 'DESC'));
+
+        return $this->render('webapp/message/follows.html.twig', [
+            'follows' => $follows,
+            'user' =>$user
         ]);
     }
 }

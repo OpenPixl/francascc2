@@ -26,6 +26,7 @@ class RessourcesType extends AbstractType
             ])
             ->add('imageFile', VichImageType::class, ['required' => false,])
             ->add('docFile', VichFileType::class, ['required' => false,])
+            ->add('Linkmedia')
         ;
     }
 

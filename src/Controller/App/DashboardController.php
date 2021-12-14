@@ -4,6 +4,7 @@ namespace App\Controller\App;
 
 use App\Entity\Admin\College;
 use App\Entity\Admin\Config;
+use App\Entity\Webapp\Message;
 use App\Entity\Webapp\Page;
 use App\Entity\Webapp\Section;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -78,8 +79,11 @@ class DashboardController extends AbstractController
             ->getRepository(College::class)
             ->CollegeByUser($user);
 
+        $messages = $this->getDoctrine()->getRepository(Message::class)->listMessagesByUser($user->getId());
+
         return $this->render('app/espcoll.html.twig', [
             'college' => $college,
+            'messages' => $messages
         ]);
     }
 }

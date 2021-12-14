@@ -63,6 +63,15 @@ a:visited, a:hover, a:link, a:active {
   background-color: #fff;
 }
 
+#content h1,
+#content h2,
+#content h3,
+#content h4,
+#content h5,
+#content h6,{
+  color: $color-link;
+}
+
 #content_header_img{
   position: relative;
   width: 100%;

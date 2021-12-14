@@ -42,8 +42,7 @@
         })
 
         ClassicEditor
-            .create(document.querySelector('#articles_content'), {
-                toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'indent', 'alignment', 'mediaEmbed' ,'sourceEditing' ],
+            .create(document.querySelector('#ressources_content'), {
                 height: 50
             })
             .catch(error => {
@@ -51,6 +50,7 @@
             });
     }
 </script>
+{% endblock %}
 
 {% block content %}
 <div class="container-fluid">

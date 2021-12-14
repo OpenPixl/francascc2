@@ -123,6 +123,11 @@ class Ressources
      */
     private $college;
 
+    /**
+     * @ORM\Column(type="text", length=255, nullable=true)
+     */
+    private $Linkmedia;
+
 
     /**
      * Permet d'initialiser le slug !
@@ -361,6 +366,18 @@ class Ressources
     public function setCollege(?College $college): self
     {
         $this->college = $college;
+
+        return $this;
+    }
+
+    public function getLinkmedia(): ?string
+    {
+        return $this->Linkmedia;
+    }
+
+    public function setLinkmedia(?string $Linkmedia): self
+    {
+        $this->Linkmedia = $Linkmedia;
 
         return $this;
     }

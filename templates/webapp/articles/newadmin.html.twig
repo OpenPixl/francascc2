@@ -1,45 +1,39 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Collégiens-citoyens{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script>
-        window.onload = function(){
+        window.onload = function() {
             ClassicEditor
                 .create(document.querySelector('#articles_content'), {
-                    toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'indent', 'alignment', 'mediaEmbed' ,'sourceEditing' ],
                     height: 50
                 })
                 .catch(error => {
                     console.error(error);
                 });
+        }
     </script>
 {% endblock %}
 
-{% block body %}
-    <section class="container" id="espace_college_header">
-        <div class="row" id="content">
-            {{ include('admin/college/include/_header_college.html.twig') }}
-        </div>
-    </section>
-    <section class="container" id="espace_college_content">
-        <div class="row">
-            <div class="col-9" id="content">
-                <div class="row" id="content_title">
-                    <div class="col-12">
-                        <h5>CREER UN NOUVEL ARTICLE</h5>
-                        <hr>
-                    </div>
+{% block content %}
+    <div class="container-fluid">
+        {{ include('webapp/articles/include/_section_content_header.html.twig') }}
+        <section id="op_admin_content_body">
+            <div class="row g-2">
+                <div class="col-2">
+                    {{ include('webapp/articles/include/_section_content_aside.html.twig') }}
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        {{ include('webapp/articles/_form.html.twig') }}
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Modifier article</h3>
+                        </div>
+                        {{ include('webapp/articles/_form2.html.twig', {'button_label': 'Update'}) }}
                     </div>
                 </div>
             </div>
-            {{ render(controller('App\\Controller\\Admin\\CollegeController:blocAdminCollege', {'id': article.college})) }}
-        </div>
-    </section>
-
+        </section>
+    </div>
 {% endblock %}
