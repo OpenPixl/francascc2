@@ -8,10 +8,16 @@
             {% if college.headerName is null %}
             {% else %}
                 <div class="col-12" id="content_header_img">
+                    {% if college.logoName is null %}
+                    {% else %}
                     <img id="college_header" class="img-fluid" src="{{ vich_uploader_asset(college, 'headerFile' ) | imagine_filter('thumb_bandeau_college') }}" alt="{{ college.headerName }}">
+                    {% endif %}
+                    {% if college.logoName is null %}
+                    {% else %}
                     <div id="college_logo">
                         <img class="img-fluid" src="{{ vich_uploader_asset(college, 'logoFile' ) | imagine_filter('thumb_logo_college') }}" alt="{{ college.logoName }}">
                     </div>
+                    {% endif %}
                     <div id="college_titre">
                         {% if 'app/radios-francas-40' in app.request.uri %}
                             <h3>{{ college.name }}</h3>

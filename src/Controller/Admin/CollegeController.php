@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Admin\College;
+use App\Entity\Admin\User;
 use App\Form\Admin\CollegeType;
 use App\Repository\Admin\CollegeRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -61,6 +62,32 @@ class CollegeController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('op_webapp_college_espcoll');
+        }
+
+        return $this->render('admin/college/new.html.twig', [
+            'college' => $college,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/college/newcollegeAdmin/{iduser}", name="op_admin_college_newcollegeadmin", methods={"GET","POST"})
+     */
+    public function newcollegeAdmin(Request $request, $iduser): Response
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+
+        $college = new College();
+        $college->setUser($user);
+        $form = $this->createForm(CollegeType::class, $college);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($college);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('op_admin_user_index');
         }
 
         return $this->render('admin/college/new.html.twig', [

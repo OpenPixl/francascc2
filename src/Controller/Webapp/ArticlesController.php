@@ -261,4 +261,32 @@ class ArticlesController extends AbstractController
             'article' => $article,
         ]);
     }
+
+    /**
+     * Suppression d'une ligne index.php
+     * @Route("/webapp/article/del/{id}", name="op_webapp_article_del", methods={"POST"})
+     */
+    public function DelEvent(Request $request, Articles $article, PaginatorInterface $paginator) : Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($article);
+        $entityManager->flush();
+
+        $data = $this->getDoctrine()->getRepository(Articles::class)->findAll();
+        $articles = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            15
+        );
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "L'article a été supprimé",
+            'liste' => $this->renderView('webapp/articles/include/_liste.html.twig', [
+                'articles' => $articles,
+                'page' => $request->query->getInt('page', 1),
+            ]),
+
+        ], 200);
+    }
 }
