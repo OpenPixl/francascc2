@@ -209,4 +209,32 @@ class RessourcesController extends AbstractController
             'page' => $page
         ]);
     }
+
+    /**
+     * Suppression d'une ligne index.php
+     * @Route("/webapp/ressources/del/{id}", name="op_webapp_ressources_del", methods={"POST"})
+     */
+    public function DelEvent(Request $request, Ressources $ressource, PaginatorInterface $paginator) : Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($ressource);
+        $entityManager->flush();
+
+        $data = $this->getDoctrine()->getRepository(Ressources::class)->findAll();
+        $ressources = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            15
+        );
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "La ressource a été supprimé",
+            'liste' => $this->renderView('webapp/ressources/include/_liste.html.twig', [
+                'ressources' => $ressources,
+                'page' => $request->query->getInt('page', 1),
+            ]),
+
+        ], 200);
+    }
 }
