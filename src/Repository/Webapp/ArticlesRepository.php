@@ -77,23 +77,12 @@ class ArticlesRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->addSelect('
                 a.id as id, 
-                a.title as title, 
-                a.slug as slug, 
+                a.slug, 
+                a.title as title,
                 a.content as content,
-                a.createdAt As createdAt, 
-                t.id as idtheme, 
-                t.name as theme, 
-                a.imageName, 
-                a.isTitleShow, 
-                a.isShowReadMore, 
-                s.id as idsupport, 
-                s.name as support')
-            ->leftJoin('a.college', 'c')
-            ->leftJoin('a.theme', 't')
-            ->leftJoin('a.support' , 's')
-            ->leftJoin('a.category', 'ca')
-            ->andWhere('ca.id = :category')
-            ->setParameter('category', $category)
+                a.imageName,
+                a.updatedAt
+                 ')
             ->orderBy('a.updatedAt', 'DESC')
             ->setMaxResults(5)
             ->getQuery()

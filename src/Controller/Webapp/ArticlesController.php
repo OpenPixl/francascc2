@@ -6,6 +6,7 @@ use App\Entity\Admin\College;
 use App\Entity\Webapp\Articles;
 use App\Entity\Webapp\Section;
 use App\Form\Webapp\ArticlesType;
+use App\Form\Webapp\Articles2Type;
 use App\Repository\Webapp\ArticlesRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,7 +51,7 @@ class ArticlesController extends AbstractController
         $article->setAuthor($user);
         $article->setContent("...");
         $article->setCollege($college);
-        $form = $this->createForm(ArticlesType::class, $article);
+        $form = $this->createForm(Articles2Type::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -117,7 +118,7 @@ class ArticlesController extends AbstractController
             ->getRepository(College::class)
             ->CollegeByUser($user);
 
-        $form = $this->createForm(ArticlesType::class, $article);
+        $form = $this->createForm(Articles2Type::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
