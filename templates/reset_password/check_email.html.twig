@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Password Reset Email Sent{% endblock %}
+
+{% block body %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <p>
+                    Si un compte avec votre adresse mail existe dnas notre base de données, vous recevrez un mail contenant un lien vers le formulaire de renouvellement de votre mot de passe sera envoyé.
+                    Ce lien expirera dans  {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+                </p>
+                <p>
+                    Si vous ne recevez pas cet email :
+                    <br>- veuillez controler le dossier "spam" de votre webmail,
+                    <br>- sinon <a href="{{ path('op_admin_forgot_password_request') }}">try again</a>.</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}
