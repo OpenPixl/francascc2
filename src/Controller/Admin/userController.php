@@ -117,7 +117,7 @@ class userController extends AbstractController
      * Permet de mettre en menu la poge ou non
      * @Route("/op_admin/user/verified/{id}", name="op_admin_user_verified")
      */
-    public function jsMenu(User $user, EntityManagerInterface $em) : Response
+    public function jsVerified(User $user, EntityManagerInterface $em) : Response
     {
         $admin = $this->getUser();
         $isActiv = $user->getIsActiv();

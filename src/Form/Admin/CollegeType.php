@@ -30,6 +30,7 @@ class CollegeType extends AbstractType
             ->add('headerFile', VichImageType::class, [
                 'required' => false,
             ])
+            ->add('workMeeting')
         ;
     }
 

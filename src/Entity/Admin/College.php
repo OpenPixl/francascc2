@@ -178,6 +178,11 @@ class College
      */
     private $ressources;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $workMeeting;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -558,6 +563,18 @@ class College
                 $ressource->setCollege(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getWorkMeeting(): ?string
+    {
+        return $this->workMeeting;
+    }
+
+    public function setWorkMeeting(?string $workMeeting): self
+    {
+        $this->workMeeting = $workMeeting;
 
         return $this;
     }

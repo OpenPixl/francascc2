@@ -77,7 +77,7 @@ class ArticlesRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->addSelect('
                 a.id as id, 
-                a.slug, 
+                a.slug as slug, 
                 a.title as title,
                 a.content as content,
                 a.imageName,

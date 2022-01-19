@@ -133,6 +133,17 @@
                         </div>
                     </div>
 
+                    <div class="form-group row mt-1 mb-1">
+                        {{ form_label(form.workMeeting, "Réunion du Groupe :", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.workMeeting) }}
+                            <small>{{ form_help(form.workMeeting) }}</small>
+                            <div class="form-error">
+                                {{ form_errors(form.workMeeting) }}
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

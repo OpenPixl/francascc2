@@ -1,6 +1,7 @@
 {% if article.imageName is not null %}
     <div class="col-3 g-0" id="img_article">
         <img class="img-fluid" src="{{ vich_uploader_asset(article, 'imageFile', 'App\\Entity\\Webapp\\Articles' ) | imagine_filter('thumb_img_article') }}" alt="{{ article.imageName }}">
+        {#
         <div id="logo_article">
             {% if article.support is not null %}
             <div id="logo_article_support">
@@ -15,6 +16,7 @@
             {% else %}
             {% endif %}
         </div>
+        #}
     </div>
     <div class="col-9 g-0" id="content_text">
         <div class="row">
@@ -33,6 +35,7 @@
 {% else %}
     <div class="col-3 g-0" id="img_article">
         <img class="img-fluid" src="/uploads/images/fixes/img_article_none.png" alt="img_article_none">
+        {#
         <div id="logo_article">
             <div id="logo_article_support">
                 {% if article.support is not null %}
@@ -47,6 +50,7 @@
                 {% endif %}
             </div>
         </div>
+        #}
     </div>
     <div class="col-9 g-0" id="content_text">
         <div class="row">

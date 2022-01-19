@@ -19,7 +19,7 @@
                     <div class="carousel-caption d-md-block">
                         <div class="row">
                             <div class="col-12">
-                                <h2 class="text-start"><a href="{{ path('op_webapp_articles_show', {'id':article.id}) }}">{{ article.title }}</a></h2>
+                                <h2 class="text-start"><a href="{{ path('op_webapp_articles_articleSlug', {'slug':article.slug}) }}">{{ article.title }}</a></h2>
                                 <p class="text-start">{{ article.content |u.truncate(200, ' ...')| raw }}</p>
                             </div>
                         </div>

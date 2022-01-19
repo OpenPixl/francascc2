@@ -6,6 +6,7 @@ use App\Entity\Admin\College;
 use App\Entity\Admin\User;
 use App\Form\Admin\CollegeType;
 use App\Repository\Admin\CollegeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -213,6 +214,27 @@ class CollegeController extends AbstractController
     }
 
     /**
+     * Suppression d'une ligne dans le index.php
+     * @Route("/op_admin/college/del/{id}", name="op_admin_college_del", methods={"POST"})
+     */
+    public function Del(Request $request, College $college) : Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($college);
+        $entityManager->flush();
+
+        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "Le college a été supprimé",
+            'liste' => $this->renderView('admin/user/include/_liste.html.twig', [
+                'users' => $users
+            ])
+        ], 200);
+    }
+
+    /**
      * @Route("/section/{idsection}", name="_collegesbysection", methods={"GET"})
      */
     public function listCollegesBySection($idsection): Response
@@ -247,5 +269,33 @@ class CollegeController extends AbstractController
         return $this->render('admin/college/collegebyuser.html.twig', [
             'college' => $college,
         ]);
+    }
+
+    /**
+     * Permet de mettre en menu la poge ou non
+     * @Route("/op_admin/college/verified/{id}", name="op_admin_college_verified")
+     */
+    public function jsVerified(College $college, EntityManagerInterface $em) : Response
+    {
+        $admin = $this->getUser();
+        $isActive = $college->getIsActive();
+        // renvoie une erreur car l'utilisateur n'est pas connecté
+        if(!$admin) return $this->json([
+            'code' => 403,
+            'message'=> "Vous n'êtes pas connecté"
+        ], 403);
+        // Si la page est déja publiée, alors on dépublie
+        if($isActive == true){
+            $college->setIsActive(0);
+            $em->flush();
+            return $this->json(['code'=> 200, 'message' => "Le college est désactivé pour l'instant"], 200);
+        }
+        // Si la page est déja dépubliée, alors on publie
+        $college->setIsActive(1);
+        $em->flush();
+        return $this->json([
+            'code'=> 200,
+            'message' => "Le college est activé et sera visible sur le site."],
+            200);
     }
 }

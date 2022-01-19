@@ -3,11 +3,9 @@
     <tr>
         <th></th>
         <th>Etablissement</th>
-        <th>City</th>
-        <th>CollegeEmail</th>
-        <th>GroupEmail</th>
-        <th>CollegePhone</th>
+        <th>Commune</th>
         <th>Animateur</th>
+        <th>publié</th>
         <th>actions</th>
     </tr>
     </thead>
@@ -17,13 +15,23 @@
             <td></td>
             <td>{{ college.name }}</td>
             <td>{{ college.city }}</td>
-            <td>{{ college.collegeEmail }}</td>
-            <td>{{ college.groupEmail }}</td>
-            <td>{{ college.collegePhone }}</td>
             <td>{{ college.animateur }}</td>
             <td>
-                <a href="{{ path('op_admin_college_show', {'id': college.id}) }}">show</a>
-                <a href="{{ path('op_admin_college_edit', {'id': college.id}) }}">edit</a>
+                {% if college.isActive == 0 %}
+                    <a class="js-verified" href="{{ path('op_admin_college_verified', {'id': college.id}) }}"><i class="far fa-times-circle text-danger"></i></a>
+                {% elseif college.isActive == 1 %}
+                    <a class="js-verified" href="{{ path('op_admin_college_verified', {'id': college.id}) }}"><i class="far fa-check-circle text-success"></i></a>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ path('op_admin_college_show', {'id': college.id}) }}"><i class="far fa-eye"></i></a>&nbsp;
+                <a href="{{ path('op_admin_college_edit', {'id': college.id}) }}"><i class="far fa-edit"></i></a>
+                {#
+                &nbsp;|&nbsp;
+            <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ college.id }}">
+                <i class="fas fa-eraser"></i>
+            </a>
+                #}
             </td>
         </tr>
     {% else %}
