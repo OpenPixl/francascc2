@@ -46,6 +46,17 @@
                             </div>
                         {% endif %}
                     </div>
+                    <div class="row">
+                    {% if ressource.support is not null %}
+                        {% if ressource.supportName == "document" %}
+
+                        {% elseif ressource.supportName == "video" %}
+
+                        {% elseif ressource.supportName == "audio" %}
+
+                        {% endif %}
+                    {% endif %}
+                    </div>
                 {% endif %}
             </div>
 

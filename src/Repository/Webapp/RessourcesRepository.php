@@ -58,8 +58,11 @@ class RessourcesRepository extends ServiceEntityRepository
                 r.imageName, 
                 r.isTitleShow, 
                 r.isShowIntro,
-                r.Linkmedia
+                r.Linkmedia,
+                su.id AS support,
+                su.name AS supportName
                 ')
+            ->leftJoin('r.support', 'su')
             ->andWhere('r.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()
