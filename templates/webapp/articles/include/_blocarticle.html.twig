@@ -21,13 +21,13 @@
     <div class="col-9 g-0" id="content_text">
         <div class="row">
             <div class="col-12" id="content_title">
-                <h3><a href="{{ path('op_webapp_articles_articleSlug', {'slug': article.slug}) }}">{{ article.title }}</a></h3>
+                <h3><a href="{{ path('op_webapp_articles_articleSlug', {'id': article.id, 'idcollege':article.idcollege}) }}">{{ article.title }}</a></h3>
             </div>
             <div class="col-12">
                 {{ article.content|u.truncate(280, ' ...')|raw }}
                 {% if app.request.attributes.get('_route') == 'op_webapp_articles_articleSlug' %}
                 {% else %}
-                <p><a href="{{ path('op_webapp_articles_articleSlug', {'slug': article.slug}) }}">Lire la suite</a></p>
+                <p><a href="{{ path('op_webapp_articles_articleSlug', {'id': article.id, 'idcollege':article.idcollege}) }}">Lire la suite</a></p>
                 {% endif %}
             </div>
         </div>
@@ -55,11 +55,11 @@
     <div class="col-9 g-0" id="content_text">
         <div class="row">
             <div class="col-12" id="content_title">
-                <h3><a href="{{ path('op_webapp_articles_articleSlug', {'slug': article.slug}) }}">{{ article.title }}</a></h3>
+                <h3><a href="{{ path('op_webapp_articles_articleSlug', {'id': article.id, 'idcollege':article.idcollege}) }}">{{ article.title }}</a></h3>
                 {{ article.content|u.truncate(280, ' ...')|raw }}
                 {% if app.request.attributes.get('_route') == 'op_webapp_articles_articleSlug' %}
                 {% else %}
-                    <p><a href="{{ path('op_webapp_articles_articleSlug', {'slug': article.slug}) }}">Lire la suite</a></p>
+                    <p><a href="{{ path('op_webapp_articles_articleSlug', {'id': article.id, 'idcollege':article.idcollege}) }}">Lire la suite</a></p>
                 {% endif %}
             </div>
         </div>

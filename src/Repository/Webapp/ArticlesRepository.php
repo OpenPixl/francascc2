@@ -22,7 +22,21 @@ class ArticlesRepository extends ServiceEntityRepository
     public function listArticlesBySection($idsection)
     {
         return $this->createQueryBuilder('a')
-            ->select('a.id as id, a.slug, a.title as title, a.isTitleShow, a.isShowReadMore, a.content as content, t.id as idtheme, t.name as theme, a.imageName, su.id as idsupport, su.name as support')
+            ->select('
+                a.id as id, 
+                a.slug, 
+                a.title as title, 
+                a.isTitleShow, 
+                a.isShowReadMore, 
+                a.content as content, 
+                t.id as idtheme, 
+                t.name as theme, 
+                a.imageName, 
+                su.id as idsupport, 
+                su.name as support,
+                c.id AS idcollege
+                '
+            )
             ->leftJoin('a.sections', 's')
             ->leftJoin('a.college', 'c')
             ->leftJoin('a.theme', 't')
@@ -59,7 +73,8 @@ class ArticlesRepository extends ServiceEntityRepository
                  a.imageName,
                  a.updatedAt, 
                  s.id as idsupport, 
-                 s.name as support
+                 s.name as support,
+                 c.id AS idcollege
                  ')
             ->leftJoin('a.college', 'c')
             ->leftJoin('a.theme', 't')
@@ -81,8 +96,10 @@ class ArticlesRepository extends ServiceEntityRepository
                 a.title as title,
                 a.content as content,
                 a.imageName,
-                a.updatedAt
+                a.updatedAt,
+                c.id AS idcollege
                  ')
+            ->leftJoin('a.college', 'c')
             ->orderBy('a.updatedAt', 'DESC')
             ->setMaxResults(5)
             ->getQuery()
@@ -96,16 +113,35 @@ class ArticlesRepository extends ServiceEntityRepository
      * @throws \Doctrine\ORM\NonUniqueResultException
      * Affiche un articel selon son slug
      */
-    public function articlecollegeSlug($slug)
+    public function articlecollegeSlug($id)
     {
         return $this->createQueryBuilder('a')
-            ->addSelect('a.id as id, a.slug, a.title as title, a.content as content, a.doc, t.id as idtheme, t.name as theme, a.imageName, a.isTitleShow, a.intro, a.isShowIntro, c.name, c.id AS collegeId,c.headerName, c.logoName, c.GroupDescription, a.isShowReadMore, s.id as idsupport, s.name as support')
+            ->addSelect('
+                a.id as id, 
+                a.slug, 
+                a.title as title, 
+                a.content as content, 
+                a.doc, 
+                t.id as idtheme, 
+                t.name as theme, 
+                a.imageName, 
+                a.isTitleShow, 
+                a.intro, 
+                a.isShowIntro, 
+                c.name, c.id AS idcollege,
+                c.headerName, 
+                c.logoName, 
+                c.GroupDescription,
+                a.isShowReadMore, 
+                s.id as idsupport, 
+                s.name as support
+                 ')
             ->leftJoin('a.college', 'c')
             ->leftJoin('a.theme', 't')
             ->leftJoin('a.support' , 's')
             ->leftJoin('a.category', 'ca')
-            ->andWhere('a.slug = :slug')
-            ->setParameter('slug', $slug)
+            ->andWhere('a.id = :id')
+            ->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult()
             ;

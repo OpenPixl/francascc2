@@ -248,16 +248,17 @@ class ArticlesController extends AbstractController
 
     /**
      * Affiche un article depuis la page du collège
-     * @Route("/webapp/articles/slug/{slug}", name="op_webapp_articles_articleSlug", methods={"GET"})
+     * @Route("/webapp/articles/slug/{id}/{idcollege}", name="op_webapp_articles_articleSlug", methods={"GET"})
      */
-    public function articleCollegeSlug($slug): Response
+    public function articleCollegeSlug($id): Response
     {
         // Code pour afficher l'article depuis le slug'
         $article = $this
             ->getDoctrine()
             ->getRepository(Articles::class)
-            ->articleCollegeSlug($slug)
+            ->articleCollegeSlug($id)
         ;
+        //dd($id);
         return $this->render('webapp/articles/articleCollegeSlug.html.twig',[
             'article' => $article,
         ]);
