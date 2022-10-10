@@ -169,6 +169,16 @@ class Articles
      */
     private $sections;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isArchived = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isShowCreated = false;
+
     public function __construct()
     {
         $this->category = new ArrayCollection();
@@ -543,5 +553,29 @@ class Articles
     public function getSections(): Collection
     {
         return $this->sections;
+    }
+
+    public function getIsArchived(): ?bool
+    {
+        return $this->isArchived;
+    }
+
+    public function setIsArchived(bool $isArchived): self
+    {
+        $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    public function getIsShowCreated(): ?bool
+    {
+        return $this->isShowCreated;
+    }
+
+    public function setIsShowCreated(bool $isShowCreated): self
+    {
+        $this->isShowCreated = $isShowCreated;
+
+        return $this;
     }
 }

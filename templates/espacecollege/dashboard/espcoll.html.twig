@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Collégiens - Citoyens{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+    <section class="container" id="espace_college_header">
+        <div class="row" id="content">
+            {{ include('espacecollege/dashboard/_header_college.html.twig') }}
+        </div>
+    </section>
+    <section class="container" id="espace_college_content">
+        <div class="row">
+            <div class="col-9" id="content">
+                <div class="row" id="content_title">
+                    <div class="col-12">
+                        <h5>Tableau de bord</h5>
+
+                    </div>
+                </div>
+                <div class="row" id="content_body">
+                    <div class="col-12">
+                        <p class="alert alert-info">
+                            Ce tableau de bord vous permettre d'accéder :<br>
+                            - l'édtion d'articles, <br>
+                            - La personnalisation de votre page.
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card border-primary bg-primary">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="avatar-lg rounded-circle bg-soft-light">
+                                            <a data-bs-toggle="modal" data-bs-target="#AddMessage"><i class="bi bi-envelope avatar-title"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="text-end">
+                                            <h2 class="text-white mt-2">{{ messages|length }}</h2>
+                                            <p class="text-white mb-0">Messages</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ include('espacecollege/dashboard/_blocAdminCollege.html.twig') }}
+        </div>
+    </section>
+{% endblock %}
+{% block Modals %}
+    {{ parent() }}
+{% endblock %}

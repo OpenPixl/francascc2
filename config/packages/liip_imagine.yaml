@@ -5,18 +5,32 @@ liip_imagine:
 
     filter_sets:
         thumb_bandeau_college:
-            quality: 75
+            quality: 150
             filters:
                 thumbnail:
                     size: [ 1132, 250 ]
                     mode: outbond
+                background:
+                    # set the background color to #00ffff
+                    color: '#ffffff'
+                    # set a size different from the input image
+                    size: [ 1132, 250 ]
+                    # center input image on the newly created background
+                    position: center
 
         thumb_logo_college:
-            quality: 75
+            quality: 150
             filters:
                 thumbnail:
                     size: [200, 152]
                     mode: outbond
+                background:
+                    # set the background color to #00ffff
+                    color: '#ffffff'
+                    # set a size different from the input image
+                    size: [200, 152]
+                    # center input image on the newly created background
+                    position: center
 
         thumb_card_college:
             quality: 75
@@ -31,3 +45,17 @@ liip_imagine:
                 thumbnail:
                     size: [ 280, 210 ]
                     mode: outbond
+
+        thumb_five_articles:
+            quality: 75
+            filters:
+                thumbnail:
+                    size: [ 280, 210 ]
+                    mode: outbond
+                background:
+                    # set the background color to #00ffff
+                    color: '#ffffff'
+                    # set a size different from the input image
+                    size: [ 280, 210 ]
+                    # center input image on the newly created background
+                    position: center

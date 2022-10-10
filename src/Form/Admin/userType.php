@@ -23,8 +23,8 @@ class userType extends AbstractType
             ->add('email')
             ->add('type', ChoiceType::class, [
                 'choices'  => [
-                    'administrateur' => "administrator",
-                    'membre' => 'member',
+                    'College' => 'college',
+                    'Administrateur' => "administrator",
                 ],
             ])
             ->add('firstName')

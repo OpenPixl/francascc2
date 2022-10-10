@@ -66,7 +66,7 @@ class MessageController extends AbstractController
             return $this->redirectToRoute('op_webapp_message_messagesbyuser', ['iduser' => $user->getId()]);
         }
 
-        return $this->render('webapp/message/new.html.twig', [
+        return $this->render('espacecollege/newmessage.html.twig', [
             'message' => $message,
             'form' => $form->createView(),
             'college' => $college
@@ -135,6 +135,19 @@ class MessageController extends AbstractController
         return $this->redirectToRoute('op_webapp_message_messagesbyuser', ['iduser' => $user->getId()]);
     }
 
+    /**
+     * @Route("/deletemessageview/{id}", name="_deletemessageview", methods={"POST", "GET"})
+     */
+    public function delete_message_view(Request $request, Message $message): Response
+    {
+        $user = $this->getUser();
+        // suppression du message sélectionné
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($message);
+        $entityManager->flush();
+        // lister tous les messages appartenant à l'utilisateur courant
+        return $this->redirectToRoute('op_webapp_message_messagesbyuser', ['iduser' => $user->getId()]);
+    }
     /**
      * @Route("/messagesbyuser/{iduser}", name="_messagesbyuser", methods={"GET"})
      */
@@ -213,5 +226,28 @@ class MessageController extends AbstractController
             'follows' => $follows,
             'user' =>$user
         ]);
+    }
+
+    /**
+     * Supprimer les messages
+     * @Route("/delete/{id}", name="_deleteonespcoll", methods={"POST"})
+     */
+    public function deleteMessage(Message $message, EntityManagerInterface $em)
+    {
+        $user = $this->getUser();
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($message);
+        $entityManager->flush();
+
+        $messages = $em->getRepository(Message::class)->listMessagesByUser($user->getId());
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "Le message a été correctement supprimé",
+            'listeMessages' => $this->renderView('webapp/message/include/_listbyuser.html.twig', [
+                'messages' => $messages,
+            ]),
+        ], 200);
     }
 }
