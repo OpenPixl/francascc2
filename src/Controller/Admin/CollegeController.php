@@ -54,6 +54,7 @@ class CollegeController extends AbstractController
     {
         $user = $this->getUser();
         $college = new College();
+        $college->setUser($user);
         $form = $this->createForm(CollegeType::class, $college);
         $form->handleRequest($request);
 
