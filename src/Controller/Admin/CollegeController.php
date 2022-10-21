@@ -52,9 +52,13 @@ class CollegeController extends AbstractController
      */
     public function newcollege(Request $request): Response
     {
-        $user = $this->getUser();
+
+        // on récupére l'objet user de l'administrateur en cours
+        //$iduser = $this->getUser()->getId();
+        //$user = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        // on crée l'instance College depuis la classe "College" et on injecte l'admin en cours
         $college = new College();
-        $college->setUser($user);
+        //$college->setUser($user);
         $form = $this->createForm(CollegeType::class, $college);
         $form->handleRequest($request);
 
@@ -105,6 +109,7 @@ class CollegeController extends AbstractController
     {
         $user = $this->getUser();
         $college = new College();
+        $college->setUser($user);
         $form = $this->createForm(CollegeType::class, $college);
         $form->handleRequest($request);
 
