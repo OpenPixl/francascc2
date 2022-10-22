@@ -2,6 +2,45 @@
 
 {% block title %}Espace Collège{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+            // Archivage d'un article depuis le compte college
+            function updateArticleArchived(event){
+                event.preventDefault()
+                const urlArchived = this.href
+                // on ouvre une modal pour confirmer la demande d'archivage
+                const warningArchived = document.getElementById('ModalWarning')
+                warningArchived.addEventListener('show.bs.modal', function (event) {
+                    var modalTitle = warningArchived.querySelector('.modal-title')
+                    var modalBody = warningArchived.querySelector('.modal-body')
+                    modalTitle.textContent = "Attention : Archivage de l'article"
+                    modalBody.textContent = "Vous êtes sur le point de mettre en archive l'article, Etes-vous sur de vouloir continuer ?"
+                    // sélection du bouton push
+                    const btnPushReq = document.getElementById('btnPushReq')
+                    btnPushReq.addEventListener('submit', function (event){
+                        axios
+                            .post(urlArchived)
+                            .then(function(response){
+                                const listeArticles = document.getElementById('listeArticles').innerHTML = response.data.listeArticles
+                                // on réalise un toast de confirmation de l'action
+                            })
+                            .catch(function (error){
+                                console.log(error)
+                            })
+                    })
+                })
+            }
+            // Mise en place de l'écouteur d'évènement sur le lien Archivage
+            document.querySelectorAll('a.btnArchived').forEach(function (link) {
+                link.addEventListener('click', updateArticleArchived);
+            })
+
+        }
+    </script>
+{% endblock %}
+
 {% block body %}
     <section class="container" id="espace_college_header">
         <div class="row" id="content">

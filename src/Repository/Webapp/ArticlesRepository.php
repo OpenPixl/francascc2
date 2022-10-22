@@ -94,6 +94,8 @@ class ArticlesRepository extends ServiceEntityRepository
     public function listFiveArticles($category)
     {
         return $this->createQueryBuilder('a')
+            ->leftJoin('a.college', 'c')
+            ->leftJoin('a.author', 'u')
             ->addSelect('
                 a.id as id, 
                 a.slug as slug, 
@@ -101,9 +103,11 @@ class ArticlesRepository extends ServiceEntityRepository
                 a.content as content,
                 a.imageName,
                 a.updatedAt,
-                c.id AS idcollege
+                c.id AS idcollege,
+                u.type
                  ')
-            ->leftJoin('a.college', 'c')
+            ->where('u.type = :type')
+            ->setParameter('type', 'college')
             ->orderBy('a.updatedAt', 'DESC')
             ->setMaxResults(5)
             ->getQuery()

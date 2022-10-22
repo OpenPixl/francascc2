@@ -309,7 +309,7 @@ class ArticlesController extends AbstractController
 
         return $this->json([
             'code'=> 200,
-            'message' => "L'article a été archivé",
+            'message' => "L'article a été correctement archivé",
             'listeArticles' => $this->renderView('webapp/articles/include/_listebycollege.html.twig', [
                 'articles' => $listearticles,
             ]),

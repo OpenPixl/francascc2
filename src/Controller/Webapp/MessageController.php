@@ -214,4 +214,27 @@ class MessageController extends AbstractController
             'user' =>$user
         ]);
     }
+    /**
+     * Supprimer les messages par Javascript depuis l'interface Espcoll
+     * @Route("/delete/{id}", name="_delete")
+     */
+    public function deleteMessage(Message $message, EntityManagerInterface $em)
+    {
+        $user = $this->getUser();
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($message);
+        $entityManager->flush();
+
+        $messages = $em->getRepository(Message::class)->listMessagesByUser($user->getId());
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "Le message a été correctement supprimé",
+            'listeMessages' => $this->renderView('webapp/message/include/_listbyuser.html.twig', [
+                'messages' => $messages,
+            ]),
+        ], 200);
+    }
+
 }
