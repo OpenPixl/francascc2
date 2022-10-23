@@ -9,34 +9,57 @@
             // Archivage d'un article depuis le compte college
             function deleteMessage(event){
                 event.preventDefault()
+
                 const urlDeleted = this.href
-                // on ouvre une modal pour confirmer la demande d'archivage
-                //confirm("Vous êtes sur le point d'archiver l'article. Etes-vous sur de vouloir continuer")
-                if (window.confirm("Vous êtes sur le point de supprimer le message. \nEtes-vous sur de vouloir continuer ?")) {
+
+                // Déclaration de la modal
+                let warningDeleted = document.getElementById('ModalWarning')
+                // Personnalisation de la modal
+                let modalTitle = warningDeleted.querySelector('.modal-title')
+                modalTitle.textContent = "Attention : Suppression du message"
+                let modalBody = warningDeleted.querySelector('.modal-body')
+                modalBody.innerHTML = "<p>Vous êtes sur le point de supprimer votre message.</p><p>Etes-vous sur de vouloir continuer ?"
+                // Ouverture de la modal
+                let Deleted = new bootstrap.Modal(warningDeleted, {
+                    backdrop:true,
+                    focus:true,
+                    keyboard:true
+                })
+                Deleted.show()
+                // sélection du bouton push
+                const btnPushReq = document.getElementById('btnPushReq')
+                // comportement
+                btnPushReq.addEventListener('click', function (event){
                     axios
                         .post(urlDeleted)
-                        .then(function(response){
-                            const listeMessages = document.getElementById('listeMessages').innerHTML = response.data.listeMessages
-                            // on réalise un toast de confirmation de l'action
-                            let option = {
+                        .then(function (response){
+                            const listeMessages = document.getElementById('listeMessages').innerHTML = response.data.listeArticles
+                            Deleted.hide()
+                            // initialisation du toaster bootstrap
+                            let toastHTMLElement = document.getElementById("toaster")
+                            let message = response.data.message
+                            let toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                            toastBody.innerHTML = "<p>" + message + "</p>";
+                            let toastElement = new bootstrap.Toast(toastHTMLElement, {
                                 animation: true,
                                 autohide: true,
                                 delay: 3000,
-                            };
-                            // initialisation du toaster bootstrap
-                            let toastHTMLElement = document.getElementById("toaster");
-                            let message = response.data.message;
-                            let toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
-                            toastBody.textContent = message;
-                            let toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                            });
                             toastElement.show();
+                            // Redéclaration des écouteurs d'évènement
+                            // Suppression
+                            document.querySelectorAll('a.btnDeleted').forEach(function (link) {
+                                link.addEventListener('click', deleteMessage);
+                            })
                         })
                         .catch(function (error){
                             console.log(error)
                         })
-                }
+
+                })
             }
-            // on sélection le bon lien
+
+            // on sélectionne le bon lien
             document.querySelectorAll('a.btnDeleted').forEach(function (link) {
                 link.addEventListener('click', deleteMessage);
             })

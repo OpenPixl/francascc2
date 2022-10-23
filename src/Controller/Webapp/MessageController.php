@@ -216,7 +216,7 @@ class MessageController extends AbstractController
     }
     /**
      * Supprimer les messages par Javascript depuis l'interface Espcoll
-     * @Route("/delete/{id}", name="_delete")
+     * @Route("/delete/{id}", name="_delete", methods={"POST"})
      */
     public function deleteMessage(Message $message, EntityManagerInterface $em)
     {
@@ -236,5 +236,4 @@ class MessageController extends AbstractController
             ]),
         ], 200);
     }
-
 }
