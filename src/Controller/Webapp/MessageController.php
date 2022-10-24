@@ -174,7 +174,7 @@ class MessageController extends AbstractController
 
     /**
      * Action de réponse à un mail
-     * @Route("/reply_mail/{id}", name="_reply_mail")
+     * @Route("/reply_mail/{id}", name="_reply_mail", methods={"GET","POST"})
      */
     public function reply_mail(Message $message, Request $request){
         $user = $this->getUser();
@@ -229,8 +229,47 @@ class MessageController extends AbstractController
     }
 
     /**
-     * Supprimer les messages
-     * @Route("/delete/{id}", name="_deleteonespcoll", methods={"POST"})
+     * Action de réponse à un mail
+     * @Route("/trans_mail/{id}", name="_trans_mail", methods={"GET","POST"})
+     */
+    public function trans_mail(Message $message, Request $request){
+        $user = $this->getUser();
+        $college = $this
+            ->getDoctrine()
+            ->getRepository(College::class)
+            ->CollegeByUser($user);
+
+        $trans = new Message();
+
+        $trans
+            ->setSubject("Trans : " . $message->getSubject())
+            ->setAuthor($user)
+            ->setContent($message->getContent())
+            ->setFollow($message->getFollow())
+        ;
+
+        $transform = $this->createForm(ReplyType::class, $trans);
+        $transform->handleRequest($request);
+
+        if ($transform->isSubmitted() && $transform->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($trans);
+            $em->flush();
+
+            return $this->redirectToRoute('op_webapp_message_messagesbyuser', ['iduser' => $user->getId()]);
+        }
+
+        return $this->render('webapp/message/reply_mail.html.twig',[
+            'college'=> $college,
+            'message'=> $message,
+            'trans' => $trans,
+            'transform' => $transform->createView()
+        ]);
+    }
+
+    /**
+     * Supprimer les messages par Javascript depuis l'interface Espcoll
+     * @Route("/delete/{id}", name="_delete", methods={"POST"})
      */
     public function deleteMessage(Message $message, EntityManagerInterface $em)
     {

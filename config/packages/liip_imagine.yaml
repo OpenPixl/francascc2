@@ -28,7 +28,7 @@ liip_imagine:
                     # set the background color to #00ffff
                     color: '#ffffff'
                     # set a size different from the input image
-                    size: [200, 152]
+                    size: [ 200, 152 ]
                     # center input image on the newly created background
                     position: center
 

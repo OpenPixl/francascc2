@@ -17,8 +17,8 @@
                     </div>
                     <div class="col-12">
                         <a href="{{ path('op_webapp_message_reply_mail', {'id' : message.id}) }}" class="btn btn-outline-dark btn-sm" ><i class="fas fa-angle-left"></i> Répondre</a>
-                        <button class="btn btn-outline-dark btn-sm" ><i class="fas fa-angle-double-left"></i>Transférer</button>
-                        <a href="{{ path('op_webapp_message_deletemessageview', {'id': message.id}) }}" class="btn btn-outline-danger btn-sm" ><i class="fas fa-trash"></i> Supprimer</a>
+                        <a href="{{ path('op_webapp_message_trans_mail', {'id' : message.id}) }}"class="btn btn-outline-dark btn-sm" ><i class="fas fa-angle-double-left"></i>Transférer</a>
+                        <a href="{{ path('op_webapp_message_delete', {'id': message.id}) }}" class="btn btn-outline-danger btn-sm" ><i class="fas fa-trash"></i> Supprimer</a>
                     </div>
                 </div>
                 <hr>

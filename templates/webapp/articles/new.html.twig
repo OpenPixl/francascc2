@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Articles{% endblock %}
+{% block title %}Collégiens-citoyens{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -21,7 +21,7 @@
 {% block body %}
     <section class="container" id="espace_college_header">
         <div class="row" id="content">
-            {{ include('espacecollege/dashboard/_header_college.html.twig') }}
+            {{ include('admin/college/include/_header_college.html.twig') }}
         </div>
     </section>
     <section class="container" id="espace_college_content">
@@ -29,17 +29,18 @@
             <div class="col-9" id="content">
                 <div class="row" id="content_title">
                     <div class="col-12">
-                        <h5>MODIFIER UN ARTICLE</h5>
+                        <h5>CREER UN NOUVEL ARTICLE</h5>
                         <hr>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        {{ include('webapp/articles/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                        {{ include('webapp/articles/_form.html.twig') }}
                     </div>
                 </div>
             </div>
             {{ render(controller('App\\Controller\\Admin\\CollegeController:blocAdminCollege', {'id': article.college})) }}
         </div>
     </section>
+
 {% endblock %}

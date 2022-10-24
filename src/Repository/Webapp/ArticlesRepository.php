@@ -107,15 +107,11 @@ class ArticlesRepository extends ServiceEntityRepository
                 a.content as content,
                 a.imageName,
                 a.updatedAt,
-                a.isArchived as isArchived,
-                a.isShowCreated as isShowCreated,
                 c.id AS idcollege,
                 u.type
                  ')
             ->where('u.type = :type')
             ->setParameter('type', 'college')
-            ->andWhere('a.isArchived = :isArchived')
-            ->setParameter('isArchived', 0)
             ->orderBy('a.updatedAt', 'DESC')
             ->setMaxResults(5)
             ->getQuery()

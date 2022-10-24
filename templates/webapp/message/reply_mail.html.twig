@@ -2,6 +2,31 @@
 
 {% block title %}Collègiens-citoyens{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+            // Select
+            new TomSelect("#reply_recipient",{
+                plugins: ['remove_button'],
+                create: true,
+                onItemAdd:function(){
+                    this.setTextboxValue('');
+                    this.refreshOptions();
+                },
+                render:{
+                    option:function(data,escape){
+                        return '<div class="d-flex"><span>' + escape(data.data) + '</span><span class="ms-auto text-muted">' + escape(data.value) + '</span></div>';
+                    },
+                    item:function(data,escape){
+                        return '<div>' + escape(data.data) + '</div>';
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
 {% block body %}
     <section class="container" id="espace_college_header">
         <div class="row" id="content">
@@ -13,7 +38,11 @@
             <div class="col-9" id="content">
                 <div class="row" id="content_title">
                     <div class="col-12">
+                    {% if app.request.attributes.get('_route') == 'op_webapp_message_reply_mail' %}
                         <h5>Répondre au message de : {{ message.author }}</h5>
+                    {% elseif app.request.attributes.get('_route') == 'op_webapp_message_trans_mail' %}
+                        <h5>Transférer le message de : {{ message.author }}</h5>
+                    {% endif %}
                         <hr>
                     </div>
                 </div>
@@ -24,14 +53,3 @@
     </section>
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#reply_content'))
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
-{% endblock %}

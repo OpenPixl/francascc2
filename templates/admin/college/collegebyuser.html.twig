@@ -6,41 +6,63 @@
     {{ parent() }}
     <script>
         window.onload = function(){
+
             // Archivage d'un article depuis le compte college
             function updateArticleArchived(event){
                 event.preventDefault()
                 const urlArchived = this.href
-                // on ouvre une modal pour confirmer la demande d'archivage
-                //confirm("Vous êtes sur le point d'archiver l'article. Etes-vous sur de vouloir continuer")
-                if (window.confirm("Vous êtes sur le point d'archiver l'article. \n Etes-vous sur de vouloir continuer")) {
+                // Déclaration de la modal
+                let warningArchived = document.getElementById('ModalWarning')
+                // Personnalisation de la modal
+                let modalTitle = warningArchived.querySelector('.modal-title')
+                modalTitle.textContent = "Attention : Archivage de l'article"
+                let modalBody = warningArchived.querySelector('.modal-body')
+                modalBody.innerHTML = "<p>Vous êtes sur le point de mettre votre article en archive. Seul, le coordinnateur du dispositif aura accès à l'article</p><p>Etes-vous sur de vouloir continuer ?"
+                // Ouverture de la modal
+                let Warning = new bootstrap.Modal(warningArchived, {
+                    backdrop:true,
+                    focus:true,
+                    keyboard:true
+                })
+                Warning.show()
+                // sélection du bouton push
+                const btnPushReq = document.getElementById('btnPushReq')
+                // comportement
+                btnPushReq.addEventListener('click', function (event){
                     axios
                         .post(urlArchived)
-                        .then(function(response){
+                        .then(function (response){
                             const listeArticles = document.getElementById('listeArticles').innerHTML = response.data.listeArticles
-                            // on réalise un toast de confirmation de l'action
-                            let option = {
+                            Warning.hide()
+                            // initialisation du toaster bootstrap
+                            let toastHTMLElement = document.getElementById("toaster")
+                            let message = response.data.message
+                            let toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                            toastBody.innerHTML = "<p>" + message + "</p>";
+                            let toastElement = new bootstrap.Toast(toastHTMLElement, {
                                 animation: true,
                                 autohide: true,
                                 delay: 3000,
-                            };
-                            // initialisation du toaster bootstrap
-                            let toastHTMLElement = document.getElementById("toaster");
-                            let message = response.data.message;
-                            let toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
-                            toastBody.textContent = message;
-                            let toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                            });
                             toastElement.show();
+                            // Redéclaration des écouteurs d'évènement
+                            // Archivage
+                            document.querySelectorAll('a.btnArchived').forEach(function (link) {
+                                link.addEventListener('click', updateArticleArchived);
+                            })
                         })
                         .catch(function (error){
                             console.log(error)
                         })
-                }
+
+                })
+
             }
-            // on sélection le bon lien
+            // Mise en place de l'écouteur d'évènement sur le lien Archivage
             document.querySelectorAll('a.btnArchived').forEach(function (link) {
                 link.addEventListener('click', updateArticleArchived);
             })
-            // Incrémentation lors du clic de la valeur 1 sur IsArchived
+
         }
     </script>
 {% endblock %}
@@ -69,4 +91,8 @@
             {{ render(controller('App\\Controller\\Admin\\CollegeController:blocAdminCollege', {'id':college.id})) }}
         </div>
     </section>
+{% endblock %}
+
+{% block Modals %}
+    {{ parent() }}
 {% endblock %}

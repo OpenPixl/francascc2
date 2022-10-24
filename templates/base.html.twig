@@ -6,19 +6,14 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
-        <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
 
+        <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
     {% endblock %}
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
         <script src="{{ asset('js/ckeditor5/build/ckeditor.js') }}"></script>
-        <script type="module" src="{{ asset('js/spinning.js') }}" defer></script>
-        <script type="module" src="{{ asset('js/onload.js') }}"></script>
-        <script type="module" src="{{ asset('js/onSubmit.js') }}"></script>
-
-    {% endblock %}
+        <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>    {% endblock %}
 </head>
 <body>
 <header>
@@ -32,16 +27,6 @@
     {% endblock %}
 </header>
 <main>
-    <div class="loader">
-        <div class="mb-2">
-            <p>Merci de patienter jusqu'au chargement complet de la page.<br></p>
-        </div>
-        <div>
-            <spinning-dots class="large"></spinning-dots>
-        </div>
-    </div>
-    <!-- This will create a loader with a 68px width -->
-
     {% block body %}
     {% endblock %}
 
@@ -121,6 +106,40 @@
                 </div>
             </div>
 
+        </div>
+    {% endblock %}
+    {% block Modals %}
+        <div class="modal fade" id="ModalWarning" tabindex="-1" aria-labelledby="ModalAlert" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-warning">
+                        <h5 class="modal-title" id="exampleModalLabel">Attention</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Fermeture</button>
+                        <button id="btnPushReq" type="submit" class="btn btn-sm btn-primary">Envoyer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div aria-live="polite" aria-atomic="true" class="bg-dark position-relative">
+            <div class="toast-container position-absolute bottom-100 end-0 p-3">
+                <div id="toaster" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <img src="..." class="rounded me-2" alt="...">
+                        <strong class="me-auto">Collégiens-citoyens</strong>
+                        <small class="text-muted">A l'instant</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Hello, world! This is a toast message.
+                    </div>
+                </div>
+            </div>
         </div>
     {% endblock %}
 </footer>

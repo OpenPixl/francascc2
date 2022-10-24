@@ -312,6 +312,7 @@ class ArticlesController extends AbstractController
             'message' => "L'article a été correctement archivé",
             'listeArticles' => $this->renderView('webapp/articles/include/_listebycollege.html.twig', [
                 'articles' => $listearticles,
+                'idcollege' => $idcollege
             ]),
         ], 200);
     }

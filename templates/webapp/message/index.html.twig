@@ -44,6 +44,72 @@
     </script>
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+            // Archivage d'un article depuis le compte college
+            function deleteMessage(event){
+                event.preventDefault()
+
+                const urlDeleted = this.href
+
+                // Déclaration de la modal
+                let warningDeleted = document.getElementById('ModalWarning')
+                // Personnalisation de la modal
+                let modalTitle = warningDeleted.querySelector('.modal-title')
+                modalTitle.textContent = "Attention : Suppression du message"
+                let modalBody = warningDeleted.querySelector('.modal-body')
+                modalBody.innerHTML = "<p>Vous êtes sur le point de supprimer votre message.</p><p>Etes-vous sur de vouloir continuer ?"
+                // Ouverture de la modal
+                let Deleted = new bootstrap.Modal(warningDeleted, {
+                    backdrop:true,
+                    focus:true,
+                    keyboard:true
+                })
+                Deleted.show()
+                // sélection du bouton push
+                const btnPushReq = document.getElementById('btnPushReq')
+                // comportement
+                btnPushReq.addEventListener('click', function (event){
+                    axios
+                        .post(urlDeleted)
+                        .then(function (response){
+                            const listeMessages = document.getElementById('listeMessages').innerHTML = response.data.listeMessages
+                            Deleted.hide()
+                            // initialisation du toaster bootstrap
+                            let toastHTMLElement = document.getElementById("toaster")
+                            let message = response.data.message
+                            let toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                            toastBody.innerHTML = "<p>" + message + "</p>";
+                            let toastElement = new bootstrap.Toast(toastHTMLElement, {
+                                animation: true,
+                                autohide: true,
+                                delay: 3000,
+                            });
+                            toastElement.show();
+                            // Redéclaration des écouteurs d'évènement
+                            // Suppression
+                            document.querySelectorAll('a.btnDeleted').forEach(function (link) {
+                                link.addEventListener('click', deleteMessage);
+                            })
+                        })
+                        .catch(function (error){
+                            console.log(error)
+                        })
+
+                })
+            }
+
+            // on sélectionne le bon lien
+            document.querySelectorAll('a.btnDeleted').forEach(function (link) {
+                link.addEventListener('click', deleteMessage);
+            })
+            // Incrémentation lors du clic de la valeur 1 sur IsArchived
+        }
+    </script>
+{% endblock %}
+
 {% block body %}
     <section class="container" id="espace_college_header">
         <div class="row" id="content">
@@ -60,10 +126,8 @@
                     </div>
                 </div>
                 <div class="row" id="content_body">
-                    <div class="col-12">
-                        <div id="listeMessages">
-                            {{ include('webapp/message/include/_listbyuser.html.twig') }}
-                        </div>
+                    <div class="col-12" id="listeMessages">
+                        {{ include('webapp/message/include/_listbyuser.html.twig') }}
                     </div>
                 </div>
             </div>
