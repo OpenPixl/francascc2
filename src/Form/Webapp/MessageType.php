@@ -2,8 +2,11 @@
 
 namespace App\Form\Webapp;
 
+use App\Entity\Admin\User;
 use App\Entity\Webapp\Message;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,7 +21,14 @@ class MessageType extends AbstractType
                 'label'=> "Contenu",
                 'data' => "..."
             ])
-            ->add('recipient')
+            ->add('recipient',EntityType::class, [
+                'class' => User::class,
+                'label' => 'Equipement du bien',
+                'multiple' => true,
+                'choice_attr' => ChoiceList::attr($this, function (?User $user) {
+                    return $user ? ['data-data' => $user->getfirstName().' '.$user->getLastName()] : [];
+                })
+            ])
         ;
     }
 

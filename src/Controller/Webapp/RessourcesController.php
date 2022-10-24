@@ -141,7 +141,7 @@ class RessourcesController extends AbstractController
             return $this->redirectToRoute('op_webapp_ressources_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('webapp/ressources/collegenew.html.twig', [
+        return $this->render('webapp/ressources/collegenewressource.html.twig', [
             'college' => $college,
             'ressource' => $ressource,
             'form' => $form->createView(),

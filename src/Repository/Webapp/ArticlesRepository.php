@@ -22,13 +22,19 @@ class ArticlesRepository extends ServiceEntityRepository
     public function listArticlesBySection($idsection)
     {
         return $this->createQueryBuilder('a')
-            ->select('
+            ->leftJoin('a.sections', 's')
+            ->leftJoin('a.college', 'c')
+            ->leftJoin('a.theme', 't')
+            ->leftJoin('a.support' , 'su')
+            ->addSelect('
                 a.id as id, 
-                a.slug, 
+                a.slug as slug, 
                 a.title as title, 
                 a.isTitleShow, 
                 a.isShowReadMore, 
-                a.content as content, 
+                a.content as content,
+                a.isArchived as isArchived,
+                a.isShowCreated as isShowCreated,
                 t.id as idtheme, 
                 t.name as theme, 
                 a.imageName, 
@@ -37,12 +43,10 @@ class ArticlesRepository extends ServiceEntityRepository
                 c.id AS idcollege
                 '
             )
-            ->leftJoin('a.sections', 's')
-            ->leftJoin('a.college', 'c')
-            ->leftJoin('a.theme', 't')
-            ->leftJoin('a.support' , 'su')
             ->andWhere('s.id = :idsection')
+            ->andWhere('a.isArchived = :isArchived')
             ->setParameter('idsection', $idsection)
+            ->setParameter('isArchived', 0)
             ->orderBy('a.id', 'ASC')
             ->getQuery()
             ->getOneOrNullResult()
@@ -54,6 +58,8 @@ class ArticlesRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->leftJoin('a.section', 's')
             ->andWhere('a.college > 0')
+            ->andWhere('a.isArchived = :isArchived')
+            ->setParameter('isArchived', 0)
             ->orderBy('a.id', 'ASC')
             ->getQuery()
             ->getResult()
@@ -81,6 +87,8 @@ class ArticlesRepository extends ServiceEntityRepository
             ->leftJoin('a.support' , 's')
             ->andWhere('c.id = :idcollege')
             ->setParameter('idcollege', $idcollege)
+            ->andWhere('a.isArchived = :isArchived')
+            ->setParameter('isArchived', 0)
             ->orderBy('a.updatedAt', 'DESC')
             ->getQuery()
             ->getResult()
@@ -90,6 +98,8 @@ class ArticlesRepository extends ServiceEntityRepository
     public function listFiveArticles($category)
     {
         return $this->createQueryBuilder('a')
+            ->leftJoin('a.college', 'c')
+            ->leftJoin('a.author', 'u')
             ->addSelect('
                 a.id as id, 
                 a.slug as slug, 
@@ -97,9 +107,15 @@ class ArticlesRepository extends ServiceEntityRepository
                 a.content as content,
                 a.imageName,
                 a.updatedAt,
-                c.id AS idcollege
+                a.isArchived as isArchived,
+                a.isShowCreated as isShowCreated,
+                c.id AS idcollege,
+                u.type
                  ')
-            ->leftJoin('a.college', 'c')
+            ->where('u.type = :type')
+            ->setParameter('type', 'college')
+            ->andWhere('a.isArchived = :isArchived')
+            ->setParameter('isArchived', 0)
             ->orderBy('a.updatedAt', 'DESC')
             ->setMaxResults(5)
             ->getQuery()
@@ -122,6 +138,8 @@ class ArticlesRepository extends ServiceEntityRepository
                 a.title as title, 
                 a.content as content, 
                 a.doc, 
+                a.isArchived as isArchived,
+                a.isShowCreated as isShowCreated,
                 t.id as idtheme, 
                 t.name as theme, 
                 a.imageName, 
@@ -140,6 +158,8 @@ class ArticlesRepository extends ServiceEntityRepository
             ->leftJoin('a.theme', 't')
             ->leftJoin('a.support' , 's')
             ->leftJoin('a.category', 'ca')
+            ->andWhere('a.isArchived = :isArchived')
+            ->setParameter('isArchived', 0)
             ->andWhere('a.id = :id')
             ->setParameter('id', $id)
             ->getQuery()

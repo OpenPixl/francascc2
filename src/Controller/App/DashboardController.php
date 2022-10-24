@@ -81,7 +81,7 @@ class DashboardController extends AbstractController
 
         $messages = $this->getDoctrine()->getRepository(Message::class)->listMessagesByUser($user->getId());
 
-        return $this->render('app/espcoll.html.twig', [
+        return $this->render('espacecollege/dashboard/espcoll.html.twig', [
             'college' => $college,
             'messages' => $messages
         ]);

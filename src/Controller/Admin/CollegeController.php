@@ -52,8 +52,13 @@ class CollegeController extends AbstractController
      */
     public function newcollege(Request $request): Response
     {
-        $user = $this->getUser();
+        // on récupére l'objet user de l'administrateur en cours
+        //$iduser = $this->getUser()->getId();
+        //$user = $this->getDoctrine()->getRepository(User::class)->find($iduser);
+        // on crée l'instance College depuis la classe "College" et on injecte l'admin en cours
         $college = new College();
+        //$college->setUser($user);
+
         $form = $this->createForm(CollegeType::class, $college);
         $form->handleRequest($request);
 
@@ -103,7 +108,10 @@ class CollegeController extends AbstractController
     public function new(Request $request): Response
     {
         $user = $this->getUser();
+        //dd($user);
         $college = new College();
+        $college->setUser($user);
+        //dd($college);
         $form = $this->createForm(CollegeType::class, $college);
         $form->handleRequest($request);
 
@@ -148,7 +156,7 @@ class CollegeController extends AbstractController
      */
     public function blocAdminCollege(College $college): Response
     {
-        return $this->render('admin/college/include/_blocAdminCollege.html.twig', [
+        return $this->render('espacecollege/dashboard/_blocAdminCollege.html.twig', [
             'college' => $college,
         ]);
     }
@@ -188,12 +196,12 @@ class CollegeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('op_webapp_college_espcoll',[
-                'iduser' => $user->getId(),
+            return $this->redirectToRoute('op_webapp_college_edit',[
+                'id' => $user->getId(),
             ]);
         }
 
-        return $this->render('admin/college/editcollege.html.twig', [
+        return $this->render('espacecollege/editcollege.html.twig', [
             'college' => $college,
             'form' => $form->createView(),
         ]);

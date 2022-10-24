@@ -12,7 +12,7 @@
     <div class="tab-pane fade show active" id="article" role="tabpanel" aria-labelledby="groupe-tab">
         <div class="form-row">
             <div class="col">
-                <div class="form-group row">
+                <div class="form-group row g-1">
                     {{ form_label(form.title, "Titre de l'article", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                     <div class="col-sm-9">
                         {{ form_widget(form.title) }}
@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row g-1">
                     {{ form_label(form.content, "Contenu", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                     <div class="col-sm-9">
                         {{ form_widget(form.content) }}
@@ -34,7 +34,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row g-1">
                     {{ form_label(form.theme, "Thème du projet", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                     <div class="col-sm-9">
                         {{ form_widget(form.theme) }}
@@ -51,7 +51,7 @@
     <div class="tab-pane" id="media" role="tabpanel" aria-labelledby="groupe-tab">
         <div class="form-row">
             <div class="col">
-                <div class="form-group row">
+                <div class="form-group row g-1">
                     {{ form_label(form.imageFile, "Image de l'article", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                     <div class="col-sm-9">
                         {{ form_widget(form.imageFile, {'attr': {'class': 'col-sm-3 btn btn-small'}}) }}
@@ -67,7 +67,7 @@
     <div class="tab-pane" id="support" role="tabpanel" aria-labelledby="groupe-tab">
         <div class="form-row">
             <div class="col">
-                <div class="form-group row">
+                <div class="form-group row g-1">
                     {{ form_label(form.support, "Support du Projet", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                     <div class="col-sm-9">
                         {{ form_widget(form.support) }}
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row g-1">
                     {{ form_label(form.docFile, "Insertion du fichier", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                     <div class="col-sm-9">
                         {{ form_widget(form.docFile) }}

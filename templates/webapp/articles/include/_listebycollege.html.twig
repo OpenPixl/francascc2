@@ -1,0 +1,29 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>thème</th>
+            <th>publié</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.id }}</td>
+                <td>{{ article.title }}</td>
+                <td>{{ article.theme }}</td>
+                <td></td>
+                <td>
+                    <a href="{{ path('op_webapp_articles_edit', {'id' : article.id}) }}"><i class="far fa-edit"></i> Modifier</a> |
+                    <a class="btnArchived" href="{{ path('op_webapp_articles_archived', {'id': article.id, 'idcollege': idcollege}) }}"><i class="fa fa-eraser"></i> Archiver</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Il n'y a pas d'articles publié au nom du collège.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

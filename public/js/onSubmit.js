@@ -4,8 +4,8 @@ const loader = document.querySelector('.loader');
 document.querySelectorAll('button.btn').forEach(function (link){
     link.addEventListener('click', (event) => {
         //event.preventDefault()
-        loader.classList.remove('hidden')
-        console.log(loader.classList)
+        loader.classList.remove('hidden');
+        console.log(loader.classList);
     } );
-})
+});
 

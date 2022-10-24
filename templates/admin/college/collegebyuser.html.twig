@@ -2,10 +2,53 @@
 
 {% block title %}Espace Collège{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+            // Archivage d'un article depuis le compte college
+            function updateArticleArchived(event){
+                event.preventDefault()
+                const urlArchived = this.href
+                // on ouvre une modal pour confirmer la demande d'archivage
+                //confirm("Vous êtes sur le point d'archiver l'article. Etes-vous sur de vouloir continuer")
+                if (window.confirm("Vous êtes sur le point d'archiver l'article. \n Etes-vous sur de vouloir continuer")) {
+                    axios
+                        .post(urlArchived)
+                        .then(function(response){
+                            const listeArticles = document.getElementById('listeArticles').innerHTML = response.data.listeArticles
+                            // on réalise un toast de confirmation de l'action
+                            let option = {
+                                animation: true,
+                                autohide: true,
+                                delay: 3000,
+                            };
+                            // initialisation du toaster bootstrap
+                            let toastHTMLElement = document.getElementById("toaster");
+                            let message = response.data.message;
+                            let toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                            toastBody.textContent = message;
+                            let toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                            toastElement.show();
+                        })
+                        .catch(function (error){
+                            console.log(error)
+                        })
+                }
+            }
+            // on sélection le bon lien
+            document.querySelectorAll('a.btnArchived').forEach(function (link) {
+                link.addEventListener('click', updateArticleArchived);
+            })
+            // Incrémentation lors du clic de la valeur 1 sur IsArchived
+        }
+    </script>
+{% endblock %}
+
 {% block body %}
     <section class="container" id="espace_college_header">
         <div class="row" id="content">
-            {{ include('admin/college/include/_header_college.html.twig') }}
+            {{ include('espacecollege/dashboard/_header_college.html.twig') }}
         </div>
     </section>
     <section class="container" id="espace_college_content">

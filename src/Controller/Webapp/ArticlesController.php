@@ -8,6 +8,7 @@ use App\Entity\Webapp\Section;
 use App\Form\Webapp\ArticlesType;
 use App\Form\Webapp\Articles2Type;
 use App\Repository\Webapp\ArticlesRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,8 +50,8 @@ class ArticlesController extends AbstractController
 
         $article = new Articles();
         $article->setAuthor($user);
-        $article->setContent("...");
         $article->setCollege($college);
+
         $form = $this->createForm(Articles2Type::class, $article);
         $form->handleRequest($request);
 
@@ -64,7 +65,7 @@ class ArticlesController extends AbstractController
             ]);
         }
 
-        return $this->render('webapp/articles/new.html.twig', [
+        return $this->render('espacecollege/newarticles.html.twig', [
             'article' => $article,
             'college' =>$college,
             'form' => $form->createView(),
@@ -210,6 +211,7 @@ class ArticlesController extends AbstractController
 
         return $this->render('webapp/articles/listarticlesbycollege.html.twig',[
             'articles' => $articles,
+            'idcollege' => $idcollege
         ]);
     }
 
@@ -289,6 +291,28 @@ class ArticlesController extends AbstractController
                 'page' => $request->query->getInt('page', 1),
             ]),
 
+        ], 200);
+    }
+
+    /**
+     * Mise en archive d'un article
+     * @Route("/webapp/articles/archived/{id}/{idcollege}", name="op_webapp_articles_archived", methods={"POST"})
+     */
+    public function archived(Articles $articles, EntityManagerInterface $entityManager, $idcollege )
+    {
+        // articles archivés
+        $articles->setIsArchived(1);
+        $entityManager->flush();
+
+        // actualiser la liste des articles du collège
+        $listearticles = $this->getDoctrine()->getRepository(Articles::class)->listArticlesByCollege($idcollege);
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "L'article a été correctement archivé",
+            'listeArticles' => $this->renderView('webapp/articles/include/_listebycollege.html.twig', [
+                'articles' => $listearticles,
+            ]),
         ], 200);
     }
 }
