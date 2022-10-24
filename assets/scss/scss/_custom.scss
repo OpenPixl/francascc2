@@ -61,6 +61,13 @@ a:visited, a:hover, a:link, a:active {
 #content{
   border: 4px double #ebebeb;
   background-color: #fff;
+  .noArticles{
+    padding-right: 0;
+    padding-left: 0;
+    .alert{
+      margin-bottom: 0;
+    }
+  }
 }
 
 #content h1,

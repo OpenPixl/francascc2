@@ -6,12 +6,14 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-        <script src="{{ asset('js/ckeditor5/build/ckeditor.js') }}"></script>
+
+        <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
     {% endblock %}
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
-    {% endblock %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+        <script src="{{ asset('js/ckeditor5/build/ckeditor.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>    {% endblock %}
 </head>
 <body>
 <header>
@@ -25,8 +27,6 @@
     {% endblock %}
 </header>
 <main>
-
-    <!-- This will create a loader with a 68px width -->
     {% block body %}
     {% endblock %}
 </main>

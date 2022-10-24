@@ -28,8 +28,17 @@
                 </div>
             {% endif %}
             {% if article.isShowReadMore == 1 %}
-                <p>{{ article.content|u.truncate(600, ' ...')|raw }}</p>
-                <a class="content-readmore" href="{{ path('op_webapp_articles_show', {'id': article.id}) }}">Lire la suite</a>
+                <div class="row">
+                    <div class="col-12">
+                        <p>{{ article.content|u.truncate(600, ' ...')|raw }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <a class="content-readmore" href="{{ path('op_webapp_articles_show', {'id': article.id}) }}">Lire la suite</a>
+                    </div>
+                </div>
+
             {% else %}
                 <p>{{ article.content|raw }}</p>
             {% endif %}

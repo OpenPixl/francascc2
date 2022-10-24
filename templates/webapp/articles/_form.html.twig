@@ -15,7 +15,7 @@
                 <div class="form-group row">
                     {{ form_label(form.title, "Titre de l'article", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                     <div class="col-sm-9">
-                        {{ form_widget(form.title) }}
+                        {{ form_widget(form.title, {'attr': {'class': 'form-control form-control-sm'}}) }}
                         <small>{{ form_help(form.title) }}</small>
                         <div class="form-error">
                             {{ form_errors(form.title) }}
@@ -26,7 +26,7 @@
                 <div class="form-group row">
                     {{ form_label(form.content, "Contenu", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                     <div class="col-sm-9">
-                        {{ form_widget(form.content) }}
+                        {{ form_widget(form.content, {'attr': {'class': 'form-control form-control-sm'}}) }}
                         <small>{{ form_help(form.content) }}</small>
                         <div class="form-error">
                             {{ form_errors(form.content) }}

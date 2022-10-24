@@ -15,7 +15,7 @@
                     <div class="form-group row mt-1 mb-1">
                         {{ form_label(form.name, "Collège", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-9">
-                            {{ form_widget(form.name) }}
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control form-control-sm'}}) }}
                             <small>{{ form_help(form.name) }}</small>
                             <div class="form-error">
                                 {{ form_errors(form.name) }}
@@ -26,7 +26,7 @@
                     <div class="form-group row mb-1">
                         {{ form_label(form.address, "Adresse", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-9">
-                            {{ form_widget(form.address) }}
+                            {{ form_widget(form.address, {'attr': {'class': 'form-control form-control-sm'}}) }}
                             <small>{{ form_help(form.address) }}</small>
                             <div class="form-error">
                                 {{ form_errors(form.address) }}
@@ -36,7 +36,7 @@
 
                     <div class="form-group row mb-1">
                         <div class="col-sm-9 offset-sm-3">
-                            {{ form_widget(form.complement) }}
+                            {{ form_widget(form.complement, {'attr': {'class': 'form-control form-control-sm'}}) }}
                             <small>{{ form_help(form.complement) }}</small>
                             <div class="form-error">
                                 {{ form_errors(form.complement) }}
@@ -47,14 +47,14 @@
                     <div class="form-group row mb-1">
                         {{ form_label(form.zipcode, "CP / Ville", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-3">
-                            {{ form_widget(form.zipcode) }}
+                            {{ form_widget(form.zipcode, {'attr': {'class': 'form-control form-control-sm'}}) }}
                             <small>{{ form_help(form.zipcode) }}</small>
                             <div class="form-error">
                                 {{ form_errors(form.zipcode) }}
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            {{ form_widget(form.city) }}
+                            {{ form_widget(form.city, {'attr': {'class': 'form-control form-control-sm'}}) }}
                             <small>{{ form_help(form.city) }}</small>
                             <div class="form-error">
                                 {{ form_errors(form.city) }}
@@ -65,7 +65,7 @@
                     <div class="form-group row mb-1">
                         {{ form_label(form.collegeEmail, "Email du collège", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-9">
-                            {{ form_widget(form.collegeEmail) }}
+                            {{ form_widget(form.collegeEmail, {'attr': {'class': 'form-control form-control-sm'}}) }}
                             <small>{{ form_help(form.collegeEmail) }}</small>
                             <div class="form-error">
                                 {{ form_errors(form.collegeEmail) }}
@@ -76,7 +76,7 @@
                     <div class="form-group row mb-1">
                         {{ form_label(form.collegePhone, "Téléphone du collège", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-9">
-                            {{ form_widget(form.collegePhone) }}
+                            {{ form_widget(form.collegePhone, {'attr': {'class': 'form-control form-control-sm'}}) }}
                             <small>{{ form_help(form.collegePhone) }}</small>
                             <div class="form-error">
                                 {{ form_errors(form.collegePhone) }}
@@ -92,7 +92,7 @@
                     <div class="form-group row mt-1 mb-1">
                         {{ form_label(form.animateur, "Animateur du groupe", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-9">
-                            {{ form_widget(form.animateur) }}
+                            {{ form_widget(form.animateur, {'attr': {'class': 'form-control form-control-sm'}}) }}
                             <small>{{ form_help(form.animateur) }}</small>
                             <div class="form-error">
                                 {{ form_errors(form.animateur) }}
@@ -103,7 +103,7 @@
                     <div class="form-group row mb-1">
                         {{ form_label(form.groupPhone, "Téléphone du groupe", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-9">
-                            {{ form_widget(form.groupPhone) }}
+                            {{ form_widget(form.groupPhone, {'attr': {'class': 'form-control form-control-sm'}}) }}
                             <small>{{ form_help(form.groupPhone) }}</small>
                             <div class="form-error">
                                 {{ form_errors(form.groupPhone) }}
@@ -114,7 +114,7 @@
                     <div class="form-group row mb-1">
                         {{ form_label(form.groupEmail, "Email du groupe", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-9">
-                            {{ form_widget(form.groupEmail) }}
+                            {{ form_widget(form.groupEmail, {'attr': {'class': 'form-control form-control-sm'}}) }}
                             <small>{{ form_help(form.groupEmail) }}</small>
                             <div class="form-error">
                                 {{ form_errors(form.groupEmail) }}
@@ -125,7 +125,7 @@
                     <div class="form-group row mb-1">
                         {{ form_label(form.GroupDescription, "Présentation du groupe", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-9">
-                            {{ form_widget(form.GroupDescription) }}
+                            {{ form_widget(form.GroupDescription, {'attr': {'class': 'form-control form-control-sm'}}) }}
                             <small>{{ form_help(form.GroupDescription) }}</small>
                             <div class="form-error">
                                 {{ form_errors(form.GroupDescription) }}
@@ -136,7 +136,7 @@
                     <div class="form-group row mt-1 mb-1">
                         {{ form_label(form.workMeeting, "Réunion du Groupe :", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                         <div class="col-sm-9">
-                            {{ form_widget(form.workMeeting) }}
+                            {{ form_widget(form.workMeeting, {'attr': {'class': 'form-control form-control-sm'}}) }}
                             <small>{{ form_help(form.workMeeting) }}</small>
                             <div class="form-error">
                                 {{ form_errors(form.workMeeting) }}

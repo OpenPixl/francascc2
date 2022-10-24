@@ -33,7 +33,7 @@
                     axios
                         .post(urlDeleted)
                         .then(function (response){
-                            const listeMessages = document.getElementById('listeMessages').innerHTML = response.data.listeArticles
+                            const listeMessages = document.getElementById('listeMessages').innerHTML = response.data.listeMessages
                             Deleted.hide()
                             // initialisation du toaster bootstrap
                             let toastHTMLElement = document.getElementById("toaster")
