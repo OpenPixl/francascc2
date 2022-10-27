@@ -38,6 +38,7 @@ class ArticlesRepository extends ServiceEntityRepository
                 t.id as idtheme, 
                 t.name as theme, 
                 a.imageName, 
+                a.createdAt,
                 su.id as idsupport, 
                 su.name as support,
                 c.id AS idcollege
@@ -73,15 +74,16 @@ class ArticlesRepository extends ServiceEntityRepository
                 a.id as id, 
                 a.slug, 
                 a.title as title,
-                 a.content as content, 
-                 t.id as idtheme, 
-                 t.name as theme, 
-                 a.imageName,
-                 a.updatedAt, 
-                 s.id as idsupport, 
-                 s.name as support,
-                 c.id AS idcollege
-                 ')
+                a.content as content, 
+                t.id as idtheme, 
+                t.name as theme, 
+                a.imageName,
+                a.createdAt,
+                a.updatedAt, 
+                s.id as idsupport, 
+                s.name as support,
+                c.id AS idcollege
+                ')
             ->leftJoin('a.college', 'c')
             ->leftJoin('a.theme', 't')
             ->leftJoin('a.support' , 's')

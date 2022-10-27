@@ -65,6 +65,10 @@ a:visited, a:hover, a:link, a:active {
       margin-bottom: 0;
     }
   }
+  #blockArticle{
+    display: grid;
+    grid-template-rows: 10% 80% 10%;
+  }
 }
 
 #content_header_img{

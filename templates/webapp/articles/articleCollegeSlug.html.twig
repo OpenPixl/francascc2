@@ -38,7 +38,6 @@
     <section class="container" id="college_page_content">
         <div class="row" id="content">
             {{ include('webapp/articles/include/_blocarticle.html.twig') }}
-
             {% if article.idsupport == 0 %}
             {% elseif article.idsupport == 1 %}
             <div class="col-12" id="content_support">
