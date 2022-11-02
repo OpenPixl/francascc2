@@ -12,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class CollegeController extends AbstractController
 {
@@ -185,7 +187,7 @@ class CollegeController extends AbstractController
     /**
      * @Route("/webapp/college/{id}/editcollege", name="op_webapp_college_edit", methods={"GET","POST"})
      */
-    public function editCollege(Request $request, College $college): Response
+    public function editCollege(Request $request, College $college, SluggerInterface $slugger): Response
     {
         $user = $this->getUser();
 
@@ -193,6 +195,51 @@ class CollegeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $banniereFile */
+            $banniereFile = $form->get('banniereFilename')->getData();
+            $vignetteFile = $form->get('vignetteFilename')->getData();
+
+            if ($banniereFile) {
+                $originalbanniereFilename = pathinfo($banniereFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safebanniereFilename = $slugger->slug($originalbanniereFilename);
+                $newbanniereFilename = $safebanniereFilename . '-' . uniqid() . '.' . $banniereFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $banniereFile->move(
+                        $this->getParameter('banniere_directory'),
+                        $newbanniereFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $college->setBanniereFilename($newbanniereFilename);
+            }
+
+            if ($vignetteFile) {
+                $originalvignetteFilename = pathinfo($vignetteFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safevignetteFilename = $slugger->slug($originalvignetteFilename);
+                $newvignetteFilename = $safevignetteFilename . '-' . uniqid() . '.' . $vignetteFile->guessExtension();
+                // Move the file to the directory where brochures are stored
+                try {
+                    $vignetteFile->move(
+                        $this->getParameter('vignette_directory'),
+                        $newvignetteFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $college->setVignetteFilename($newvignetteFilename);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('op_webapp_college_edit',[

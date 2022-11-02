@@ -6,6 +6,8 @@ use App\Entity\Admin\College;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class CollegeType extends AbstractType
@@ -31,6 +33,37 @@ class CollegeType extends AbstractType
                 'required' => false,
             ])
             ->add('workMeeting')
+            ->add('banniereFilename', FileType::class, [
+                'label' => 'Banniere au format : png ou jpg',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpg',
+                        ],
+                        'mimeTypesMessage' => 'Attention, veuillez charger un fichier image.',
+                    ])
+                ],
+            ])
+            // ...
+            ->add('vignetteFilename', FileType::class, [
+                'label' => 'vignette au format : png ou jpg',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpg',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid PDF document',
+                    ])
+                ],
+            ])
         ;
     }
 

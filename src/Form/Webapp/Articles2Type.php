@@ -40,14 +40,17 @@ class Articles2Type extends AbstractType
             ])
             ->add('imageFile', VichImageType::class, ['required' => false,])
             ->add('docFile', VichFileType::class, ['required' => false,])
-
         ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Articles::class,
+        ]);
+        $resolver->setDefaults([
+            'data_class' => BanniereFilename::class,
         ]);
     }
 }
