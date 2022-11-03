@@ -44,13 +44,13 @@ class CollegeType extends AbstractType
                             'image/png',
                             'image/jpg',
                         ],
-                        'mimeTypesMessage' => 'Attention, veuillez charger un fichier image.',
+                        'mimeTypesMessage' => 'Attention, veuillez charger un fichier au format jpg ou png',
                     ])
                 ],
             ])
             // ...
             ->add('vignetteFilename', FileType::class, [
-                'label' => 'vignette au format : png ou jpg',
+                'label' => 'vignette au format : jpg ou png',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
@@ -60,7 +60,7 @@ class CollegeType extends AbstractType
                             'image/png',
                             'image/jpg',
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid PDF document',
+                        'mimeTypesMessage' => 'Attention, veuillez charger un fichier au format jpg ou png',
                     ])
                 ],
             ])

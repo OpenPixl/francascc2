@@ -4,8 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\Admin\College;
 use App\Entity\Admin\User;
+use App\Entity\Webapp\Message;
 use App\Form\Admin\CollegeType;
 use App\Repository\Admin\CollegeRepository;
+use App\Repository\Webapp\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,6 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Path;
 
 class CollegeController extends AbstractController
 {
@@ -243,7 +248,8 @@ class CollegeController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('op_webapp_college_edit',[
-                'id' => $user->getId(),
+               // 'id' => $user->getId(),
+                'id' => $college->getId(),
             ]);
         }
 
@@ -256,10 +262,21 @@ class CollegeController extends AbstractController
     /**
      * @Route("/op_admin/college/{id}", name="op_admin_college_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, College $college): Response
+    public function delete(Request $request, College $college, Filesystem $filesystem): Response
     {
         if ($this->isCsrfTokenValid('delete'.$college->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+
+
+
+            // récupération du nom de l'image
+            $banniereImageName = $college->getBanniereFilename();
+            $vignetteImageName = $college->getVignetteFilename();
+            // Suppression du fichiers
+            $filesystem->remove(['symlink', '/uploads/images/colleges/', $banniereImageName]);
+            $filesystem->remove(['symlink', '/uploads/images/colleges/', $vignetteImageName]);
+
+
             $entityManager->remove($college);
             $entityManager->flush();
         }

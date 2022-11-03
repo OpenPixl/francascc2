@@ -70,11 +70,6 @@ class User implements UserInterface
     private $isVerified = false;
 
     /**
-     * @ORM\OneToOne(targetEntity=College::class, inversedBy="user", cascade={"persist", "remove"})
-     */
-    private $college;
-
-    /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $loginName;
@@ -148,10 +143,16 @@ class User implements UserInterface
      */
     private $ressources;
 
+    /**
+     * @ORM\OneToMany(targetEntity=College::class, mappedBy="user")
+     */
+    private $college;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
         $this->ressources = new ArrayCollection();
+        $this->college = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -288,18 +289,6 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
-
-        return $this;
-    }
-
-    public function getCollege(): ?College
-    {
-        return $this->college;
-    }
-
-    public function setCollege(?College $college): self
-    {
-        $this->college = $college;
 
         return $this;
     }
@@ -520,6 +509,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($ressource->getAuthor() === $this) {
                 $ressource->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|College[]
+     */
+    public function getCollege(): Collection
+    {
+        return $this->college;
+    }
+
+    public function addCollege(College $college): self
+    {
+        if (!$this->college->contains($college)) {
+            $this->college[] = $college;
+            $college->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCollege(College $college): self
+    {
+        if ($this->college->removeElement($college)) {
+            // set the owning side to null (unless already changed)
+            if ($college->getUser() === $this) {
+                $college->setUser(null);
             }
         }
 

@@ -102,11 +102,6 @@ class College
      */
     private $GroupDescription;
 
-    /**
-     * @ORM\OneToOne(targetEntity=User::class, mappedBy="college", cascade={"persist", "remove"})
-     */
-    private $user;
-
     //code d'insertion pour le logo
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -194,6 +189,11 @@ class College
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $workMeeting;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="college")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -442,24 +442,6 @@ class College
         return $this->name;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newCollege = null === $user ? null : $this;
-        if ($user->getCollege() !== $newCollege) {
-            $user->setCollege($newCollege);
-        }
-
-        return $this;
-    }
-
     // code get et set logo
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
@@ -611,6 +593,18 @@ class College
     public function setWorkMeeting(?string $workMeeting): self
     {
         $this->workMeeting = $workMeeting;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
