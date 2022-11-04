@@ -7,7 +7,9 @@ use App\Entity\Admin\User;
 use App\Entity\Webapp\Message;
 use App\Form\Admin\CollegeType;
 use App\Repository\Admin\CollegeRepository;
+use App\Repository\Webapp\ArticlesRepository;
 use App\Repository\Webapp\MessageRepository;
+use App\Repository\Webapp\RessourcesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -262,19 +264,26 @@ class CollegeController extends AbstractController
     /**
      * @Route("/op_admin/college/{id}", name="op_admin_college_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, College $college, Filesystem $filesystem): Response
+    public function delete(Request $request, College $college, Filesystem $filesystem, ArticlesRepository $articlesRepository, RessourcesRepository $RessourcesRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$college->getId(), $request->request->get('_token'))) {
+
+            $articles = $articlesRepository->findBy(array('college'=>$college));
+            foreach ($articles as $article) {
+                $college->removeArticle($article);
+            }
+            $ressources = $RessourcesRepository->findBy(array('college'=>$college));
+            foreach ($ressources as $ressource){
+                $college->removeRessource($ressource);
+            }
             $entityManager = $this->getDoctrine()->getManager();
-
-
 
             // récupération du nom de l'image
             $banniereImageName = $college->getBanniereFilename();
             $vignetteImageName = $college->getVignetteFilename();
             // Suppression du fichiers
-            $filesystem->remove(['symlink', '/uploads/images/colleges/', $banniereImageName]);
-            $filesystem->remove(['symlink', '/uploads/images/colleges/', $vignetteImageName]);
+            $filesystem->remove(['/uploads/images/colleges/', $banniereImageName]);
+            $filesystem->remove(['/uploads/images/colleges/', $vignetteImageName]);
 
 
             $entityManager->remove($college);

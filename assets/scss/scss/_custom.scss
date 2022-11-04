@@ -66,8 +66,10 @@ a:visited, a:hover, a:link, a:active {
     }
   }
   #blockArticle{
+    min-height: 210px;
+    max-height: 210px;
     display: grid;
-    grid-template-rows: 10% 80% 10%;
+    grid-template-rows: auto 1fr auto;
   }
 }
 

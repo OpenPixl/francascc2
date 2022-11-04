@@ -153,13 +153,13 @@ class College
 
     // vignette
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $vignetteFilename;
 
     // banniere
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $banniereFilename;
 

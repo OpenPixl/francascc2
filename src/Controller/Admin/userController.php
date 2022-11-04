@@ -33,7 +33,7 @@ class userController extends AbstractController
      */
     public function index(userRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $data = $userRepository->findAll();
+        $data = $userRepository->findAllUsersWithCollege();
         $users = $paginator->paginate(
             $data,
             $request->query->getInt('page', 1),

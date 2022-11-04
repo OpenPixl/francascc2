@@ -45,6 +45,13 @@ liip_imagine:
                 thumbnail:
                     size: [ 280, 210 ]
                     mode: outbond
+                background:
+                    # set the background color to #00ffff
+                    color: '#ffffff'
+                    # set a size different from the input image
+                    size: [ 280, 210 ]
+                    # center input image on the newly created background
+                    position: center
 
         thumb_five_articles:
             quality: 75
