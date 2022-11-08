@@ -26,7 +26,7 @@
                 <div class="form-group row g-1">
                     {{ form_label(form.content, "Contenu", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
                     <div class="col-sm-9">
-                        {{ form_widget(form.content, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                        {{ form_widget(form.content, {'attr': {'rows':'10'}}) }}
                         <small>{{ form_help(form.content) }}</small>
                         <div class="form-error">
                             {{ form_errors(form.content) }}

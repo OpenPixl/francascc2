@@ -37,13 +37,7 @@ class userEditType extends AbstractType
             ->add('city')
             ->add('phoneDesk')
             ->add('phoneGsm')
-            ->add('college',EntityType::class,[
-                'class' => College::class,
-                'placeholder' => '-- Choisir le college --',
-                'required' => false,
-                'label'=> "Thème du projet",
-            ])
-        ;
+            ->add('college');
     }
 
     public function configureOptions(OptionsResolver $resolver)

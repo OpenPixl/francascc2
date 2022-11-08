@@ -6,33 +6,31 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
-
         <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
     {% endblock %}
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
         <script src="{{ asset('js/ckeditor5/build/ckeditor.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>    {% endblock %}
+        <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+    {% endblock %}
 </head>
 <body>
-<header>
-    {% block header %}
-        {% if app.request.attributes.get('_route') == 'op_webapp_public_homepage'%}
-            {{ render(controller('App\\Controller\\Admin\\ConfigController::headerShow')) }}
-        {% endif %}
-    {% endblock %}
-    {% block mainnav %}
-        {{ render(controller('App\\Controller\\Webapp\\PageController::listmenu')) }}
-    {% endblock %}
-</header>
-<main>
-    {% block body %}
-    {% endblock %}
-
-
-</main>
-<footer>
+    <header>
+        {% block header %}
+            {% if app.request.attributes.get('_route') == 'op_webapp_public_homepage'%}
+                {{ render(controller('App\\Controller\\Admin\\ConfigController::headerShow')) }}
+            {% endif %}
+        {% endblock %}
+        {% block mainnav %}
+            {{ render(controller('App\\Controller\\Webapp\\PageController::listmenu')) }}
+        {% endblock %}
+    </header>
+    <main>
+        {% block body %}
+        {% endblock %}
+    </main>
+    <footer>
     {% block Modals %}
         <section>
             <div class="modal fade" id="ModalWarning" tabindex="-1" aria-labelledby="ModalAlert" aria-hidden="true">
@@ -110,7 +108,5 @@
     {% endblock %}
 
 </footer>
-
-
 </body>
 </html>

@@ -39,7 +39,7 @@ class CollegeType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '1024k',
+                        'maxSize' => '10000k',
                         'mimeTypes' => [
                             'image/png',
                             'image/jpg',
@@ -55,7 +55,7 @@ class CollegeType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '1024k',
+                        'maxSize' => '10000k',
                         'mimeTypes' => [
                             'image/png',
                             'image/jpg',

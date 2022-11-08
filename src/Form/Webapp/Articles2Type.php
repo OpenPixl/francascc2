@@ -25,6 +25,7 @@ class Articles2Type extends AbstractType
             ])
             ->add('content',TextareaType::class,[
                 'label'=> "Contenu de l'article",
+                'required' => false
             ])
             ->add('theme',EntityType::class,[
                 'class' => Theme::class,
@@ -48,9 +49,6 @@ class Articles2Type extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Articles::class,
-        ]);
-        $resolver->setDefaults([
-            'data_class' => BanniereFilename::class,
         ]);
     }
 }

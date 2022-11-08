@@ -88,7 +88,7 @@ class CollegeController extends AbstractController
     /**
      * @Route("/admin/college/newcollegeAdmin/{iduser}", name="op_admin_college_newcollegeadmin", methods={"GET","POST"})
      */
-    public function newcollegeAdmin(Request $request, $iduser): Response
+    public function newcollegeAdmin(Request $request, $iduser, SluggerInterface $slugger): Response
     {
         $user = $this->getDoctrine()->getRepository(User::class)->find($iduser);
 
@@ -98,11 +98,57 @@ class CollegeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $banniereFile */
+            $banniereFile = $form->get('banniereFilename')->getData();
+            $vignetteFile = $form->get('vignetteFilename')->getData();
+
+            if ($banniereFile) {
+                $originalbanniereFilename = pathinfo($banniereFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safebanniereFilename = $slugger->slug($originalbanniereFilename);
+                $newbanniereFilename = $safebanniereFilename . '-' . uniqid() . '.' . $banniereFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $banniereFile->move(
+                        $this->getParameter('banniere_directory'),
+                        $newbanniereFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $college->setBanniereFilename($newbanniereFilename);
+            }
+
+            if ($vignetteFile) {
+                $originalvignetteFilename = pathinfo($vignetteFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safevignetteFilename = $slugger->slug($originalvignetteFilename);
+                $newvignetteFilename = $safevignetteFilename . '-' . uniqid() . '.' . $vignetteFile->guessExtension();
+                // Move the file to the directory where brochures are stored
+                try {
+                    $vignetteFile->move(
+                        $this->getParameter('vignette_directory'),
+                        $newvignetteFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $college->setVignetteFilename($newvignetteFilename);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($college);
             $entityManager->flush();
 
-            return $this->redirectToRoute('op_admin_user_index');
+            return $this->redirectToRoute('op_admin_college_index');
         }
 
         return $this->render('admin/college/new.html.twig', [
@@ -114,90 +160,12 @@ class CollegeController extends AbstractController
     /**
      * @Route("/op_admin/college/new", name="op_admin_college_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, SluggerInterface $slugger): Response
     {
         $user = $this->getUser();
         //dd($user);
         $college = new College();
         $college->setUser($user);
-        $form = $this->createForm(CollegeType::class, $college);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($college);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('op_admin_college_index');
-        }
-
-        return $this->render('admin/college/new.html.twig', [
-            'college' => $college,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/op_admin/college/{id}", name="op_admin_college_show", methods={"GET"})
-     */
-    public function show(College $college): Response
-    {
-        return $this->render('admin/college/show.html.twig', [
-            'college' => $college,
-        ]);
-    }
-
-    /**
-     * Affiche un collège depuis la page des collèges
-     * @Route("/webapp/college/blog/{id}", name="op_webapp_college_show2", methods={"GET"})
-     */
-    public function show2(College $college): Response
-    {
-        return $this->render('admin/college/show2.html.twig', [
-            'college' => $college,
-        ]);
-    }
-
-    /**
-     * Affiche le bloc d'admin des collèges leur espace privé
-     * @Route("/webapp/college/bloc_admin/", name="op_webapp_college_adminonly", methods={"GET"})
-     */
-    public function blocAdminCollege(College $college): Response
-    {
-        return $this->render('espacecollege/dashboard/_blocAdminCollege.html.twig', [
-            'college' => $college,
-        ]);
-    }
-
-    /**
-     * @Route("/op_admin/college/{id}/edit", name="op_admin_college_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, College $college): Response
-    {
-        $user = $this->getUser();
-
-        $form = $this->createForm(CollegeType::class, $college);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('op_admin_college_index');
-        }
-
-        return $this->render('admin/college/edit.html.twig', [
-            'college' => $college,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/webapp/college/{id}/editcollege", name="op_webapp_college_edit", methods={"GET","POST"})
-     */
-    public function editCollege(Request $request, College $college, SluggerInterface $slugger): Response
-    {
-        $user = $this->getUser();
-
         $form = $this->createForm(CollegeType::class, $college);
         $form->handleRequest($request);
 
@@ -247,6 +215,197 @@ class CollegeController extends AbstractController
                 $college->setVignetteFilename($newvignetteFilename);
             }
 
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($college);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('op_admin_college_index');
+        }
+        
+
+        return $this->render('admin/college/new.html.twig', [
+            'college' => $college,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/op_admin/college/{id}", name="op_admin_college_show", methods={"GET"})
+     */
+    public function show(College $college): Response
+    {
+        return $this->render('admin/college/show.html.twig', [
+            'college' => $college,
+        ]);
+    }
+
+    /**
+     * Affiche un collège depuis la page des collèges
+     * @Route("/webapp/college/blog/{id}", name="op_webapp_college_show2", methods={"GET"})
+     */
+    public function show2(College $college): Response
+    {
+        return $this->render('admin/college/show2.html.twig', [
+            'college' => $college,
+        ]);
+    }
+
+    /**
+     * Affiche le bloc d'admin des collèges leur espace privé
+     * @Route("/webapp/college/bloc_admin/", name="op_webapp_college_adminonly", methods={"GET"})
+     */
+    public function blocAdminCollege(College $college): Response
+    {
+        return $this->render('espacecollege/dashboard/_blocAdminCollege.html.twig', [
+            'college' => $college,
+        ]);
+    }
+
+    /**
+     * @Route("/op_admin/college/{id}/edit", name="op_admin_college_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, College $college, SluggerInterface $slugger): Response
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(CollegeType::class, $college);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $banniereFile */
+            $banniereFile = $form->get('banniereFilename')->getData();
+            $vignetteFile = $form->get('vignetteFilename')->getData();
+
+            if ($banniereFile) {
+                $originalbanniereFilename = pathinfo($banniereFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safebanniereFilename = $slugger->slug($originalbanniereFilename);
+                $newbanniereFilename = $safebanniereFilename . '-' . uniqid() . '.' . $banniereFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $banniereFile->move(
+                        $this->getParameter('banniere_directory'),
+                        $newbanniereFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $college->setBanniereFilename($newbanniereFilename);
+            }
+            if ($vignetteFile) {
+                $originalvignetteFilename = pathinfo($vignetteFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safevignetteFilename = $slugger->slug($originalvignetteFilename);
+                $newvignetteFilename = $safevignetteFilename . '-' . uniqid() . '.' . $vignetteFile->guessExtension();
+                // Move the file to the directory where brochures are stored
+                try {
+                    $vignetteFile->move(
+                        $this->getParameter('vignette_directory'),
+                        $newvignetteFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $college->setVignetteFilename($newvignetteFilename);
+            }
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('op_admin_college_edit',[
+                'id' => $college->getId(),
+            ]);
+        }
+
+        return $this->render('admin/college/edit.html.twig', [
+            'college' => $college,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/webapp/college/{id}/editcollege", name="op_webapp_college_edit", methods={"GET","POST"})
+     */
+    public function editCollege(Request $request, College $college, SluggerInterface $slugger): Response
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(CollegeType::class, $college);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $banniereFile */
+            $banniereFile = $form->get('banniereFilename')->getData();
+            $vignetteFile = $form->get('vignetteFilename')->getData();
+
+            if ($banniereFile) {
+                // Effacement du fichier bannièreFileName si il est présent en BDD
+                // récupération du nom de l'image
+                $banniereImageName = $college->getBanniereFilename();
+                // suppression du Fichier
+                if($banniereImageName){
+                    $filesystem = new Filesystem();
+                    $path = $this->getParameter('banniere_directory').'/public/uploads/images/colleges/'.$banniereImageName;
+                    $filesystem->remove($path);
+                }
+                // Ajout de la nouvelle bannière
+                $originalbanniereFilename = pathinfo($banniereFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safebanniereFilename = $slugger->slug($originalbanniereFilename);
+                $newbanniereFilename = $safebanniereFilename . '-' . uniqid() . '.' . $banniereFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $banniereFile->move(
+                        $this->getParameter('banniere_directory'),
+                        $newbanniereFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $college->setBanniereFilename($newbanniereFilename);
+            }
+
+            if ($vignetteFile) {
+                // Effacement du fichier bannièreFileName si il est présent en BDD
+                // récupération du nom de l'image
+                $vignetteImageName = $college->getVignetteFilename();
+                // suppression du Fichier
+                if($vignetteImageName){
+                    $filesystem = new Filesystem();
+                    $path = $this->getParameter('vignette_directory').'/public/uploads/images/colleges/'.$vignetteImageName;
+                    $filesystem->remove($path);
+                }
+
+                $originalvignetteFilename = pathinfo($vignetteFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safevignetteFilename = $slugger->slug($originalvignetteFilename);
+                $newvignetteFilename = $safevignetteFilename . '-' . uniqid() . '.' . $vignetteFile->guessExtension();
+                // Move the file to the directory where brochures are stored
+                try {
+                    $vignetteFile->move(
+                        $this->getParameter('vignette_directory'),
+                        $newvignetteFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $college->setVignetteFilename($newvignetteFilename);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('op_webapp_college_edit',[
@@ -268,6 +427,7 @@ class CollegeController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$college->getId(), $request->request->get('_token'))) {
 
+            // Concerne la suppression des relations par rapport au college
             $articles = $articlesRepository->findBy(array('college'=>$college));
             foreach ($articles as $article) {
                 $college->removeArticle($article);
@@ -276,15 +436,26 @@ class CollegeController extends AbstractController
             foreach ($ressources as $ressource){
                 $college->removeRessource($ressource);
             }
+
+            // on instancie la classe de gestion des entités
             $entityManager = $this->getDoctrine()->getManager();
 
             // récupération du nom de l'image
             $banniereImageName = $college->getBanniereFilename();
-            $vignetteImageName = $college->getVignetteFilename();
-            // Suppression du fichiers
-            $filesystem->remove(['/uploads/images/colleges/', $banniereImageName]);
-            $filesystem->remove(['/uploads/images/colleges/', $vignetteImageName]);
 
+            //If there is a old logo we need to detele it
+            if($banniereImageName){
+                $filesystem = new Filesystem();
+                $path = $this->getTargetDirectory().'/public/uploads/images/colleges/' . $banniereImageName;
+                $filesystem->remove($path);
+            }
+
+            $vignetteImageName = $college->getVignetteFilename();
+            if($vignetteImageName){
+                $filesystem = new Filesystem();
+                $path = $this->getTargetDirectory().'/public/uploads/images/colleges/' . $vignetteImageName;
+                $filesystem->remove($path);
+            }
 
             $entityManager->remove($college);
             $entityManager->flush();
