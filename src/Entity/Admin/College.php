@@ -195,6 +195,16 @@ class College
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isSupprHeader = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isSupprLogo = false;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -605,6 +615,30 @@ class College
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getIsSupprHeader(): ?bool
+    {
+        return $this->isSupprHeader;
+    }
+
+    public function setIsSupprHeader(?bool $isSupprHeader): self
+    {
+        $this->isSupprHeader = $isSupprHeader;
+
+        return $this;
+    }
+
+    public function getIsSupprLogo(): ?bool
+    {
+        return $this->isSupprLogo;
+    }
+
+    public function setIsSupprLogo(?bool $isSupprLogo): self
+    {
+        $this->isSupprLogo = $isSupprLogo;
 
         return $this;
     }

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Admin\College;
 use App\Entity\Admin\User;
 use App\Entity\Webapp\Message;
+use App\Form\Admin\CollegeEditType;
 use App\Form\Admin\CollegeType;
 use App\Repository\Admin\CollegeRepository;
 use App\Repository\Webapp\ArticlesRepository;
@@ -268,24 +269,37 @@ class CollegeController extends AbstractController
     {
         $user = $this->getUser();
 
-        $form = $this->createForm(CollegeType::class, $college);
+        $form = $this->createForm(CollegeEditType::class, $college);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $banniereFile */
-            $banniereFile = $form->get('banniereFilename')->getData();
-            $vignetteFile = $form->get('vignetteFilename')->getData();
+            /** @var UploadedFile $headerFile */
+            $headerFileInput = $form->get('headerFile')->getData();
+            $logoFileInput = $form->get('logoFile')->getData();
 
-            if ($banniereFile) {
-                $originalbanniereFilename = pathinfo($banniereFile->getClientOriginalName(), PATHINFO_FILENAME);
+            if ($headerFileInput) {
+                // Effacement du fichier bannièreFileName si il est présent en BDD
+                // récupération du nom de l'image
+                $headerName = $college->getHeaderName();
+                // suppression du Fichier
+                if($headerName){
+
+                    $pathheader = $this->getParameter('college_directory').'/'.$headerName;
+                    // On vérifie si l'image existe
+                    if(file_exists($pathheader)){
+                        unlink($pathheader);
+                    }
+                }
+                // Ajout de la nouvelle bannière
+                $originalbanniereFilename = pathinfo($headerFileInput->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safebanniereFilename = $slugger->slug($originalbanniereFilename);
-                $newbanniereFilename = $safebanniereFilename . '-' . uniqid() . '.' . $banniereFile->guessExtension();
+                $newbanniereFilename = $safebanniereFilename . '-' . uniqid() . '.' . $headerFileInput->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $banniereFile->move(
-                        $this->getParameter('banniere_directory'),
+                    $headerFile->move(
+                        $this->getParameter('college_directory'),
                         $newbanniereFilename
                     );
                 } catch (FileException $e) {
@@ -296,15 +310,28 @@ class CollegeController extends AbstractController
                 // instead of its contents
                 $college->setBanniereFilename($newbanniereFilename);
             }
-            if ($vignetteFile) {
-                $originalvignetteFilename = pathinfo($vignetteFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+            if ($logoFileInput) {
+                // Effacement du fichier bannièreFileName si il est présent en BDD
+                // récupération du nom de l'image
+                $logoName = $college->getLogoName();
+                // suppression du Fichier
+                if($logoName){
+                    $pathlogo = $this->getParameter('college_directory').'/'.$logoName;
+                    // On vérifie si l'image existe
+                    if(file_exists($pathlogo)){
+                        unlink($pathlogo);
+                    }
+                }
+
+                $originalvignetteFilename = pathinfo($logoFileInput->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safevignetteFilename = $slugger->slug($originalvignetteFilename);
-                $newvignetteFilename = $safevignetteFilename . '-' . uniqid() . '.' . $vignetteFile->guessExtension();
+                $newvignetteFilename = $safevignetteFilename . '-' . uniqid() . '.' . $logoFileInput->guessExtension();
                 // Move the file to the directory where brochures are stored
                 try {
-                    $vignetteFile->move(
-                        $this->getParameter('vignette_directory'),
+                    $logoFileInput->move(
+                        $this->getParameter('college_directory'),
                         $newvignetteFilename
                     );
                 } catch (FileException $e) {
@@ -336,35 +363,38 @@ class CollegeController extends AbstractController
     {
         $user = $this->getUser();
 
-        $form = $this->createForm(CollegeType::class, $college);
+        $form = $this->createForm(CollegeEditType::class, $college);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            /** @var UploadedFile $banniereFile */
-            $banniereFile = $form->get('banniereFilename')->getData();
-            $vignetteFile = $form->get('vignetteFilename')->getData();
+            /** @var UploadedFile $headerFile */
+            $headerFileInput = $form->get('headerFile')->getData();
+            $logoFileInput = $form->get('logoFile')->getData();
 
-            if ($banniereFile) {
+            if ($headerFileInput) {
                 // Effacement du fichier bannièreFileName si il est présent en BDD
                 // récupération du nom de l'image
-                $banniereImageName = $college->getBanniereFilename();
+                $headerName = $college->getHeaderName();
                 // suppression du Fichier
-                if($banniereImageName){
-                    $filesystem = new Filesystem();
-                    $path = $this->getParameter('banniere_directory').'/public/uploads/images/colleges/'.$banniereImageName;
-                    $filesystem->remove($path);
+                if($headerName){
+
+                    $pathheader = $this->getParameter('college_directory').'/'.$headerName;
+                    // On vérifie si l'image existe
+                    if(file_exists($pathheader)){
+                        unlink($pathheader);
+                    }
                 }
                 // Ajout de la nouvelle bannière
-                $originalbanniereFilename = pathinfo($banniereFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $originalbanniereFilename = pathinfo($headerFileInput->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safebanniereFilename = $slugger->slug($originalbanniereFilename);
-                $newbanniereFilename = $safebanniereFilename . '-' . uniqid() . '.' . $banniereFile->guessExtension();
+                $newbanniereFilename = $safebanniereFilename . '-' . uniqid() . '.' . $headerFileInput->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $banniereFile->move(
-                        $this->getParameter('banniere_directory'),
+                    $headerFile->move(
+                        $this->getParameter('college_directory'),
                         $newbanniereFilename
                     );
                 } catch (FileException $e) {
@@ -376,25 +406,27 @@ class CollegeController extends AbstractController
                 $college->setBanniereFilename($newbanniereFilename);
             }
 
-            if ($vignetteFile) {
+            if ($logoFileInput) {
                 // Effacement du fichier bannièreFileName si il est présent en BDD
                 // récupération du nom de l'image
-                $vignetteImageName = $college->getVignetteFilename();
+                $logoName = $college->getLogoName();
                 // suppression du Fichier
-                if($vignetteImageName){
-                    $filesystem = new Filesystem();
-                    $path = $this->getParameter('vignette_directory').'/public/uploads/images/colleges/'.$vignetteImageName;
-                    $filesystem->remove($path);
+                if($logoName){
+                    $pathlogo = $this->getParameter('college_directory').'/'.$logoName;
+                    // On vérifie si l'image existe
+                    if(file_exists($pathlogo)){
+                        unlink($pathlogo);
+                    }
                 }
 
-                $originalvignetteFilename = pathinfo($vignetteFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $originalvignetteFilename = pathinfo($logoFileInput->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safevignetteFilename = $slugger->slug($originalvignetteFilename);
-                $newvignetteFilename = $safevignetteFilename . '-' . uniqid() . '.' . $vignetteFile->guessExtension();
+                $newvignetteFilename = $safevignetteFilename . '-' . uniqid() . '.' . $logoFileInput->guessExtension();
                 // Move the file to the directory where brochures are stored
                 try {
-                    $vignetteFile->move(
-                        $this->getParameter('vignette_directory'),
+                    $logoFileInput->move(
+                        $this->getParameter('college_directory'),
                         $newvignetteFilename
                     );
                 } catch (FileException $e) {
@@ -440,21 +472,24 @@ class CollegeController extends AbstractController
             // on instancie la classe de gestion des entités
             $entityManager = $this->getDoctrine()->getManager();
 
-            // récupération du nom de l'image
-            $banniereImageName = $college->getBanniereFilename();
-
-            //If there is a old logo we need to detele it
-            if($banniereImageName){
-                $filesystem = new Filesystem();
-                $path = $this->getTargetDirectory().'/public/uploads/images/colleges/' . $banniereImageName;
-                $filesystem->remove($path);
+            // Récupération des noms des images enregistrées
+            $headerName = $college->getHeaderName();
+            $logoName = $college->getLogoName();
+            // Suppression de l'image physique liée à la bannière de l'établissement
+            if($headerName){
+                $pathheader = $this->getParameter('college_directory').'/'.$headerName;
+                // On vérifie si l'image existe
+                if(file_exists($pathheader)){
+                    unlink($pathheader);
+                }
             }
-
-            $vignetteImageName = $college->getVignetteFilename();
-            if($vignetteImageName){
-                $filesystem = new Filesystem();
-                $path = $this->getTargetDirectory().'/public/uploads/images/colleges/' . $vignetteImageName;
-                $filesystem->remove($path);
+            // Suppression de l'image physique liée à l'image de profil de l'établissement
+            if($logoName){
+                $pathlogo = $this->getParameter('college_directory').'/'.$logoName;
+                // On vérifie si l'image existe
+                if(file_exists($pathlogo)){
+                    unlink($pathlogo);
+                }
             }
 
             $entityManager->remove($college);

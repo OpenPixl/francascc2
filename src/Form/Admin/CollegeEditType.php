@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class CollegeType extends AbstractType
+class CollegeEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -58,6 +58,8 @@ class CollegeType extends AbstractType
                     ])
                 ],
             ])
+            ->add('isSupprHeader')
+            ->add('isSupprLogo')
         ;
     }
 
