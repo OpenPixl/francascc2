@@ -99,22 +99,21 @@ class CollegeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $headerFile */
+            $headerFile = $form->get('headerFile')->getData();
+            $logoFile = $form->get('logoFile')->getData();
 
-            /** @var UploadedFile $banniereFile */
-            $banniereFile = $form->get('banniereFilename')->getData();
-            $vignetteFile = $form->get('vignetteFilename')->getData();
-
-            if ($banniereFile) {
-                $originalbanniereFilename = pathinfo($banniereFile->getClientOriginalName(), PATHINFO_FILENAME);
+            if ($headerFile) {
+                $originalHeaderFilename = pathinfo($headerFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
-                $safebanniereFilename = $slugger->slug($originalbanniereFilename);
-                $newbanniereFilename = $safebanniereFilename . '-' . uniqid() . '.' . $banniereFile->guessExtension();
+                $safeHeaderFilename = $slugger->slug($originalHeaderFilename);
+                $newHeaderFilename = $safeHeaderFilename . '-' . uniqid() . '.' . $headerFile->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $banniereFile->move(
-                        $this->getParameter('banniere_directory'),
-                        $newbanniereFilename
+                    $headerFile->move(
+                        $this->getParameter('college_directory'),
+                        $newHeaderFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
@@ -122,19 +121,19 @@ class CollegeController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $college->setBanniereFilename($newbanniereFilename);
+                $college->setHeaderName($newHeaderFilename);
             }
 
-            if ($vignetteFile) {
-                $originalvignetteFilename = pathinfo($vignetteFile->getClientOriginalName(), PATHINFO_FILENAME);
+            if ($logoFile) {
+                $originallogoFilename = pathinfo($logoFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
-                $safevignetteFilename = $slugger->slug($originalvignetteFilename);
-                $newvignetteFilename = $safevignetteFilename . '-' . uniqid() . '.' . $vignetteFile->guessExtension();
+                $safelogoFilename = $slugger->slug($originallogoFilename);
+                $newlogoFilename = $safelogoFilename . '-' . uniqid() . '.' . $logoFile->guessExtension();
                 // Move the file to the directory where brochures are stored
                 try {
-                    $vignetteFile->move(
-                        $this->getParameter('vignette_directory'),
-                        $newvignetteFilename
+                    $logoFile->move(
+                        $this->getParameter('college_directory'),
+                        $newlogoFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
@@ -142,7 +141,7 @@ class CollegeController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $college->setVignetteFilename($newvignetteFilename);
+                $college->setLogoName($newlogoFilename);
             }
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -172,20 +171,20 @@ class CollegeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $banniereFile */
-            $banniereFile = $form->get('banniereFilename')->getData();
-            $vignetteFile = $form->get('vignetteFilename')->getData();
+            $headerFileName = $form->get('headerFile')->getData();
+            $logoFileName = $form->get('logoFile')->getData();
 
-            if ($banniereFile) {
-                $originalbanniereFilename = pathinfo($banniereFile->getClientOriginalName(), PATHINFO_FILENAME);
+            if ($headerFileName) {
+                $originalheaderFilename = pathinfo($headerFileName->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
-                $safebanniereFilename = $slugger->slug($originalbanniereFilename);
-                $newbanniereFilename = $safebanniereFilename . '-' . uniqid() . '.' . $banniereFile->guessExtension();
+                $safeheaderFileename = $slugger->slug($originalheaderFilename);
+                $newheaderFilename = $safeheaderFileename . '-' . uniqid() . '.' . $headerFileName->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $banniereFile->move(
-                        $this->getParameter('banniere_directory'),
-                        $newbanniereFilename
+                    $headerFileName->move(
+                        $this->getParameter('college_directory'),
+                        $newheaderFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
@@ -193,19 +192,19 @@ class CollegeController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $college->setBanniereFilename($newbanniereFilename);
+                $college->setHeaderName($newheaderFilename);
             }
 
-            if ($vignetteFile) {
-                $originalvignetteFilename = pathinfo($vignetteFile->getClientOriginalName(), PATHINFO_FILENAME);
+            if ($logoFileName) {
+                $originallogoFilename = pathinfo($logoFileName->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
-                $safevignetteFilename = $slugger->slug($originalvignetteFilename);
-                $newvignetteFilename = $safevignetteFilename . '-' . uniqid() . '.' . $vignetteFile->guessExtension();
+                $safelogoFilename = $slugger->slug($originallogoFilename);
+                $newlogoFilename = $safelogoFilename . '-' . uniqid() . '.' . $logoFileName->guessExtension();
                 // Move the file to the directory where brochures are stored
                 try {
-                    $vignetteFile->move(
-                        $this->getParameter('vignette_directory'),
-                        $newvignetteFilename
+                    $logoFileName->move(
+                        $this->getParameter('college_directory'),
+                        $newlogoFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
@@ -213,7 +212,7 @@ class CollegeController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $college->setVignetteFilename($newvignetteFilename);
+                $college->setLogoName($newlogoFilename);
             }
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -291,16 +290,16 @@ class CollegeController extends AbstractController
                     }
                 }
                 // Ajout de la nouvelle bannière
-                $originalbanniereFilename = pathinfo($headerFileInput->getClientOriginalName(), PATHINFO_FILENAME);
+                $originalheaderFilename = pathinfo($headerFileInput->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
-                $safebanniereFilename = $slugger->slug($originalbanniereFilename);
-                $newbanniereFilename = $safebanniereFilename . '-' . uniqid() . '.' . $headerFileInput->guessExtension();
+                $safeheaderFilename = $slugger->slug($originalheaderFilename);
+                $newheaderFilename = $safeheaderFilename . '-' . uniqid() . '.' . $headerFileInput->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $headerFile->move(
+                    $headerFileInput->move(
                         $this->getParameter('college_directory'),
-                        $newbanniereFilename
+                        $newheaderFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
@@ -308,7 +307,7 @@ class CollegeController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $college->setBanniereFilename($newbanniereFilename);
+                $college->setHeaderName($newheaderFilename);
             }
 
             if ($logoFileInput) {
@@ -324,15 +323,15 @@ class CollegeController extends AbstractController
                     }
                 }
 
-                $originalvignetteFilename = pathinfo($logoFileInput->getClientOriginalName(), PATHINFO_FILENAME);
+                $originallogoFilename = pathinfo($logoFileInput->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
-                $safevignetteFilename = $slugger->slug($originalvignetteFilename);
-                $newvignetteFilename = $safevignetteFilename . '-' . uniqid() . '.' . $logoFileInput->guessExtension();
+                $safelogoFilename = $slugger->slug($originallogoFilename);
+                $newlogoFilename = $safelogoFilename . '-' . uniqid() . '.' . $logoFileInput->guessExtension();
                 // Move the file to the directory where brochures are stored
                 try {
                     $logoFileInput->move(
                         $this->getParameter('college_directory'),
-                        $newvignetteFilename
+                        $newlogoFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
@@ -340,7 +339,7 @@ class CollegeController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $college->setVignetteFilename($newvignetteFilename);
+                $college->setLogoName($newlogoFilename);
             }
 
             $this->getDoctrine()->getManager()->flush();
@@ -386,16 +385,16 @@ class CollegeController extends AbstractController
                     }
                 }
                 // Ajout de la nouvelle bannière
-                $originalbanniereFilename = pathinfo($headerFileInput->getClientOriginalName(), PATHINFO_FILENAME);
+                $originalheaderFilename = pathinfo($headerFileInput->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
-                $safebanniereFilename = $slugger->slug($originalbanniereFilename);
-                $newbanniereFilename = $safebanniereFilename . '-' . uniqid() . '.' . $headerFileInput->guessExtension();
+                $safeheaderFilename = $slugger->slug($originalheaderFilename);
+                $newheaderFilename = $safeheaderFilename . '-' . uniqid() . '.' . $headerFileInput->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 try {
-                    $headerFile->move(
+                    $headerFileInput->move(
                         $this->getParameter('college_directory'),
-                        $newbanniereFilename
+                        $newheaderFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
@@ -403,7 +402,7 @@ class CollegeController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $college->setBanniereFilename($newbanniereFilename);
+                $college->setHeaderName($newheaderFilename);
             }
 
             if ($logoFileInput) {
@@ -419,15 +418,15 @@ class CollegeController extends AbstractController
                     }
                 }
 
-                $originalvignetteFilename = pathinfo($logoFileInput->getClientOriginalName(), PATHINFO_FILENAME);
+                $originallogoFilename = pathinfo($logoFileInput->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
-                $safevignetteFilename = $slugger->slug($originalvignetteFilename);
-                $newvignetteFilename = $safevignetteFilename . '-' . uniqid() . '.' . $logoFileInput->guessExtension();
+                $safelogoFilename = $slugger->slug($originallogoFilename);
+                $newlogoFilename = $safelogoFilename . '-' . uniqid() . '.' . $logoFileInput->guessExtension();
                 // Move the file to the directory where brochures are stored
                 try {
                     $logoFileInput->move(
                         $this->getParameter('college_directory'),
-                        $newvignetteFilename
+                        $newlogoFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
@@ -435,7 +434,7 @@ class CollegeController extends AbstractController
 
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
-                $college->setVignetteFilename($newvignetteFilename);
+                $college->setLogoName($newlogoFilename);
             }
 
             $this->getDoctrine()->getManager()->flush();

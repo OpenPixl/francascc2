@@ -5,8 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 
 parameters:
-    banniere_directory: '%kernel.project_dir%/public/uploads/images/colleges'
-    vignette_directory: '%kernel.project_dir%/public/uploads/images/colleges'
+    college_directory: '%kernel.project_dir%/public/uploads/images/colleges'
 
 services:
     # default configuration for services in *this* file

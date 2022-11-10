@@ -151,18 +151,6 @@ class College
      */
     private $headerSize;
 
-    // vignette
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $vignetteFilename;
-
-    // banniere
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $banniereFilename;
-
     /**
      * @ORM\Column(type="datetime", nullable=true)
      *
@@ -335,30 +323,6 @@ class College
     public function setAnimateur(?string $animateur): self
     {
         $this->animateur = $animateur;
-
-        return $this;
-    }
-
-    public function getBanniereFilename()
-    {
-        return $this->banniereFilename;
-    }
-
-    public function setBanniereFilename($banniereFilename)
-    {
-        $this->banniereFilename = $banniereFilename;
-
-        return $this;
-    }
-
-    public function getVignetteFilename()
-    {
-        return $this->vignetteFilename;
-    }
-
-    public function setVignetteFilename($vignetteFilename)
-    {
-        $this->vignetteFilename = $vignetteFilename;
 
         return $this;
     }

@@ -159,10 +159,17 @@
                                 {{ form_errors(form.headerFile) }}
                             </div>
                         </div>
-                        {% if college.headerFile is not null %}
-                            <div class="col-9 offset-3">
-                                <img class="img-fluid" src="{{ asset('uploads/images/colleges/' ~ college.headerFile) }}" alt="{{ college.headerFile }}">
+                        {% if college.headerName is not null %}
+
+                            <div class="col-9 offset-2">
+                                <img class="img-fluid" src="{{ asset('uploads/images/colleges/' ~ college.headerName) }}" alt="{{ college.headerName }}">
                             </div>
+                            {% if app.request.attributes.get('_route') == 'op_admin_college_edit' or app.request.attributes.get('_route') == 'op_webapp_college_edit' %}
+                                <div class="text-center col-8">
+                                    {{ form_label(form.isSupprHeader, "Supprimer la bannière ") }}
+                                    {{ form_widget(form.isSupprHeader) }}
+                                </div>
+                            {% endif %}
                         {% endif %}
                     </div>
 
@@ -175,10 +182,16 @@
                                 {{ form_errors(form.logoFile) }}
                             </div>
                         </div>
-                        {% if college.logoFile is not null %}
-                        <div class="col-3 offset-3">
-                            <img class="img-fluid" src="{{ asset('uploads/images/colleges/' ~ college.logoFile) }}" alt="{{ college.logoFile }}">
+                        {% if college.logoName is not null %}
+                        <div class="col-3 offset-4">
+                            <img class="img-fluid" src="{{ asset('uploads/images/colleges/' ~ college.logoName) }}" alt="{{ college.logoName }}">
                         </div>
+                            {% if app.request.attributes.get('_route') == 'op_admin_college_edit' or app.request.attributes.get('_route') == 'op_webapp_college_edit' %}
+                                <div class="text-center col-8">
+                                    {{ form_label(form.isSupprLogo, "Supprimer le logo ") }}
+                                    {{ form_widget(form.isSupprLogo) }}
+                                </div>
+                            {% endif %}
                         {% endif %}
                     </div>
 
