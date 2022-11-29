@@ -14,6 +14,7 @@ use App\Repository\Webapp\RessourcesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -367,8 +368,38 @@ class CollegeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            /** @var UploadedFile $headerFile */
+            // Suppression directe de la bannière
+            $supprHeaderInput = $form->get('isSupprHeader')->getData();
+            if($supprHeaderInput && $supprHeaderInput == true){
+                // récupération du nom de l'image
+                $headerName = $college->getHeaderName();
+                $pathheader = $this->getParameter('college_directory').'/'.$headerName;
+                // On vérifie si l'image existe
+                if(file_exists($pathheader)){
+                    unlink($pathheader);
+                }
+                $college->setHeaderName(null);
+                $college->setIsSupprHeader(0);
+            }
+
+            // Suppression directe du logo
+            $supprLogoInput = $form->get('isSupprLogo')->getData();
+            if($supprLogoInput && $supprLogoInput == true){
+                // récupération du nom de l'image
+                $logoName = $college->getLogoName();
+                $pathheader = $this->getParameter('college_directory').'/'.$logoName;
+                // On vérifie si l'image existe
+                if(file_exists($pathheader)){
+                    unlink($pathheader);
+                }
+                $college->setLogoName(null);
+                $college->setIsSupprLogo(0);
+            }
+
+            // si on change de photo
+            /** @var UploadedFile $headerFile **/
             $headerFileInput = $form->get('headerFile')->getData();
+            /** @var UploadedFile $logoFile **/
             $logoFileInput = $form->get('logoFile')->getData();
 
             if ($headerFileInput) {
@@ -377,7 +408,6 @@ class CollegeController extends AbstractController
                 $headerName = $college->getHeaderName();
                 // suppression du Fichier
                 if($headerName){
-
                     $pathheader = $this->getParameter('college_directory').'/'.$headerName;
                     // On vérifie si l'image existe
                     if(file_exists($pathheader)){
@@ -436,6 +466,8 @@ class CollegeController extends AbstractController
                 // instead of its contents
                 $college->setLogoName($newlogoFilename);
             }
+
+            //dd($college);
 
             $this->getDoctrine()->getManager()->flush();
 
