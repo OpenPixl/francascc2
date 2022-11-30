@@ -364,6 +364,7 @@ class CollegeController extends AbstractController
         $user = $this->getUser();
 
         $form = $this->createForm(CollegeEditType::class, $college);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

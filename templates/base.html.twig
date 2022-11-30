@@ -29,6 +29,14 @@
     <main>
         {% block body %}
         {% endblock %}
+        <section id="spinner" class="d-none">
+            <div class="d-flex justify-content-center align-items-center">
+                <div>Veuillez patienter ... &nbsp;</div>
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </section>
     </main>
     <footer>
     {% block Modals %}

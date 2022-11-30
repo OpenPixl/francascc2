@@ -7,13 +7,21 @@
     <script>
         window.onload = function(){
             ClassicEditor
-                .create(document.querySelector('#college_GroupDescription'), {
+                .create(document.querySelector('#college_edit_GroupDescription'), {
                     toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'indent', 'alignment' ],
                     height: 50
                 })
                 .catch(error => {
                     console.error(error);
                 });
+            // sélection du div contenant le spinneur
+            const spinner = document.getElementById('spinner')
+
+            const button = document.querySelector('button.btn');
+            button.addEventListener('click', event => {
+                button.classList.remove('d-none')
+                console.log('Ok')
+            });
         }
     </script>
 {% endblock %}
