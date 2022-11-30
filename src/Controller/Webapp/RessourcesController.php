@@ -138,7 +138,9 @@ class RessourcesController extends AbstractController
             $entityManager->persist($ressource);
             $entityManager->flush();
 
-            return $this->redirectToRoute('op_webapp_ressources_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('op_webapp_ressources_index', [
+                'id' => $college->getId()
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('webapp/ressources/newressourcebycollege.html.twig', [
