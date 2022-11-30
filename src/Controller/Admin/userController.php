@@ -148,7 +148,6 @@ class userController extends AbstractController
     public function Del(Request $request, User $user) : Response
     {
         $articles = $this->getDoctrine()->getRepository(Articles::class)->find($user->getArticles());
-        dd($articles);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($user);
         $entityManager->flush();
