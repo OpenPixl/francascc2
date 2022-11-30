@@ -169,6 +169,8 @@
                                     {{ form_widget(form.isSupprHeader) }}
                                 </div>
                             {% endif %}
+                        {% else %}
+                            {{ form_widget(form.isSupprHeader, {'attr': {'class': 'd-none'}}) }}
                         {% endif %}
                     </div>
 
@@ -191,6 +193,8 @@
                                     {{ form_widget(form.isSupprLogo) }}
                                 </div>
                             {% endif %}
+                        {% else %}
+                            {{ form_widget(form.isSupprLogo, {'attr': {'class': 'd-none'}}) }}
                         {% endif %}
                     </div>
 
