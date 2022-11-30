@@ -4,6 +4,7 @@ namespace App\Form\Admin;
 
 use App\Entity\Admin\College;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -59,6 +60,8 @@ class CollegeType extends AbstractType
                     ])
                 ],
             ])
+            ->add('isSupprHeader')
+            ->add('isSupprLogo')
         ;
     }
 
