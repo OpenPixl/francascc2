@@ -44,7 +44,6 @@ class CollegeEditType extends AbstractType
                     ])
                 ],
             ])
-            // ...
             ->add('logoFile', FileType::class, [
                 'label' => 'vignette au format : jpg ou png',
                 'mapped' => false,
@@ -61,9 +60,7 @@ class CollegeEditType extends AbstractType
                     ])
                 ],
             ])
-            ->add('isSupprHeader', CheckboxType::class, [
-                
-            ])
+            ->add('isSupprHeader')
             ->add('isSupprLogo')
         ;
     }

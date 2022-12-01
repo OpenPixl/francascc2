@@ -30,7 +30,6 @@ class userType extends AbstractType
             ->add('firstName')
             ->add('lastName')
             ->add('loginName')
-            ->add('avatarFile')
             ->add('adress1')
             ->add('adress2')
             ->add('zipcode')
