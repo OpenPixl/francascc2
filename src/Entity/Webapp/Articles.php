@@ -18,6 +18,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ArticlesRepository::class)
+ * @ORM\Table(name="articles", indexes={@ORM\Index(columns={"title"}, flags={"fulltext"})})
  * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable()
  */

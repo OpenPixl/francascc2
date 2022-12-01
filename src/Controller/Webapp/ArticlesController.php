@@ -7,6 +7,7 @@ use App\Entity\Webapp\Articles;
 use App\Entity\Webapp\Section;
 use App\Form\Webapp\ArticlesType;
 use App\Form\Webapp\Articles2Type;
+use App\Form\Webapp\SearcharticleType;
 use App\Repository\Webapp\ArticlesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -19,7 +20,7 @@ class ArticlesController extends AbstractController
 {
     /**
      * Liste dans l'admin tous les articles
-     * @Route("/webapp/articles/", name="op_webapp_articles_index", methods={"GET"})
+     * @Route("/webapp/articles/", name="op_webapp_articles_index", methods={"GET", "POST"})
      */
     public function index(ArticlesRepository $articlesRepository, PaginatorInterface $paginator, Request $request): Response
     {
@@ -29,9 +30,24 @@ class ArticlesController extends AbstractController
             $request->query->getInt('page', 1),
             15
         );
+
+        $form = $this->createForm(SearcharticleType::class);
+        $search = $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $data2 = $articlesRepository->searchArticles($search->get('title')->getData());
+            $articles = $paginator->paginate(
+                $data2,
+                $request->query->getInt('page', 1),
+                15
+            );
+        }
+
+
         return $this->render('webapp/articles/index.html.twig', [
             'articles' => $articles,
             'page' => $request->query->getInt('page', 1),
+            'form' => $form->createView()
 
         ]);
     }

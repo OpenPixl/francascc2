@@ -165,4 +165,18 @@ class ArticlesRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
             ;
     }
+
+    /**
+     * Recherche les articles a partir du moteur de recherche
+     * @return void
+     */
+    public function searchArticles($title){
+        $query = $this->createQueryBuilder("a");
+        if($title != null){
+            $query
+                ->andWhere('MATCH_AGAINST(a.title) AGAINST (:title boolean)>0')
+                ->setParameter('title', $title);
+        }
+        return $query->getQuery()->getResult();
+    }
 }

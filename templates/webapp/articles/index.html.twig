@@ -105,7 +105,33 @@
                                     <p>Créer, Modifier ou supprimer des articles du site</p>
                                 </div>
                                 <div id="op_actions">
-                                    <button class="btn btn-sm btn-outline-secondary">Supprimer</button>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            {{ form_start(form) }}
+                                            <div class="form-row">
+                                                <div class="col">
+                                                    <div class="form-group row g-1">
+                                                        <div class="col-sm-9">
+                                                            {{ form_widget(form.title) }}
+                                                            <small>{{ form_help(form.title) }}</small>
+                                                            <div class="form-error">
+                                                                {{ form_errors(form.title) }}
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="col-sm-3">
+                                                                {{ form_widget(form.go) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{ form_end(form) }}
+                                        </div>
+                                        <div class="col-6">
+                                            <button class="btn btn-sm btn-outline-secondary">Supprimer</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div id="liste">
