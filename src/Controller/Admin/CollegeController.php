@@ -45,7 +45,7 @@ class CollegeController extends AbstractController
     }
 
     /**
-     * @Route("/webapp/college/articles/{iduser}", name="op_webapp_college_espace_article", methods={"GET"})
+     * @Route("/espcoll/college/articles/{iduser}", name="op_webapp_college_espace_article", methods={"GET"})
      */
     public function collegebyuser(CollegeRepository $collegeRepository, Request $request): Response
     {
@@ -263,7 +263,7 @@ class CollegeController extends AbstractController
     }
 
     /**
-     * @Route("/op_admin/college/{id}/edit", name="op_admin_college_edit", methods={"GET","POST"})
+     * @Route("/espcoll/college/{id}/edit", name="op_admin_college_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, College $college, SluggerInterface $slugger): Response
     {
@@ -357,7 +357,7 @@ class CollegeController extends AbstractController
     }
 
     /**
-     * @Route("/webapp/college/{id}/editcollege", name="op_webapp_college_edit", methods={"GET","POST"})
+     * @Route("/espcoll/college/{id}/editcollege", name="op_webapp_college_edit", methods={"GET","POST"})
      */
     public function editCollege(Request $request, College $college, SluggerInterface $slugger): Response
     {

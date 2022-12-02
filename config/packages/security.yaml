@@ -40,4 +40,5 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/op_admin/resetting, roles: ROLE_USER}
+        - { path: ^/espcoll, roles: ROLE_USER}
         # - { path: ^/profile, roles: ROLE_USER }
