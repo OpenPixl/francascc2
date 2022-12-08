@@ -1,4 +1,47 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="row">
+    <div class="col-12">
+        <div class="form-group row mt-1 mb-1">
+            {{ form_label(form.name, "Nom du site", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+            <div class="col-sm-9">
+                {{ form_widget(form.name, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <small>{{ form_help(form.name) }}</small>
+                <div class="form-error">
+                    {{ form_errors(form.name) }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group row mt-1 mb-1">
+            {{ form_label(form.description, "Description du site", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+            <div class="col-sm-9">
+                {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <small>{{ form_help(form.description) }}</small>
+                <div class="form-error">
+                    {{ form_errors(form.description) }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group row mt-1 mb-1">
+            {{ form_label(form.isOffline, "En ligne", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+            <div class="col-sm-9">
+                {{ form_widget(form.isOffline, {'attr': {'class': ''}}) }}
+                <small>{{ form_help(form.isOffline) }}</small>
+                <div class="form-error">
+                    {{ form_errors(form.isOffline) }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group row mt-1 mb-1">
+            {{ form_label(form.headerFile, "Image du site", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+            <div class="col-sm-9">
+                {{ form_widget(form.headerFile, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <small>{{ form_help(form.headerFile) }}</small>
+                <div class="form-error">
+                    {{ form_errors(form.headerFile) }}
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-sm btn-primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+</div>
 {{ form_end(form) }}

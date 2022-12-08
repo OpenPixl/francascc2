@@ -16,23 +16,23 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    {{ include('admin/college/include/_section_content_header.html.twig') }}
-    <section id="op_admin_content_body">
-        <div class="row g-2">
-            {{ include('admin/college/include/_section_content_aside.html.twig') }}
-            <div class="col-10">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Modifier college</h3>
+    <div class="container-fluid">
+        {{ include('admin/college/include/_section_content_header.html.twig') }}
+        <section id="op_admin_content_body">
+            <div class="row g-2">
+                {{ include('admin/college/include/_section_content_aside.html.twig') }}
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Modifier college</h3>
+                        </div>
+                        {{ include('admin/college/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
                     </div>
-                    {{ include('admin/college/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                    {{ include('admin/college/_delete_form.html.twig') }}
                 </div>
-                {{ include('admin/college/_delete_form.html.twig') }}
             </div>
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
 {% endblock %}
 
 
