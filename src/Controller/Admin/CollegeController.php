@@ -263,7 +263,7 @@ class CollegeController extends AbstractController
     }
 
     /**
-     * @Route("/espcoll/college/{id}/edit", name="op_admin_college_edit", methods={"GET","POST"})
+     * @Route("/espcoll/college/{id}/edit", name="op_espcoll_college_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, College $college, SluggerInterface $slugger): Response
     {
@@ -345,7 +345,7 @@ class CollegeController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('op_admin_college_edit',[
+            return $this->redirectToRoute('op_espcoll_college_edit',[
                 'id' => $college->getId(),
             ]);
         }
@@ -357,9 +357,9 @@ class CollegeController extends AbstractController
     }
 
     /**
-     * @Route("/espcoll/college/{id}/editcollege", name="op_webapp_college_edit", methods={"GET","POST"})
+     * @Route("/admin/college/{id}/editcollege", name="op_admin_college_edit", methods={"GET","POST"})
      */
-    public function editCollege(Request $request, College $college, SluggerInterface $slugger): Response
+    public function editCollegeAdmin(Request $request, College $college, SluggerInterface $slugger): Response
     {
         $user = $this->getUser();
 
@@ -472,7 +472,7 @@ class CollegeController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('op_webapp_college_edit',[
+            return $this->redirectToRoute('op_admin_college_edit',[
                // 'id' => $user->getId(),
                 'id' => $college->getId(),
             ]);

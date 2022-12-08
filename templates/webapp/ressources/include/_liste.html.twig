@@ -13,7 +13,7 @@
             <tr>
                 <td><input id="ressourcesId" type="checkbox" value="{{ ressource.id }}"></td>
                 <td>{{ ressource.name }}</td>
-                <td>{{ ressource.content }}</td>
+                <td>{{ ressource.content | u.truncate(200, '...') | raw }}</td>
                 <td>
                     <a href="{{ path('op_webapp_ressources_show', {'id': ressource.id}) }}"><i class="far fa-eye"></i></a>
                     <a href="{{ path('op_webapp_ressources_edit', {'id': ressource.id}) }}"><i class="far fa-edit"></i></a>

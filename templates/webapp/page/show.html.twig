@@ -190,27 +190,23 @@
                                         <td>{{ page.id }}<input id="page" type="hidden" value="{{ page.id }}"></td>
                                     </tr>
                                     <tr>
-                                        <th>Title</th>
-                                        <td>{{ page.title }}</td>
+                                        <th>Titre</th>
+                                        <td>{{ page.title }} - {{ page.slug }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Slug</th>
-                                        <td>{{ page.slug }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>State</th>
+                                        <th>Etat</th>
                                         <td>{{ page.state }}</td>
                                     </tr>
                                     <tr>
-                                        <th>IsMenu</th>
+                                        <th>La page est un menu ?</th>
                                         <td>{{ page.isMenu ? '<p class="text-success"><i class="far fa-check-circle"></i></p>' : '<p class="text-danger"><i class="far fa-times-circle"></i></p>' }}</td>
                                     </tr>
                                     <tr>
-                                        <th>MetaKeywords</th>
+                                        <th>Mots clefs</th>
                                         <td>{{ page.metaKeywords ? page.metaKeywords|join(', ') : '' }}</td>
                                     </tr>
                                     <tr>
-                                        <th>MetaDescription</th>
+                                        <th>Description</th>
                                         <td>{{ page.metaDescription }}</td>
                                     </tr>
                                     <tr>
@@ -218,19 +214,11 @@
                                         <td>{{ page.tags ? page.tags|join(', ') : '' }}</td>
                                     </tr>
                                     <tr>
-                                        <th>PublishAt</th>
-                                        <td>{{ page.publishAt ? page.publishAt|date('Y-m-d H:i:s') : '' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>PublishEnd</th>
-                                        <td>{{ page.publishEnd ? page.publishEnd|date('Y-m-d') : '' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>CreateAt</th>
+                                        <th>Créée le :</th>
                                         <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                                     </tr>
                                     <tr>
-                                        <th>UpdateAt</th>
+                                        <th>Mise à jour le :</th>
                                         <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                                     </tr>
                                     </tbody>

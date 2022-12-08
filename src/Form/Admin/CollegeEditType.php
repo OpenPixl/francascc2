@@ -62,6 +62,7 @@ class CollegeEditType extends AbstractType
             ])
             ->add('isSupprHeader')
             ->add('isSupprLogo')
+            ->add('user')
         ;
     }
 
