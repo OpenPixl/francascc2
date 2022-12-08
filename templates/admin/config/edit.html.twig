@@ -1,8 +1,18 @@
 {% extends 'admin.html.twig' %}
 
-{% block title %}Edit Config{% endblock %}
+{% block title %}Collégiens-Citoyens{% endblock %}
 
 {% block content %}
-    <h1>Edit Config</h1>
-    {{ include('admin/config/_form.html.twig', {'button_label': 'Update'}) }}
+    <div class="container-fluid">
+        {{ include('admin/config/include/_section_content_header.html.twig') }}
+        <section id="op_admin_content_body">
+            <div class="row g-2">
+                <div class="col-12">
+                    <div class="card">
+                        {{ include('admin/config/_form.html.twig', {'button_label': 'Mettre à jour les paramètres'}) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 {% endblock %}
