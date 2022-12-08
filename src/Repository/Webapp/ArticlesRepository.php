@@ -172,6 +172,7 @@ class ArticlesRepository extends ServiceEntityRepository
      */
     public function searchArticles($title){
         $query = $this->createQueryBuilder("a");
+        $query = join('a.college', 'c');
         if($title != null){
             $query
                 ->andWhere('MATCH_AGAINST(a.title) AGAINST (:title boolean)>0')
