@@ -99,12 +99,12 @@
                 <div class="col-10">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <div>
+                            <div class="row">
+                                <div class="col-4">
                                     <h4>Liste des articles</h4>
                                     <p>Créer, Modifier ou supprimer des articles du site</p>
                                 </div>
-                                <div id="op_actions">
+                                <div id="op_actions" class="col-6">
                                     <div class="row">
                                         <div class="col-6">
                                             {{ form_start(form) }}
@@ -122,15 +122,20 @@
 
                                                         </div>
                                                         <div class="col-sm-9">
-
+                                                            {{ form_widget(form.title) }}
+                                                            {{ form_widget(form.go) }}
                                                             <small>{{ form_help(form.title) }}</small>
 
 
                                                             <div class="form-error">
                                                                 {{ form_errors(form.title) }}
                                                             </div>
+
                                                         </div>
                                                         <div>
+                                                            <div class="col-sm-3">
+
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
