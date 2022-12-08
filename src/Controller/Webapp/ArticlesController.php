@@ -53,7 +53,7 @@ class ArticlesController extends AbstractController
     }
 
     /**
-     * @Route("/webapp/articles/new", name="op_webapp_articles_new", methods={"GET","POST"})
+     * @Route("/espcoll/articles/new", name="op_webapp_articles_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -126,7 +126,7 @@ class ArticlesController extends AbstractController
     }
 
     /**
-     * @Route("/webapp/articles/{id}/edit", name="op_webapp_articles_edit", methods={"GET","POST"})
+     * @Route("/espcoll/articles/{id}/edit", name="op_webapp_articles_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Articles $article): Response
     {

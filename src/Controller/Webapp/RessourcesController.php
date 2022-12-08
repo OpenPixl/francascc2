@@ -121,7 +121,7 @@ class RessourcesController extends AbstractController
     }
 
     /**
-     * @Route("/admin/ressources/collegenew/{idcollege}", name="op_webapp_ressources_collegenew", methods={"GET","POST"})
+     * @Route("/espcoll/ressources/collegenew/{idcollege}", name="op_webapp_ressources_collegenew", methods={"GET","POST"})
      */
     public function collegeNew($idcollege, Request $request): Response
     {

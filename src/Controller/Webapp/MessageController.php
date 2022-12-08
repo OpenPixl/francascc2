@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/webapp/message", name="op_webapp_message")
+ * @Route("/espcoll/message", name="op_webapp_message")
  */
 class MessageController extends AbstractController
 {
