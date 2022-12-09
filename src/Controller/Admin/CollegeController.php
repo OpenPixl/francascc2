@@ -269,7 +269,7 @@ class CollegeController extends AbstractController
     {
         $user = $this->getUser();
 
-        $form = $this->createForm(CollegeEditType::class, $college);
+        $form = $this->createForm(CollegeType::class, $college);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -350,7 +350,7 @@ class CollegeController extends AbstractController
             ]);
         }
 
-        return $this->render('admin/college/edit.html.twig', [
+        return $this->render('espacecollege/editcollege.html.twig', [
             'college' => $college,
             'form' => $form->createView(),
         ]);

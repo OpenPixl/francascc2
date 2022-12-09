@@ -23,10 +23,9 @@ class ArticlesType extends AbstractType
             ->add('title',TextType::class,[
                 'label'=> 'titre',
             ])
-
-            ->add('isShowReadMore')
             ->add('content',TextareaType::class,[
                 'label'=> "Contenu de l'article",
+                'required' => false
             ])
             ->add('theme',EntityType::class,[
                 'class' => Theme::class,
@@ -42,9 +41,10 @@ class ArticlesType extends AbstractType
             ])
             ->add('imageFile', VichImageType::class, ['required' => false,])
             ->add('docFile', VichFileType::class, ['required' => false,])
+            ->add('isShowReadMore')
             ->add('category')
-
         ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -43,12 +43,10 @@ class ArticlesController extends AbstractController
             );
         }
 
-
         return $this->render('webapp/articles/index.html.twig', [
             'articles' => $articles,
             'page' => $request->query->getInt('page', 1),
             'form' => $form->createView()
-
         ]);
     }
 
@@ -58,6 +56,7 @@ class ArticlesController extends AbstractController
     public function new(Request $request): Response
     {
         $user = $this->getUser();
+
         // récupération de l'objet college
         $college = $this
             ->getDoctrine()
@@ -96,8 +95,16 @@ class ArticlesController extends AbstractController
     {
         $user = $this->getUser();
 
+        // récupération de l'objet college
+        $college = $this
+            ->getDoctrine()
+            ->getRepository(College::class)
+            ->CollegeByUser($user);
+
         $article = new Articles();
         $article->setAuthor($user);
+        $article->setCollege($college);
+
         $form = $this->createForm(ArticlesType::class, $article);
         $form->handleRequest($request);
 
@@ -106,11 +113,14 @@ class ArticlesController extends AbstractController
             $entityManager->persist($article);
             $entityManager->flush();
 
-            return $this->redirectToRoute('op_webapp_articles_index');
+            return $this->redirectToRoute('op_webapp_articles_index', [
+                'iduser' => $user->getId(),
+            ]);
         }
 
         return $this->render('webapp/articles/newadmin.html.twig', [
             'article' => $article,
+            'college' =>$college,
             'form' => $form->createView(),
         ]);
     }

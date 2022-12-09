@@ -66,6 +66,7 @@ class Articles
 
     /**
      * @ORM\ManyToOne(targetEntity=College::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $college;
 
