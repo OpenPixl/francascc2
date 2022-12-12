@@ -2,6 +2,8 @@
 
 namespace App\Form\Webapp;
 
+use App\Entity\Admin\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -20,6 +22,14 @@ class SearcharticleType extends AbstractType
                     'class' => 'form-control form-control-sm',
                     'placeholder' => 'Rechercher'
                 ]
+            ])
+            ->add('author', EntityType::class, [
+                'class' => User::class,
+                'label' => 'author',
+                'attr' => [
+                    'class' => 'form-control form-control-sm'
+                ],
+                'required' => false
             ])
             ->add('go', SubmitType::class, [
                 'attr' => [

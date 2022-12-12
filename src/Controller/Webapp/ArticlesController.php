@@ -35,7 +35,10 @@ class ArticlesController extends AbstractController
         $search = $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $data2 = $articlesRepository->searchArticles($search->get('title')->getData());
+            $data2 = $articlesRepository->searchArticles(
+                $search->get('title')->getData(),
+                $search->get('author')->getData()
+            );
             $articles = $paginator->paginate(
                 $data2,
                 $request->query->getInt('page', 1),

@@ -170,13 +170,17 @@ class ArticlesRepository extends ServiceEntityRepository
      * Recherche les articles a partir du moteur de recherche
      * @return void
      */
-    public function searchArticles($title){
+    public function searchArticles($title = null, $author = null){
         $query = $this->createQueryBuilder("a");
-        $query = join('a.college', 'c');
         if($title != null){
             $query
                 ->andWhere('MATCH_AGAINST(a.title) AGAINST (:title boolean)>0')
                 ->setParameter('title', $title);
+        }
+        if($author !=null){
+            $query->join('a.author', 'u');
+            $query->andWhere('u.id = :id')
+                ->setParameter('id', $author);
         }
         return $query->getQuery()->getResult();
     }
