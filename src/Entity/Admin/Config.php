@@ -103,6 +103,21 @@ class Config
      */
     private $isShowTitleSiteHome = false;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $vignetteFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $vignetteName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $vignetteSize;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -257,6 +272,42 @@ class Config
     public function setIsShowTitleSiteHome(bool $isShowTitleSiteHome): self
     {
         $this->isShowTitleSiteHome = $isShowTitleSiteHome;
+
+        return $this;
+    }
+
+    public function getVignetteFile(): ?string
+    {
+        return $this->vignetteFile;
+    }
+
+    public function setVignetteFile(string $vignetteFile): self
+    {
+        $this->vignetteFile = $vignetteFile;
+
+        return $this;
+    }
+
+    public function getVignetteName(): ?string
+    {
+        return $this->vignetteName;
+    }
+
+    public function setVignetteName(string $vignetteName): self
+    {
+        $this->vignetteName = $vignetteName;
+
+        return $this;
+    }
+
+    public function getVignetteSize(): ?string
+    {
+        return $this->vignetteSize;
+    }
+
+    public function setVignetteSize(string $vignetteSize): self
+    {
+        $this->vignetteSize = $vignetteSize;
 
         return $this;
     }

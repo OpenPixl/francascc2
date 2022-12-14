@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @Route("/opadmin/config")
@@ -28,13 +29,38 @@ class ConfigController extends AbstractController
     /**
      * @Route("/new", name="op_admin_config_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, SluggerInterface $slugger): Response
     {
         $config = new Config();
         $form = $this->createForm(ConfigType::class, $config);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $vignetteFile */
+            $vignetteFile = $form->get('headerFile')->getData();
+
+            if ($vignetteFile) {
+                $originalVignetteFilename = pathinfo($vignetteFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeVignetteFilename = $slugger->slug($originalVignetteFilename);
+                $newVignetteFilename = $safeVignetteFilename . '-' . uniqid() . '.' . $vignetteFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $vignetteFile->move(
+                        $this->getParameter('config_directory'),
+                        $newVignetteFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $config->setVignetteName($newVignetteFilename);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($config);
             $entityManager->flush();
@@ -61,12 +87,37 @@ class ConfigController extends AbstractController
     /**
      * @Route("/{id}/edit", name="op_admin_config_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Config $config): Response
+    public function edit(Request $request, Config $config, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ConfigType::class, $config);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $vignetteFile */
+            $vignetteFile = $form->get('headerFile')->getData();
+
+            if ($vignetteFile) {
+                $originalVignetteFilename = pathinfo($vignetteFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeVignetteFilename = $slugger->slug($originalVignetteFilename);
+                $newVignetteFilename = $safeVignetteFilename . '-' . uniqid() . '.' . $vignetteFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $vignetteFile->move(
+                        $this->getParameter('config_directory'),
+                        $newVignetteFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $config->setVignetteName($newVignetteFilename);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('op_admin_config_edit', [
@@ -94,14 +145,14 @@ class ConfigController extends AbstractController
         return $this->redirectToRoute('admin_config_index');
     }
 
-    public function headerShow(){
+    public function VignetteShow(){
         $config = $this
             ->getDoctrine()
             ->getRepository(Config::class)
             ->findOneBy(['id'=> 1])
         ;
 
-        return $this->render('admin/config/headershow.html.twig',[
+        return $this->render('admin/config/vignetteshow.html.twig',[
             'config' => $config,
         ]);
     }
