@@ -6,6 +6,7 @@ use App\Entity\Admin\Config;
 use App\Form\Admin\ConfigType;
 use App\Repository\Admin\ConfigRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -94,10 +95,36 @@ class ConfigController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // Suppression directe de la vignette
+            $supprvignetteInput = $form->get('isSupprVignette')->getData();
+            if($supprvignetteInput && $supprvignetteInput == true){
+                // récupération du nom de l'image
+                $vignetteName = $config->getVignetteName();
+                $pathvignette = $this->getParameter('config_directory').'/'.$vignetteName;
+                // On vérifie si l'image existe
+                if(file_exists($pathvignette)){
+                    unlink($pathvignette);
+                }
+                $config->setHeaderName(null);
+                $config->setIsSupprVignette(0);
+            }
+
             /** @var UploadedFile $vignetteFile */
             $vignetteFile = $form->get('headerFile')->getData();
 
             if ($vignetteFile) {
+                // Effacement du fichier bannièreFileName si il est présent en BDD
+                // récupération du nom de l'image
+                $vignetteName = $config->getVignetteName();
+                // suppression du Fichier
+                if($vignetteName){
+
+                    $pathvignette = $this->getParameter('college_directory').'/'.$vignetteName;
+                    // On vérifie si l'image existe
+                    if(file_exists($pathvignette)){
+                        unlink($pathvignette);
+                    }
+                }
                 $originalVignetteFilename = pathinfo($vignetteFile->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
                 $safeVignetteFilename = $slugger->slug($originalVignetteFilename);
@@ -111,6 +138,9 @@ class ConfigController extends AbstractController
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
+                    // updates the 'brochureFilename' property to store the PDF file name
+                    // instead of its contents
+                    $config->setHeaderName($newVignetteFilename);
                 }
 
                 // updates the 'brochureFilename' property to store the PDF file name

@@ -118,6 +118,11 @@ class Config
      */
     private $vignetteSize;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isSupprVignette;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -308,6 +313,18 @@ class Config
     public function setVignetteSize(string $vignetteSize): self
     {
         $this->vignetteSize = $vignetteSize;
+
+        return $this;
+    }
+
+    public function getIsSupprVignette(): ?bool
+    {
+        return $this->isSupprVignette;
+    }
+
+    public function setIsSupprVignette(?bool $isSupprVignette): self
+    {
+        $this->isSupprVignette = $isSupprVignette;
 
         return $this;
     }
