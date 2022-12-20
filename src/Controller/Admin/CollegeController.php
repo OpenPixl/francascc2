@@ -8,6 +8,7 @@ use App\Entity\Webapp\Message;
 use App\Form\Admin\CollegeEditType;
 use App\Form\Admin\CollegeType;
 use App\Repository\Admin\CollegeRepository;
+use App\Repository\Admin\ConfigRepository;
 use App\Repository\Webapp\ArticlesRepository;
 use App\Repository\Webapp\MessageRepository;
 use App\Repository\Webapp\RessourcesRepository;
@@ -555,8 +556,9 @@ class CollegeController extends AbstractController
     /**
      * @Route("/section/{idsection}", name="_collegesbysection", methods={"GET"})
      */
-    public function listCollegesBySection($idsection): Response
+    public function listCollegesBySection($idsection, ConfigRepository $configRepository): Response
     {
+        $config = $configRepository->find(1);
         $colleges = $this
             ->getDoctrine()
             ->getRepository(College::class)
@@ -565,6 +567,7 @@ class CollegeController extends AbstractController
 
         return $this->render('admin/college/listcollegesbysection.html.twig',[
             'colleges' => $colleges,
+            'config' => $config
         ]);
     }
 

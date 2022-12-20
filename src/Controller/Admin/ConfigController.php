@@ -94,10 +94,12 @@ class ConfigController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // ---------------------------
+            // STEP 1 : Suppression de la vignette lors du click Checkbox
+            // ---------------------------
+            $supprvignettechkbx = $form->get('isSupprVignette')->getData();
 
-            // Suppression directe de la vignette
-            $supprvignetteInput = $form->get('isSupprVignette')->getData();
-            if($supprvignetteInput && $supprvignetteInput == true){
+            if($supprvignettechkbx && $supprvignettechkbx == true){
                 // récupération du nom de l'image
                 $vignetteName = $config->getVignetteName();
                 $pathvignette = $this->getParameter('config_directory').'/'.$vignetteName;
@@ -109,42 +111,38 @@ class ConfigController extends AbstractController
                 $config->setIsSupprVignette(0);
             }
 
+            // ---------------------------
+            // STEP 2 : Ajout ou modif de la vignette si "FileType" renseigné
+            // ---------------------------
             /** @var UploadedFile $vignetteFile */
-            $vignetteFile = $form->get('headerFile')->getData();
-
+            $vignetteFile = $form->get('vignetteFile')->getData();
             if ($vignetteFile) {
-                // Effacement du fichier bannièreFileName si il est présent en BDD
-                // récupération du nom de l'image
+                // Effacement du fichier vignetteFileName si il est présent en BDD
+                // ---------------------------
+                // Récupération du nom de l'image
                 $vignetteName = $config->getVignetteName();
                 // suppression du Fichier
                 if($vignetteName){
-
                     $pathvignette = $this->getParameter('college_directory').'/'.$vignetteName;
                     // On vérifie si l'image existe
                     if(file_exists($pathvignette)){
                         unlink($pathvignette);
                     }
                 }
+                // Renommage du fichier source
                 $originalVignetteFilename = pathinfo($vignetteFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
                 $safeVignetteFilename = $slugger->slug($originalVignetteFilename);
                 $newVignetteFilename = $safeVignetteFilename . '-' . uniqid() . '.' . $vignetteFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
+                // Déplacement du fichier dans le répertoire adéquat
                 try {
                     $vignetteFile->move(
                         $this->getParameter('config_directory'),
                         $newVignetteFilename
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                    // updates the 'brochureFilename' property to store the PDF file name
-                    // instead of its contents
                     $config->setHeaderName($newVignetteFilename);
                 }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
+                // Hydration de l'entité
                 $config->setVignetteName($newVignetteFilename);
             }
 
@@ -175,14 +173,14 @@ class ConfigController extends AbstractController
         return $this->redirectToRoute('admin_config_index');
     }
 
-    public function VignetteShow(){
+    public function headerShow(){
         $config = $this
             ->getDoctrine()
             ->getRepository(Config::class)
             ->findOneBy(['id'=> 1])
         ;
 
-        return $this->render('admin/config/vignetteshow.html.twig',[
+        return $this->render('admin/config/headershow.html.twig',[
             'config' => $config,
         ]);
     }
