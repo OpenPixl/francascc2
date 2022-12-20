@@ -41,6 +41,42 @@
                 </div>
             </div>
         </div>
+        <div class="form-group row mt-1 mb-1">
+            {{ form_label(form.vignetteFile, "Vignette par défaut", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+            <div class="col-sm-9">
+                {{ form_widget(form.vignetteFile, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                <small>{{ form_help(form.vignetteFile) }}</small>
+                <div class="form-error">
+                    {{ form_errors(form.vignetteFile) }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group row mt-1 mb-1">
+            {{ form_label(form.isSupprVignette, "Supprimer", {'label_attr': {'class': 'col-sm-3 col-form-label'}}) }}
+            <div class="col-sm-9">
+                {% if config.vignetteName is not null %}
+                    <div class="col-9 offset-2">
+                        <img class="img-fluid" src="{{ asset('uploads/images/config/' ~ config.vignetteName) }}" alt="{{ config.vignetteName }}">
+                    </div>
+                    {% if app.request.attributes.get('_route') == 'op_admin_config_edit' %}
+                        <div class="text-center col-8">
+                            {{ form_label(form.isSupprVignette, "Supprimer la Vignette ") }}
+                            {{ form_widget(form.isSupprVignette) }}
+                            <small>{{ form_help(form.isSupprVignette) }}</small>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="col-sm-3">
+                        {{ form_label(form.isSupprVignette, "Supprimer la vignette ") }}
+                        {{ form_widget(form.isSupprVignette, {'attr': {'disabled': 'disabled'}}) }}
+                        <small>{{ form_help(form.isSupprVignette) }}</small>
+                    </div>
+                {% endif %}
+                <div class="form-error">
+                    {{ form_errors(form.isSupprVignette) }}
+                </div>
+            </div>
+        </div>
         <button class="btn btn-sm btn-primary">{{ button_label|default('Enregistrer') }}</button>
     </div>
 </div>

@@ -27,7 +27,8 @@ class SearcharticleType extends AbstractType
                 'class' => User::class,
                 'label' => 'author',
                 'attr' => [
-                    'class' => 'form-control form-control-sm'
+                    'class' => 'form-control form-control-sm',
+                    'placeholder' => 'Auteur'
                 ],
                 'required' => false
             ])
