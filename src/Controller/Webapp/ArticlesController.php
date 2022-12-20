@@ -216,6 +216,18 @@ class ArticlesController extends AbstractController
     }
 
     /**
+     * @Route("/webapp/articles/section/complet/{idsection}", name="op_webapp_articles_articlescompletebysection", methods={"GET"})
+     */
+    public function ArticlesCompleteBySection($idsection): Response
+    {
+        $article = $this->getDoctrine()->getRepository(Articles::class)->listArticlesBySection($idsection);
+
+        return $this->render('webapp/articles/listarticlecompletebysection.html.twig',[
+            'article' => $article,
+        ]);
+    }
+
+    /**
      * @Route("/webapp/articles/other/{idsection}", name="op_webapp_articles_articlesbysection", methods={"GET"})
      */
     public function listArticlesBySectionOther($idsection): Response
@@ -244,6 +256,8 @@ class ArticlesController extends AbstractController
             'idcollege' => $idcollege
         ]);
     }
+
+
 
     /**
      * @Route("/webapp/articles/college2/{idcollege}", name="op_webapp_articles_articlesbycollege", methods={"GET"})

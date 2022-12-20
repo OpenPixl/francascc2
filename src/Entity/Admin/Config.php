@@ -2,7 +2,6 @@
 
 namespace App\Entity\Admin;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\Admin\ConfigRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;

@@ -39,6 +39,7 @@ class ArticlesRepository extends ServiceEntityRepository
                 t.name as theme, 
                 a.imageName, 
                 a.createdAt,
+                a.doc as doc,
                 su.id as idsupport, 
                 su.name as support,
                 c.id AS idcollege

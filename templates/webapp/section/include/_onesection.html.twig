@@ -29,6 +29,8 @@
             <div class="col">
                 {% if section.content == 'ONE_ARTICLE' %}
                 {{ render(controller('App\\Controller\\Webapp\\ArticlesController::listArticlesBySection', {'idsection': section.id})) }}
+                {% elseif section.content == 'ONE_ARTICLE_COMPLETE' %}
+                {{ render(controller('App\\Controller\\Webapp\\ArticlesController::ArticlesCompleteBySection', {'idsection': section.id})) }}
                 {% elseif section.content == 'ONE_CATEGORY' %}
                 {% elseif section.content == 'FIVE_ARTICLES' %}
                 {{ render(controller('App\\Controller\\Webapp\\ArticlesController::listFiveArticles', {'category': section.category})) }}

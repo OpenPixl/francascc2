@@ -20,6 +20,7 @@ class SectionType extends AbstractType
                     'AUCUN' => 'none',
                     'ARTICLES' => [
                         'Un article' => 'ONE_ARTICLE',
+                        'Un article complet' => 'ONE_ARTICLE_COMPLETE',
                         'Les 5 derniers articles' => 'FIVE_ARTICLES',
                         'Une categorie' => 'Category',
                     ],
