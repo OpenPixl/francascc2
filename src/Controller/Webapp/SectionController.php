@@ -172,24 +172,38 @@ class SectionController extends AbstractController
         $id = $section->getId();
         $page = $section->getPage();
 
-        // On récupére la position de la page actuelle et on prépare des les futures positions +1 et -1.
-        $position = $section->getPosition();
-        $nextPos = $section->getPosition()+1;
-        $previousPos = $section->getPosition()-1;
+        // On récupére les positions de la section et des possiblité de la page
+        // et on prépare les futures positions +1 et -1.
+
         //dd($previousPos, $position, $nextPos);
 
         if($level == 'up')
         {
-            $previousItem = $em->getRepository(Section::class)->findOneBy(array('position' => $previousPos));
-            //dd($previousItem);
-            $section->setPosition($previousPos);
-            $previousItem->setPosition($position);
-            $em->flush();
+            // On récupére la position de la section que l'on décrémente de 1
+            $position = $section->getPosition();
+            //dd($position);
+            // on récupère la section supérieure
+            $previousSec = $em->getRepository(Section::class)->findOneBy(array('position' => $position-1));
+            //dd($previousSec);
+            if($previousSec){
+                // Si la précédente existe, on récupère sa position
+                $previousPos = $previousSec->getPosition();
+                //dd($previousPos);
+                $previousSec->setPosition($section->getPosition());         // on hydrate la section précédente
+                //dd($previousSec);
+                $section->setPosition($previousPos);                        // on hydrate la section actuelle
+                //dd($section);
+                $em->flush();
+            }else{
+                $section->setPosition($position);
+                $previousSec->setPosition($position-1);
+                $em->flush();
+            }
 
             // on récupère la liste des pages ordonnée par position
             $sections = $this->getDoctrine()->getRepository(Section::class)->findbypage($page);
 
-            // on retourne au format JSON
+            // et on retourne au format JSON
             return $this->json([
                 'code'=> 200,
                 'message' => "La section est montée d'un niveau",
@@ -198,10 +212,18 @@ class SectionController extends AbstractController
                 ])
             ], 200);
         }elseif($level == 'down'){
-            $nextItem = $em->getRepository(Section::class)->findOneBy(array('position' => $nextPos));
-            $section->setPosition($nextPos);
-            $nextItem->setPosition($position);
-            $em->flush();
+            // On récupére la position de la section que l'on décrémnete de 1
+            $position = $section->getPosition()+1;
+            // on récupère la section inférieure
+            $nextSec = $em->getRepository(Section::class)->findOneBy(array('position' => $position));
+            if($nextSec){
+                // Si la suivante existe, on récupère sa position
+                $nextPos = $nextSec->getPosition();
+                $nextSec->setPosition($section->getPosition());         // on hydrate la section précédente
+                $section->setPosition($nextPos);                        // on hydrate la section actuelle
+                $em->flush();
+                // sinon aucun changement
+            }
             // on récupère la liste des pages ordonnée par position
             $sections = $this->getDoctrine()->getRepository(Section::class)->findbypage($page);
             return $this->json([

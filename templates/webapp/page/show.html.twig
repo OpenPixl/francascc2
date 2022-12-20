@@ -95,11 +95,11 @@
             // Ajouter un évènement sur le bouton AddSection
             document.getElementById('btnAddSection').addEventListener("click", function(event){
                 event.preventDefault();
-                const element = document.getElementById('btnAddSection').name;
+                let element = document.getElementById('btnAddSection').name;
                 const data = element.split('-');
                 const page = data[0];
-                const row = data[1];
-                console.log(page, row);
+                let row = data[1];
+                //console.log(page, row);
                 const url = '/webapp/section/addsection/' + page +'/'+ row
                 axios
                 .get(url)
@@ -110,19 +110,18 @@
                     document.querySelectorAll('a.jsPosition').forEach(function (link){
                         link.addEventListener('click', onClickBtnPosition);
                     })
-                    // préparation du toaster
-                    var option = {
-                        animation : true,
-                        autohide: true,
-                        delay : 3000,
-                    };
                     // initialisation du toaster
-                    var toastHTMLElement = document.getElementById("toaster");
-                    var message = response.data.message;
+                    var toastHTMLElement = document.getElementById("toaster")
+                    var message = response.data.message
                     var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
-                    toastBody.textContent = message;
-                    var toastElement = new bootstrap.Toast(toastHTMLElement, option);
-                    toastElement.show();
+                    toastBody.textContent = message
+                    var toastElement = new bootstrap.Toast(toastHTMLElement, {animation : true,autohide: true,delay : 3000})
+                    toastElement.show()
+                    let nextrow = ++row
+                    let name = page.concat('-',nextrow)
+                    //console.log(name)
+                    document.getElementById('btnAddSection').setAttribute("name", name)
+
                 })
             })
 

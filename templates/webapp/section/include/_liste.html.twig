@@ -15,7 +15,7 @@
                 {% if loop.first %}<i class="fas fa-long-arrow-alt-up text-muted"></i>&nbsp;&nbsp;{% else %}<a href="#" class="jsPosition" id="{{ section.id }}"><i class="fas fa-long-arrow-alt-up"></i></a>&nbsp;&nbsp;{% endif %}
                 {% if loop.last %}<i class="fas fa-long-arrow-alt-down text-muted"></i>{% else %}<a href="#" class="jsPosition" id="{{ section.id }}"><i class="fas fa-long-arrow-alt-down"></i></a>{% endif %}
             </td>
-            <td><a href="{{ path('op_webapp_section_edit', {'id': section.id}) }}">{{ section.name }}</a></td>
+            <td><a href="{{ path('op_webapp_section_edit', {'id': section.id}) }}">{{ section.name }} -  {{ section.position }}</a></td>
             <td class="text-center">
                 {% if section.favorites == 0 %}
                     <p class="card-text"><a class="js-star" href="{{ path('op_webapp_section_star', {'id': section.id}) }}"><i class="far fa-star text-warning"></i></a></p>
@@ -26,6 +26,8 @@
             <td class="text-center">
                 {% if section.content == 'ONE_ARTICLE' %}
                     Un article
+                {% elseif section.content == 'ONE_ARTICLE_COMPLETE' %}
+                    Un article complet
                 {% elseif section.content == 'FIVE_ARTICLES' %}
                     Les 5 deniers articles collègiens
                 {% elseif section.content == 'Category' %}
