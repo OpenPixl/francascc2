@@ -59,6 +59,12 @@
                                 {{ form_label(form.isShowReadMore, 'Afficher le bouton : Lire la suite', {'label_attr': {'class':'form-check-label'}}) }}
                             </div>
                         </fieldset>
+                        <fieldset>
+                            <div class="form-check form-switch">
+                                {{ form_widget(form.isTitleShow, {'attr': {'class': 'form-check-input'}}) }}
+                                {{ form_label(form.isTitleShow, 'Afficher le titre', {'label_attr': {'class':'form-check-label'}}) }}
+                            </div>
+                        </fieldset>
                     </div>
                     <h5>Categorie</h5>
                     <div class="row mb-1 mt-1 g-1">

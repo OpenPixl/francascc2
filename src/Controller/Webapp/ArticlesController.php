@@ -54,6 +54,7 @@ class ArticlesController extends AbstractController
     }
 
     /**
+     * Creation d'articles depuis l'espace College
      * @Route("/espcoll/articles/new", name="op_webapp_articles_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -92,6 +93,7 @@ class ArticlesController extends AbstractController
     }
 
     /**
+     * Création d'article depuis l'espace admin
      * @Route("/webapp/articles/newadmin", name="op_webapp_articles_newadmin", methods={"GET","POST"})
      */
     public function newAdmin(Request $request): Response
