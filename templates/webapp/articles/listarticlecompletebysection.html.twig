@@ -26,11 +26,8 @@
                     </div>
                 {% elseif article.idsupport == 2 %}
                     <div class="col-12" id="content_support">
-                        <h3>Notre reportage vidéo : {{ article.doc }}</h3>
-                        <video controls width="500">
-
+                        <video>
                             <source src="{{ vich_uploader_asset(article, 'docFile', 'App\\Entity\\Webapp\\Articles') }}" type="video/mp4">
-
                             <p>Votre navigateur ne prend pas en charge les vidéos HTML5.
                                 Voici <a href="{{ vich_uploader_asset(article, 'docFile', 'App\\Entity\\Webapp\\Articles') }}">un lien pour télécharger la vidéo sur votre ordinateur</a>.</p>
                         </video>
@@ -76,7 +73,7 @@
                 {% elseif article.idsupport == 2 %}
                     <div class="col-12" id="content_support">
                         <h3 class="text-center">
-                        <video controls width="500">
+                        <video>
 
                             <source src="{{ vich_uploader_asset(article, 'docFile', 'App\\Entity\\Webapp\\Articles') }}" type="video/mp4">
 
