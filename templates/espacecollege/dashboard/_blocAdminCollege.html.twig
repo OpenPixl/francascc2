@@ -46,7 +46,7 @@
         <div class="col-3" id="bloc_admin_college">
             <ul class="list-group">
                 <li class="list-group-item disabled">LE GROUPE</li>
-                <li class="list-group-item"><a href="{{ path('op_webapp_college_edit', { 'id': college.id}) }}">Editer les infos</a></li>
+                <li class="list-group-item"><a href="{{ path('op_espcoll_college_edit', { 'id': college.id}) }}">Editer les infos</a></li>
                 <li class="list-group-item"><a href="{{ path('op_webapp_message_messagesbyuser', {'iduser': app.user.id}) }}">consulter les messages</a></li>
                 <li class="list-group-item"><a href="{{ path('op_webapp_message_new', { 'id': college.id}) }}">Ecrire un message</a></li>
             </ul>
