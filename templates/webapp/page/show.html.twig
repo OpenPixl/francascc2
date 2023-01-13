@@ -6,7 +6,9 @@
     {{ parent() }}
     <script>
         window.onload = function(){
-            // Construction de la fonction OnClickBtnMenu
+            // --------------------------------------------------------------------------
+            // Fonction OnClickBtnMenu - Mettre en page d'accueil la section sélectionnée
+            // --------------------------------------------------------------------------
             function onClickBtnStar(event){
                 event.preventDefault();
                 const url = this.href;                                          // variable qui récupère l'url inclus dans le "this"
@@ -25,7 +27,10 @@
                     });
             }
 
-            // Modal suppr une ligne
+            // --------------------------------------------------------------------------
+            // Bloc de suppression d'une section
+            // --------------------------------------------------------------------------
+            // Ouverture de la modale de suppression
             var Suppr = document.getElementById('Suppr')
             Suppr.addEventListener('show.bs.modal', function (event) {
                 // Button that triggered the modal
@@ -44,8 +49,7 @@
                 modalBodyInput.value = recipient
                 modalText.innerHTML = "Vous êtes sur le point de supprimer la section sélectionnée.<br><b>Etes-vous sur de continuer ?</b>"
             })
-
-            // function Suppression de la ligne en cours
+            // Action de Suppression de la ligne en cours
             function onClickDelEvent(event){
                 event.preventDefault()
                 const id = document.getElementById('recipient-name').value
@@ -77,21 +81,11 @@
                     })
             }
 
-            // Ajouter un évènement sur le bouton de mise en vedette d'une section lors d'un clic
-            document.querySelectorAll('a.js-star').forEach(function (link){
-                link.addEventListener('click', onClickBtnStar);
-            })
 
-            // Ajouter un évènement sur le bouton de mise en vedette d'une section lors d'un clic
-            document.querySelectorAll('a.js-del-section').forEach(function (link){
-                link.addEventListener('click', onClickBtnDelSection);
-            })
 
-            // Ajouter un évènement sur le bouton de suppression de la ligne en cours
-            document.querySelectorAll('a.js-data-suppr').forEach(function(link){
-                link.addEventListener('click', onClickDelEvent)
-            })
-
+            // --------------------------------------------------------------------------
+            // Bloc de création d'une nouvelle section à la page
+            // --------------------------------------------------------------------------
             // Ajouter un évènement sur le bouton AddSection
             document.getElementById('btnAddSection').addEventListener("click", function(event){
                 event.preventDefault();
@@ -117,6 +111,7 @@
                     toastBody.textContent = message
                     var toastElement = new bootstrap.Toast(toastHTMLElement, {animation : true,autohide: true,delay : 3000})
                     toastElement.show()
+                    // génération d'un identifiant sur le bouton AddSection dans son attribut Name.
                     let nextrow = ++row
                     let name = page.concat('-',nextrow)
                     //console.log(name)
@@ -125,10 +120,13 @@
                 })
             })
 
+            // --------------------------------------------------------------------------
+            // Bloc de déplacement UP or DOWN d'une section
+            // --------------------------------------------------------------------------
             function onClickBtnPosition(event)
             {
                 event.preventDefault();
-                const id = this.id;
+                const id = this.id;                                                             // correspond au futur placement de la section
                 const icone = this.querySelector('i');
                 let level;
                 if(icone.classList.contains('fa-long-arrow-alt-up')) {
@@ -161,6 +159,21 @@
                     })
             }
 
+            // --------------------------------------------------------------------------
+            // Bloc de déclaration des évènements sur la page
+            // --------------------------------------------------------------------------
+            // Ajouter un évènement sur le bouton de mise en vedette d'une section lors d'un clic
+            document.querySelectorAll('a.js-star').forEach(function (link){
+                link.addEventListener('click', onClickBtnStar);
+            })
+            // Ajouter un évènement sur le bouton de mise en vedette d'une section lors d'un clic
+            document.querySelectorAll('a.js-del-section').forEach(function (link){
+                link.addEventListener('click', onClickBtnDelSection);
+            })
+            // Ajouter un évènement sur le bouton de suppression de la ligne en cours
+            document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                link.addEventListener('click', onClickDelEvent)
+            })
             // Appel de la fonction lors du clic sur la flèche DOWN
             document.querySelectorAll('a.jsPosition').forEach(function (link){
                 link.addEventListener('click', onClickBtnPosition);

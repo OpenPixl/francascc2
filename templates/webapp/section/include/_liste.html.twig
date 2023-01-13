@@ -12,8 +12,8 @@
     {% for section in sections %}
         <tr>
             <td>
-                {% if loop.first %}<i class="fas fa-long-arrow-alt-up text-muted"></i>&nbsp;&nbsp;{% else %}<a href="#" class="jsPosition" id="{{ section.id }}"><i class="fas fa-long-arrow-alt-up"></i></a>&nbsp;&nbsp;{% endif %}
-                {% if loop.last %}<i class="fas fa-long-arrow-alt-down text-muted"></i>{% else %}<a href="#" class="jsPosition" id="{{ section.id }}"><i class="fas fa-long-arrow-alt-down"></i></a>{% endif %}
+                {% if loop.first %}<i class="fas fa-long-arrow-alt-up text-muted"></i>&nbsp;&nbsp;{% else %}<a href="#" class="jsPosition" id="{{ section.position -1}}"><i class="fas fa-long-arrow-alt-up"></i></a>&nbsp;&nbsp;{% endif %}
+                {% if loop.last %}<i class="fas fa-long-arrow-alt-down text-muted"></i>{% else %}<a href="#" class="jsPosition" id="{{ section.position +1 }}"><i class="fas fa-long-arrow-alt-down"></i></a>{% endif %}
             </td>
             <td><a href="{{ path('op_webapp_section_edit', {'id': section.id}) }}">{{ section.name }} -  {{ section.position }}</a></td>
             <td class="text-center">

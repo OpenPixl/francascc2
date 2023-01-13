@@ -41,7 +41,6 @@
             {% if article.idsupport == 0 %}
             {% elseif article.idsupport == 1 %}
             <div class="col-12" id="content_support">
-                <h3>Notre émission de radio : {{ article.doc }}</h3>
                 <audio controls="controls">
                     <source src="{{ vich_uploader_asset(article, 'docFile', 'App\\Entity\\Webapp\\Articles') }}" type="audio/mp3" />
                     Votre navigateur ne supporte pas la balise AUDIO.
@@ -49,7 +48,6 @@
             </div>
             {% elseif article.idsupport == 2 %}
                 <div class="col-12" id="content_support">
-                    <h3>Notre reportage vidéo : {{ article.doc }}</h3>
                     <video controls width="500">
 
                         <source src="{{ vich_uploader_asset(article, 'docFile', 'App\\Entity\\Webapp\\Articles') }}" type="video/mp4">
@@ -60,6 +58,11 @@
                 </div>
             {% elseif article.idsupport == 3 %}
                 <div class="col-12" id="content_support">
+                    <p>
+                        En cliquant sur le lien ci-dessous, vous pourrez télécharger notre document au format "Pdf" au "Doc".
+                        <br>
+                        <a href="{{ vich_uploader_asset(article, 'docFile', 'App\\Entity\\Webapp\\Articles') }}"><i class="fa-light fa-download fa-2xl"></i></a>
+                    </p>
 
                 </div>
             {% else %}
