@@ -6,10 +6,12 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="https://kit.fontawesome.com/3904e9974b.css" crossorigin="anonymous">
         <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
     {% endblock %}
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
+        <script src="https://kit.fontawesome.com/3904e9974b.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
         <script src="{{ asset('js/ckeditor5/build/ckeditor.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>

@@ -59,9 +59,7 @@
             {% elseif article.idsupport == 3 %}
                 <div class="col-12" id="content_support">
                     <p>
-                        En cliquant sur le lien ci-dessous, vous pourrez télécharger notre document au format "Pdf" au "Doc".
-                        <br>
-                        <a href="{{ vich_uploader_asset(article, 'docFile', 'App\\Entity\\Webapp\\Articles') }}"><i class="fa-light fa-download fa-2xl"></i></a>
+                        En cliquant sur le lien suivant, vous pourrez télécharger notre document au format "Pdf" au "Doc" : <a href="{{ vich_uploader_asset(article, 'docFile', 'App\\Entity\\Webapp\\Articles') }}"><i class="fa-duotone fa-file-pdf fa-2x"></i> Télécharger le fichier</a>
                     </p>
 
                 </div>
